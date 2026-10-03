@@ -1,0 +1,20 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+env/
+venv/
+.venv/
+
+# Scratch & Logs
+scratch/
+.system_generated/
+*.log
+web/cloudflared.exe
+*.exe
+
+# OS files
+.DS_Store
+Thumbs.db

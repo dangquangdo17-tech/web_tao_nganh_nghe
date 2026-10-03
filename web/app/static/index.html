@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCompass AI - Hệ Thống Tư Vấn Tuyển Sinh & Hướng Nghiệp Đa Tác Tử</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css?v=4.5">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="logo-text">
+                    <span class="brand-title">EduCompass AI</span>
+                    <span class="brand-subtitle">Hệ Thống Cố Vấn Tuyển Sinh & Định Hướng Nghề Nghiệp AI</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#advisor-section" class="active"><i class="fa-solid fa-compass"></i> Tư vấn Nguyện vọng</a>
+                <a href="#feature-hub" onclick="scrollToCareerTools(event)"><i class="fa-solid fa-wand-magic-sparkles text-warning"></i> 6 Công Cụ Đột Phá</a>
+                <a href="#prospectus-section"><i class="fa-solid fa-file-contract"></i> Tra cứu Đề án</a>
+                <a href="#dashboard-section"><i class="fa-solid fa-chart-pie"></i> Bảng Phân Tích</a>
+            </nav>
+            <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <button type="button" class="btn-nav-wishlist" onclick="openWishlistDrawer()">
+                    <i class="fa-solid fa-heart text-danger"></i> Tủ Nguyện Vọng (<span id="nav-wishlist-count">0</span>)
+                </button>
+                <div class="nav-badge">
+                    <span class="status-indicator"></span> 3 Chuyên Gia AI
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Ứng dụng AI Hướng nghiệp Thế hệ Mới</div>
+            <h1 class="hero-title">Chọn Ngành Đúng Thế Mạnh • Đỗ Trường Đúng Nguyện Vọng</h1>
+            <p class="hero-desc">Kết hợp <strong>AI thấu hiểu sở thích tự nhiên</strong> và <strong>Hội đồng 3 Chuyên gia AI (Học thuật, Tâm lý nghề nghiệp, Tuyển sinh)</strong> tính toán chính xác cơ hội trúng tuyển và lập chiến lược phân bổ nguyện vọng theo tỷ lệ vàng chuẩn Bộ GD&ĐT.</p>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        
+        <!-- Step 1: Input Score & Profile -->
+        <section id="advisor-section" class="card-section">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <div class="section-number">1</div>
+                    <div class="section-header-title">
+                        <h2>Hồ Sơ Năng Lực & Điểm Dự Đoán Thi Tốt Nghiệp THPT</h2>
+                        <p class="section-subtitle">Nhập điểm dự đoán kỳ thi tốt nghiệp THPT, học bạ và chứng chỉ ngoại ngữ của bạn.</p>
+                    </div>
+                </div>
+                <!-- School Target Selector replacing old presets -->
+                <div class="school-target-selector-box">
+                    <label for="school-target-select"><i class="fa-solid fa-school-flag text-primary"></i> <strong>Trường ĐH Mơ Ước:</strong></label>
+                    <select id="school-target-select" class="school-target-select" onchange="onSelectSchoolTarget(this.value)">
+                        <option value="">-- Chọn trường đại học bạn muốn xét tuyển --</option>
+                        <optgroup label="🏛️ Top Kỹ thuật & Công nghệ">
+                            <option value="BKHN" selected>🏛️ ĐH Bách khoa Hà Nội (BKHN)</option>
+                            <option value="HCMUT">⚙️ ĐH Bách khoa - ĐHQG-HCM (HCMUT)</option>
+                            <option value="UET">🔬 ĐH Công nghệ - ĐHQGHN (UET)</option>
+                            <option value="UIT">💻 ĐH Công nghệ Thông tin ĐHQG-HCM (UIT)</option>
+                            <option value="PTIT">📡 Học viện Công nghệ Bưu chính Viễn thông (PTIT)</option>
+                            <option value="DUT">🏗️ ĐH Bách khoa - ĐH Đà Nẵng (DUT)</option>
+                            <option value="HaUI">🔧 ĐH Công nghiệp Hà Nội (HaUI)</option>
+                            <option value="UTC">🚆 ĐH Giao thông Vận tải (UTC)</option>
+                            <option value="FPT">🌐 ĐH FPT (FPT)</option>
+                        </optgroup>
+                        <optgroup label="📈 Top Kinh tế, Ngoại thương & Quản trị">
+                            <option value="NEU">📈 ĐH Kinh tế Quốc dân (NEU)</option>
+                            <option value="FTU">🚢 ĐH Ngoại thương (FTU)</option>
+                            <option value="UEH">📊 ĐH Kinh tế TP.HCM (UEH)</option>
+                            <option value="AOF">💰 Học viện Tài chính (AOF)</option>
+                            <option value="DAV">🌐 Học viện Ngoại giao (DAV)</option>
+                            <option value="TMU">🛒 ĐH Thương mại (TMU)</option>
+                            <option value="DUE">📉 ĐH Kinh tế - ĐH Đà Nẵng (DUE)</option>
+                        </optgroup>
+                        <optgroup label="🩺 Top Y Dược & Khoa học Sức khỏe">
+                            <option value="HMU">🩺 ĐH Y Hà Nội (HMU)</option>
+                            <option value="UMP">💊 ĐH Y Dược TP.HCM (UMP)</option>
+                            <option value="PNTU">🏥 ĐH Y khoa Phạm Ngọc Thạch (PNTU)</option>
+                            <option value="HMED">🌿 ĐH Y Dược - ĐH Huế (HMED)</option>
+                        </optgroup>
+                        <optgroup label="🎨 Kiến trúc, Xã hội, Ngoại ngữ, Luật & Sư phạm">
+                            <option value="HAU">📐 ĐH Kiến trúc Hà Nội (HAU)</option>
+                            <option value="UAH">🏛️ ĐH Kiến trúc TP.HCM (UAH)</option>
+                            <option value="USSH_HCM">📚 ĐH KHXH&NV - ĐHQG-HCM (USSH)</option>
+                            <option value="HANU">🗣️ ĐH Hà Nội (HANU)</option>
+                            <option value="HNUE">🎓 ĐH Sư phạm Hà Nội (HNUE)</option>
+                            <option value="AJC">🎙️ Học viện Báo chí & Tuyên truyền (AJC)</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
+            <!-- School Branding Showcase Banner -->
+            <div id="school-branding-card" class="school-branding-card mb-3">
+                <div class="school-branding-left">
+                    <div class="school-logo-badge" id="school-logo-badge">🏛️</div>
+                    <div class="school-meta-info">
+                        <div class="school-title-row">
+                            <h3 id="school-display-name">Đại học Bách khoa Hà Nội</h3>
+                            <span class="school-code-tag" id="school-display-code">BKHN</span>
+                            <span class="school-type-tag" id="school-display-type">Công lập</span>
+                            <span class="school-region-tag" id="school-display-region"><i class="fa-solid fa-location-dot"></i> Hà Nội (Miền Bắc)</span>
+                        </div>
+                        <p class="school-motto-desc" id="school-display-desc">
+                            Top 1 Kỹ thuật & Công nghệ miền Bắc, đào tạo chuyên sâu và áp lực học tập cao.
+                        </p>
+                        <div class="school-highlight-badges">
+                            <span class="badge-item"><i class="fa-solid fa-coins text-warning"></i> Học phí: <strong id="school-display-tuition">25 - 45 tr/năm</strong></span>
+                            <span class="badge-item"><i class="fa-solid fa-globe text-primary"></i> <a id="school-display-website" href="https://hust.edu.vn" target="_blank" rel="noopener">Website trường <i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
+                            <span class="badge-item badge-method" id="school-method-badge"><i class="fa-solid fa-sliders text-success"></i> Phương thức chính: <strong>THPT + ĐGTD (TSA) + IELTS</strong></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="school-branding-actions">
+                    <button type="button" class="btn-school-action btn-school-check" onclick="triggerSchoolAdmissionCheck()" title="So sánh điểm của bạn với toàn bộ ngành của trường này">
+                        <i class="fa-solid fa-bolt-lightning text-warning"></i> <strong>Thẩm Định Cửa Đỗ Trường Này</strong>
+                    </button>
+                    <button type="button" class="btn-school-action btn-school-sample" onclick="applySampleScoreForSelectedSchool()" title="Điền sẵn điểm thi mẫu thích hợp với trường này để thử nghiệm ngay">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Điền Điểm Mẫu Trường Này</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Khối Hiển Thị Kết Quả Thẩm Định & Phỏng Vấn Trực Tiếp Trên Web -->
+            <div id="school-onpage-result-card" class="school-onpage-result-card mb-4 hidden">
+                <div class="school-onpage-header">
+                    <div class="school-onpage-title-wrap">
+                        <div class="school-onpage-badge-icon" id="onpage-school-icon">🏛️</div>
+                        <div>
+                            <div class="onpage-school-title-row">
+                                <h3 id="onpage-school-title">Bản Thẩm Định Cửa Đỗ & Phỏng Vấn Tuyển Sinh</h3>
+                                <span class="onpage-badge-active" id="onpage-school-code-badge">BKHN</span>
+                            </div>
+                            <p class="section-subtitle mb-0" id="onpage-school-subtitle">
+                                Báo cáo tổng hợp đối chiếu điểm thực tế với đề án tuyển sinh chính thức
+                            </p>
+                        </div>
+                    </div>
+                    <div class="school-onpage-header-actions">
+                        <button type="button" class="btn-onpage-action" onclick="triggerSchoolAdmissionCheck()">
+                            <i class="fa-solid fa-arrows-rotate"></i> Xem bảng đầy đủ
+                        </button>
+                        <button type="button" class="btn-onpage-action btn-onpage-interview" onclick="launchInterviewFromCheckModal()">
+                            <i class="fa-solid fa-microphone-lines text-warning"></i> Phỏng vấn Thầy/Cô
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Body hiển thị 2 cột: Cửa đỗ 3 tầng + Đánh giá Tuyển sinh -->
+                <div class="school-onpage-body-grid">
+                    <!-- Cột 1: Thẩm định Cửa đỗ & Phân tầng -->
+                    <div class="school-onpage-col">
+                        <div class="col-section-header">
+                            <i class="fa-solid fa-chart-pie text-primary"></i> <strong>Cơ Hội Trúng Tuyển 3 Nhóm Ngành:</strong>
+                        </div>
+                        <div class="onpage-tier-pills-row" id="onpage-tier-pills">
+                            <!-- Injected dynamically -->
+                        </div>
+                        <div id="onpage-criteria-alert" class="onpage-criteria-alert mb-2">
+                            <!-- Injected dynamically -->
+                        </div>
+                        <div class="onpage-majors-preview" id="onpage-majors-preview">
+                            <!-- List top majors injected dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Cột 2: Bản Báo Cáo Phỏng Vấn Tuyển Sinh -->
+                    <div class="school-onpage-col">
+                        <div class="col-section-header">
+                            <i class="fa-solid fa-user-tie text-indigo"></i> <strong>Đánh Giá Của Đại Diện Tuyển Sinh:</strong>
+                        </div>
+                        <div id="onpage-interview-content">
+                            <!-- Populated dynamically -->
+                            <div class="onpage-interview-placeholder">
+                                <div class="placeholder-icon"><i class="fa-solid fa-comments"></i></div>
+                                <p>Chưa thực hiện phỏng vấn với Đại diện Tuyển sinh của trường.</p>
+                                <button type="button" class="btn-primary btn-sm" onclick="launchInterviewFromCheckModal()">
+                                    <i class="fa-solid fa-microphone"></i> Bắt đầu phỏng vấn 3 câu (2 phút)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2-cols">
+                <!-- Exam Scores -->
+                <div class="form-box">
+                    <h3 class="form-box-title"><i class="fa-solid fa-graduation-cap"></i> Chọn Khối Thi & Điểm Dự Đoán (Chuẩn 4 Môn)</h3>
+                    
+                    <!-- Bước 1: Chọn Khối xét tuyển mục tiêu -->
+                    <div class="subject-step-title mb-2">
+                        <span><i class="fa-solid fa-layer-group text-primary"></i> Bước 1: Chọn Khối xét tuyển mục tiêu của bạn</span>
+                        <span class="khoi-badge-count">Đã chọn: <strong id="selected-khoi-name" style="color: var(--primary);">Khối A01</strong> (4 môn)</span>
+                    </div>
+
+                    <!-- Danh sách các nút chọn Khối tiện lợi -->
+                    <div class="khoi-selector-grid" id="khoi-selector-grid">
+                        <button type="button" class="btn-khoi-pill active" id="btn-khoi-A01" onclick="selectKhoiTarget('A01')">
+                            <strong>Khối A01</strong>
+                            <small>Toán, Văn, Anh + Lý</small>
+                        </button>
+                        <button type="button" class="btn-khoi-pill" id="btn-khoi-A00" onclick="selectKhoiTarget('A00')">
+                            <strong>Khối A00</strong>
+                            <small>Toán, Văn + Lý, Hóa</small>
+                        </button>
+                        <button type="button" class="btn-khoi-pill" id="btn-khoi-D01" onclick="selectKhoiTarget('D01')">
+                            <strong>Khối D01</strong>
+                            <small>Toán, Văn, Anh + Tự chọn</small>
+                        </button>
+                        <button type="button" class="btn-khoi-pill" id="btn-khoi-D07" onclick="selectKhoiTarget('D07')">
+                            <strong>Khối D07</strong>
+                            <small>Toán, Văn, Anh + Hóa</small>
+                        </button>
+                        <button type="button" class="btn-khoi-pill" id="btn-khoi-B00" onclick="selectKhoiTarget('B00')">
+                            <strong>Khối B00</strong>
+                            <small>Toán, Văn + Hóa, Sinh</small>
+                        </button>
+                        <button type="button" class="btn-khoi-pill" id="btn-khoi-C00" onclick="selectKhoiTarget('C00')">
+                            <strong>Khối C00</strong>
+                            <small>Toán, Văn + Sử, Địa</small>
+                        </button>
+                        <button type="button" class="btn-khoi-pill" id="btn-khoi-D14" onclick="selectKhoiTarget('D14')">
+                            <strong>Khối D14</strong>
+                            <small>Toán, Văn, Anh + Sử</small>
+                        </button>
+                        <button type="button" class="btn-khoi-pill" id="btn-khoi-D15" onclick="selectKhoiTarget('D15')">
+                            <strong>Khối D15</strong>
+                            <small>Toán, Văn, Anh + Địa</small>
+                        </button>
+                    </div>
+
+                    <!-- Thanh mô tả giải thích cơ cấu 4 môn của khối -->
+                    <div id="khoi-structure-banner" class="khoi-structure-banner mb-3">
+                        <div class="khoi-structure-text-wrap">
+                            <i class="fa-solid fa-circle-info text-primary"></i>
+                            <span id="khoi-structure-text">
+                                <strong>Khối A01:</strong> Gồm 4 môn thi: <strong>3 môn chính</strong> (Toán, Ngữ văn, Tiếng Anh) + <strong>1 môn chọn của khối</strong> (Vật lý).
+                            </span>
+                        </div>
+                        <button type="button" class="btn-toggle-custom-subs" onclick="toggleCustomSubsDrawer()" title="Tùy chỉnh chọn thêm hoặc đổi môn khác">
+                            <i class="fa-solid fa-sliders"></i> Tùy chỉnh môn
+                        </button>
+                    </div>
+
+                    <!-- Ngăn kéo tùy chỉnh môn (ẩn mặc định, mở khi bấm Tùy chỉnh môn) -->
+                    <div id="custom-subs-drawer" class="custom-subs-drawer mb-3 hidden">
+                        <div class="custom-subs-header">
+                            <small><i class="fa-solid fa-check-double"></i> Đánh dấu các môn bạn thi (chỉ các môn được chọn mới hiển thị ô nhập điểm):</small>
+                        </div>
+                        <div class="subject-chips-grid">
+                            <label class="subject-chip checked" id="chip-toan">
+                                <input type="checkbox" id="chk-toan" checked onchange="toggleSubject('toan')"> Toán
+                            </label>
+                            <label class="subject-chip checked" id="chip-van">
+                                <input type="checkbox" id="chk-van" checked onchange="toggleSubject('van')"> Ngữ văn
+                            </label>
+                            <label class="subject-chip checked" id="chip-anh">
+                                <input type="checkbox" id="chk-anh" checked onchange="toggleSubject('anh')"> Tiếng Anh
+                            </label>
+                            <label class="subject-chip checked" id="chip-ly">
+                                <input type="checkbox" id="chk-ly" checked onchange="toggleSubject('ly')"> Vật lý
+                            </label>
+                            <label class="subject-chip" id="chip-hoa">
+                                <input type="checkbox" id="chk-hoa" onchange="toggleSubject('hoa')"> Hóa học
+                            </label>
+                            <label class="subject-chip" id="chip-sinh">
+                                <input type="checkbox" id="chk-sinh" onchange="toggleSubject('sinh')"> Sinh học
+                            </label>
+                            <label class="subject-chip" id="chip-su">
+                                <input type="checkbox" id="chk-su" onchange="toggleSubject('su')"> Lịch sử
+                            </label>
+                            <label class="subject-chip" id="chip-dia">
+                                <input type="checkbox" id="chk-dia" onchange="toggleSubject('dia')"> Địa lý
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Bước 2: Ghi điểm cho các môn đã chọn -->
+                    <div class="subject-step-title mb-2">
+                        <span><i class="fa-solid fa-pencil text-success"></i> Bước 2: Ghi điểm dự đoán cho 4 môn thi</span>
+                    </div>
+
+                    <div class="subjects-grid">
+                        <div class="input-group subject-input-item" id="wrap-score-toan">
+                            <div class="subject-label-row">
+                                <label>Toán</label>
+                                <span class="sub-role-tag role-core" id="tag-role-toan">Môn chính</span>
+                            </div>
+                            <input type="number" id="score-toan" step="0.1" min="0" max="10" value="7.2" placeholder="7.0">
+                        </div>
+                        <div class="input-group subject-input-item" id="wrap-score-van">
+                            <div class="subject-label-row">
+                                <label>Ngữ văn</label>
+                                <span class="sub-role-tag role-core" id="tag-role-van">Môn chính</span>
+                            </div>
+                            <input type="number" id="score-van" step="0.1" min="0" max="10" value="7.0" placeholder="7.0">
+                        </div>
+                        <div class="input-group subject-input-item" id="wrap-score-anh">
+                            <div class="subject-label-row">
+                                <label>Tiếng Anh</label>
+                                <span class="sub-role-tag role-core" id="tag-role-anh">Môn chính</span>
+                            </div>
+                            <input type="number" id="score-anh" step="0.1" min="0" max="10" value="7.8" placeholder="7.5">
+                        </div>
+                        <div class="input-group subject-input-item" id="wrap-score-ly">
+                            <div class="subject-label-row">
+                                <label>Vật lý</label>
+                                <span class="sub-role-tag role-elective" id="tag-role-ly">Môn chọn khối A01</span>
+                            </div>
+                            <input type="number" id="score-ly" step="0.1" min="0" max="10" value="7.5" placeholder="7.5">
+                        </div>
+                        <div class="input-group subject-input-item hidden" id="wrap-score-hoa" style="display: none;">
+                            <div class="subject-label-row">
+                                <label>Hóa học</label>
+                                <span class="sub-role-tag role-elective" id="tag-role-hoa">Môn chọn</span>
+                            </div>
+                            <input type="number" id="score-hoa" step="0.1" min="0" max="10" value="6.5" placeholder="6.5">
+                        </div>
+                        <div class="input-group subject-input-item hidden" id="wrap-score-sinh" style="display: none;">
+                            <div class="subject-label-row">
+                                <label>Sinh học</label>
+                                <span class="sub-role-tag role-elective" id="tag-role-sinh">Môn chọn</span>
+                            </div>
+                            <input type="number" id="score-sinh" step="0.1" min="0" max="10" value="6.0" placeholder="6.0">
+                        </div>
+                        <div class="input-group subject-input-item hidden" id="wrap-score-su" style="display: none;">
+                            <div class="subject-label-row">
+                                <label>Lịch sử</label>
+                                <span class="sub-role-tag role-elective" id="tag-role-su">Môn chọn</span>
+                            </div>
+                            <input type="number" id="score-su" step="0.1" min="0" max="10" value="6.5" placeholder="6.5">
+                        </div>
+                        <div class="input-group subject-input-item hidden" id="wrap-score-dia" style="display: none;">
+                            <div class="subject-label-row">
+                                <label>Địa lý</label>
+                                <span class="sub-role-tag role-elective" id="tag-role-dia">Môn chọn</span>
+                            </div>
+                            <input type="number" id="score-dia" step="0.1" min="0" max="10" value="6.8" placeholder="6.8">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transcript & Priority Options -->
+                <div class="form-box">
+                    <h3 class="form-box-title"><i class="fa-solid fa-award"></i> Học Bạ, Ngoại Ngữ & Ưu Tiên</h3>
+                    
+                    <div class="grid-2-cols mb-3">
+                        <div class="input-group" id="wrap-transcript-gpa">
+                            <label id="label-transcript-gpa">Điểm TB Học Bạ (GPA 3 năm)</label>
+                            <input type="number" id="transcript-gpa" step="0.1" min="0" max="10" value="7.8" placeholder="vd: 7.8">
+                        </div>
+                        <div class="input-group" id="wrap-ielts-score">
+                            <label id="label-ielts-score"><i class="fa-solid fa-certificate"></i> Chứng chỉ IELTS (nếu có)</label>
+                            <input type="number" id="ielts-score" step="0.5" min="4.0" max="9.0" value="6.5" placeholder="vd: 6.5">
+                        </div>
+                    </div>
+
+                    <!-- Điểm thi ĐGNL / ĐGTD (Tùy chọn cho xét tuyển sớm) -->
+                    <div class="dgnl-box mb-3" id="dgnl-box-wrapper">
+                        <div class="dgnl-box-title">
+                            <i class="fa-solid fa-graduation-cap"></i> Điểm Đánh Giá Năng Lực / Đánh Giá Tư Duy (Nếu có dự thi xét tuyển sớm):
+                        </div>
+                        <div class="grid-3-cols">
+                            <div class="input-group" id="wrap-score-hsa">
+                                <label style="font-size: 0.78rem;" id="label-score-hsa">ĐHQG Hà Nội (HSA - max 150)</label>
+                                <input type="number" id="score-hsa" min="0" max="150" placeholder="vd: 98">
+                            </div>
+                            <div class="input-group" id="wrap-score-apt">
+                                <label style="font-size: 0.78rem;" id="label-score-apt">ĐHQG TP.HCM (APT - max 1200)</label>
+                                <input type="number" id="score-apt" min="0" max="1200" placeholder="vd: 820">
+                            </div>
+                            <div class="input-group" id="wrap-score-tsa">
+                                <label style="font-size: 0.78rem;" id="label-score-tsa">ĐHBK Hà Nội (TSA - max 100)</label>
+                                <input type="number" id="score-tsa" min="0" max="100" placeholder="vd: 68">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2-cols mb-3">
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-users"></i> Thành phần Dân tộc</label>
+                            <select id="priority-ethnicity" onchange="updatePriorityPreview()">
+                                <option value="kinh" selected>Dân tộc Kinh (0 điểm)</option>
+                                <option value="minority">Dân tộc thiểu số (+1.0 điểm)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-map-location-dot"></i> Khu vực ưu tiên</label>
+                            <select id="priority-area" onchange="updatePriorityPreview()">
+                                <option value="KV3" selected>Khu vực 3 (+0.0 điểm)</option>
+                                <option value="KV2">Khu vực 2 (+0.25 điểm)</option>
+                                <option value="KV2-NT">Khu vực 2 Nông thôn (+0.5 điểm)</option>
+                                <option value="KV1">Khu vực 1 (+0.75 điểm)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="priority-preview-badge" class="priority-preview-badge mb-3">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Tổng ưu tiên gốc: <strong id="preview-priority-total">+0.00 điểm</strong> (Khu vực: <span id="preview-priority-area">0.00đ</span> | Dân tộc: <span id="preview-priority-ethnicity">0.00đ</span>)</span>
+                    </div>
+
+                    <div class="grid-3-cols">
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-earth-americas"></i> Khu vực trường mong muốn</label>
+                            <select id="target-region">
+                                <option value="Tất cả" selected>Toàn quốc (Bắc, Trung, Nam)</option>
+                                <option value="Bắc">Miền Bắc</option>
+                                <option value="Nam">Miền Nam</option>
+                                <option value="Trung">Miền Trung</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-layer-group"></i> Lĩnh vực quan tâm</label>
+                            <select id="target-category">
+                                <option value="Tất cả" selected>Tất cả lĩnh vực</option>
+                                <option value="Công nghệ thông tin">Công nghệ thông tin</option>
+                                <option value="Kinh tế & Quản lý">Kinh tế & Quản lý</option>
+                                <option value="Khoa học Kỹ thuật">Khoa học Kỹ thuật</option>
+                                <option value="Y Dược">Y Dược</option>
+                                <option value="Xã hội & Nhân văn">Xã hội & Nhân văn</option>
+                                <option value="Nghệ thuật & Thiết kế">Nghệ thuật & Thiết kế</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fa-solid fa-coins"></i> Học phí dự kiến</label>
+                            <select id="target-tuition">
+                                <option value="Tất cả" selected>Tất cả mức học phí</option>
+                                <option value="under_20">Tiết kiệm (&lt; 20 triệu/năm)</option>
+                                <option value="20_40">Tiêu chuẩn (20 - 40 triệu/năm)</option>
+                                <option value="over_40">Chất lượng cao (&gt; 40 triệu/năm)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Natural Language Interest & AI Understanding -->
+            <div class="interest-box mt-4">
+                <div class="interest-header">
+                    <div>
+                        <h3><i class="fa-solid fa-comments"></i> 2. Mô Tả Sở Thích & Khát Vọng Nghề Nghiệp</h3>
+                        <p class="section-subtitle">Chia sẻ ước mơ, sở thích hay băn khoăn của bạn bằng lời nói tự nhiên. AI sẽ phân tích để tìm ngành học và môi trường phù hợp nhất.</p>
+                    </div>
+                    <button type="button" class="btn-secondary" onclick="openHollandModal()">
+                        <i class="fa-solid fa-brain"></i> Làm Test Holland RIASEC nhanh (2 phút)
+                    </button>
+                </div>
+
+                <!-- Quick Suggestion Question Chips -->
+                <div class="quick-chips-wrapper mt-2">
+                    <div class="quick-chips-title"><i class="fa-solid fa-lightbulb text-warning"></i> Gợi ý câu hỏi nhanh (Nhấn để đặt câu hỏi và đánh giá lại tức thì):</div>
+                    <div class="chips-list">
+                        <button type="button" class="chip-btn" onclick="askQuickQuestion('Em thích làm việc với máy tính nhưng điểm toán chỉ dự đoán khoảng 7')">💻 Máy tính & CNTT (Toán 7)</button>
+                        <button type="button" class="chip-btn" onclick="askQuickQuestion('Em thích làm việc ngành thiết kế thời trang nhưng điểm toán dự đoán 7')">🎨 Thiết kế Thời trang</button>
+                        <button type="button" class="chip-btn" onclick="askQuickQuestion('Em muốn học ngành Y Đa khoa để trở thành bác sĩ chữa bệnh cứu người')">🩺 Y Đa khoa & Bác sĩ</button>
+                        <button type="button" class="chip-btn" onclick="askQuickQuestion('Em thích làm việc logistics xuất nhập khẩu và kinh doanh quốc tế')">🚢 Logistics & KD Quốc tế</button>
+                        <button type="button" class="chip-btn" onclick="askQuickQuestion('Em muốn học ngành Luật kinh tế và tư vấn doanh nghiệp')">⚖️ Luật Kinh tế</button>
+                        <button type="button" class="chip-btn" onclick="askQuickQuestion('Em đam mê Kỹ thuật Ô tô và xe điện thông minh')">🚗 Kỹ thuật Ô tô & EV</button>
+                    </div>
+                </div>
+
+                <div class="textarea-wrapper mt-2">
+                    <textarea id="user-interest" rows="3" placeholder="Gõ sở thích hoặc bấm các thẻ gợi ý bên dưới (nhấn Enter để nhận tư vấn)... Ví dụ: Em thích các môn tự nhiên, thích tìm hiểu đồ công nghệ nhưng không muốn ngồi lập trình suốt ngày, muốn làm việc tương tác với con người..."></textarea>
+                    <div class="hyde-live-badge" id="hyde-preview-trigger" onclick="testHyDEQuickly()">
+                        <i class="fa-solid fa-sparkles"></i> Xem AI phân tích làm rõ nguyện vọng
+                    </div>
+                </div>
+
+                <!-- Multi-Dimensional Interest Tags/Chips -->
+                <div class="interest-tags-container mt-2">
+                    <div class="interest-tags-header">
+                        <i class="fa-solid fa-tags text-primary"></i> <span>Thẻ gợi ý nhanh (Bấm để chọn kết hợp nhiều sở thích & định hướng):</span>
+                    </div>
+                    <div class="interest-tags-grid" id="interest-tags-grid">
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('thích sáng tạo & thẩm mỹ')">✨ #thích_sáng_tạo</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('thích giao tiếp & hướng ngoại')">🗣️ #thích_giao_tiếp</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('thích làm việc với các con số')">🔢 #thích_làm_việc_với_con_số</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('không thích ngồi yên một chỗ')">🏃 #không_thích_ngồi_yên_một_chỗ</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('thích công nghệ nhưng ghét viết code')">💡 #thích_công_nghệ_nhưng_không_code</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('muốn làm việc trong môi trường quốc tế')">🌐 #muốn_làm_việc_quốc_tế</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('thích vẽ minh họa và thiết kế đồ họa')">🎨 #thích_vẽ_thiết_kế</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('sợ toán nặng và giải thuật lý thuyết')">📐 #sợ_toán_nặng</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('thích kinh doanh và khởi nghiệp')">💼 #thích_kinh_doanh</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('thích nghiên cứu y học và chăm sóc sức khỏe')">🩺 #thích_y_dược_cứu_người</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('ưu tiên công việc ổn định lâu dài')">🛡️ #ưu_tiên_ổn_định</button>
+                        <button type="button" class="tag-chip" onclick="toggleInterestTag('thích dịch chuyển và du lịch khám phá')">✈️ #thích_dịch_chuyển_du_lịch</button>
+                    </div>
+                </div>
+
+                <!-- HyDE expansion display box -->
+                <div id="hyde-result-box" class="hyde-result-box hidden">
+                    <div class="hyde-header">
+                        <span><i class="fa-solid fa-robot"></i> Gợi ý định hướng nghề nghiệp và chuyên môn phù hợp:</span>
+                        <button class="close-btn" onclick="closeHyDEBox()">&times;</button>
+                    </div>
+                    <p id="hyde-text" class="hyde-text"></p>
+                </div>
+
+                <!-- Action Button -->
+                <div class="action-center mt-3">
+                    <button id="btn-consult" class="btn-primary btn-large" onclick="triggerMultiAgentConsultation()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Nhận Tư Vấn Chiến Lược Nguyện Vọng Ngay
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Spinner -->
+        <div id="loading-state" class="loading-state hidden">
+            <div class="spinner"></div>
+            <h3 id="loading-agent-text">Hội đồng Cố vấn AI đang phối hợp phân tích...</h3>
+            <p class="loading-subtext">Chuyên gia Học thuật phân tích điểm • Chuyên gia Tâm lý đối chiếu thiên hướng • Chuyên gia Tuyển sinh rà soát quy chế</p>
+        </div>
+
+        <!-- Section 3: Advisory Board Results (The 3 Agents) -->
+        <section id="agents-results-section" class="card-section hidden">
+            <!-- Evaluation Status Bar -->
+            <div id="eval-status-bar" class="eval-status-bar hidden">
+                <div class="eval-status-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <div>
+                    <strong>Hội đồng 3 Chuyên gia AI đã cập nhật đánh giá mới nhất:</strong> <span id="eval-timestamp-badge"></span>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <div>
+                    <h2>Báo Cáo Phân Tích Toàn Diện Từ Hội Đồng 3 Chuyên Gia AI</h2>
+                    <p class="section-subtitle">Tổng hợp đa chiều giữa năng lực học tập thực tế, thiên hướng tâm lý nghề nghiệp và quy chế tuyển sinh hiện hành.</p>
+                </div>
+            </div>
+
+            <!-- Thẻ Tích Hợp Đánh Giá & Phỏng Vấn Trường Mục Tiêu -->
+            <div id="school-integrated-consultation-card" class="school-integrated-consultation-card mb-4 hidden">
+                <!-- Populated dynamically when user runs consult -->
+            </div>
+
+            <!-- Khối Giải Thích: "Hệ Thống Hiểu Bạn Thế Nào?" (AI Empathy Summary) -->
+            <div id="ai-empathy-card" class="ai-empathy-card mb-4 hidden">
+                <!-- Populated dynamically by renderAiEmpathySummary() -->
+            </div>
+
+            <!-- Agent Cards Grid -->
+            <div class="agents-grid">
+                <!-- Academic Agent -->
+                <div class="agent-card academic-card">
+                    <div class="agent-card-header">
+                        <div class="agent-avatar"><i class="fa-solid fa-calculator"></i></div>
+                        <div>
+                            <h4>Chuyên Gia Học Thuật</h4>
+                            <span class="agent-badge">Phân Tích Điểm & Tổ Hợp</span>
+                        </div>
+                    </div>
+                    <div class="agent-body">
+                        <p id="academic-commentary" class="agent-text"></p>
+                        <div class="agent-metric-box">
+                            <div><strong>Khối mạnh nhất:</strong> <span id="metric-top-combo" class="highlight-val">A01</span></div>
+                            <div><strong>Tổng điểm:</strong> <span id="metric-top-score" class="highlight-val">22.50</span></div>
+                            <div><strong>Độ lệch chuẩn:</strong> <span id="metric-std" class="highlight-val">±0.58</span></div>
+                        </div>
+                        <div class="chart-container-sm mt-3">
+                            <canvas id="chart-combos"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Psychology Agent -->
+                <div class="agent-card psychology-card">
+                    <div class="agent-card-header">
+                        <div class="agent-avatar"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div>
+                            <h4>Chuyên Gia Tâm Lý</h4>
+                            <span class="agent-badge">Định Hướng Thiên Hướng Nghề Nghiệp</span>
+                        </div>
+                    </div>
+                    <div class="agent-body">
+                        <p id="psychology-commentary" class="agent-text"></p>
+                        <div class="agent-metric-box">
+                            <div><strong>Mã Holland:</strong> <span id="metric-holland-code" class="highlight-val">RIC</span></div>
+                            <div><strong>Nhóm chủ đạo:</strong> <span id="metric-dominant-group" class="highlight-val">Kỹ thuật - Thực tế</span></div>
+                        </div>
+                        <div class="chart-container-sm mt-3">
+                            <canvas id="chart-holland"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admission Agent -->
+                <div class="agent-card admission-card">
+                    <div class="agent-card-header">
+                        <div class="agent-avatar"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <div>
+                            <h4>Chuyên Gia Tuyển Sinh</h4>
+                            <span class="agent-badge">Quy Chế & Cơ Hội Trúng Tuyển</span>
+                        </div>
+                    </div>
+                    <div class="agent-body">
+                        <p id="admission-commentary" class="agent-text"></p>
+                        <div id="ielts-advantage-box" class="ielts-tag-box mt-2">
+                            <!-- Populated dynamically -->
+                        </div>
+                        <div id="sub-criteria-alert-box" class="alert-box mt-2">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Executive Synthesis Alert -->
+            <div class="synthesis-summary-card mt-4">
+                <div class="synthesis-icon"><i class="fa-solid fa-bullseye"></i></div>
+                <div>
+                    <h4>Chiến Lược Phối Hợp Tổng Thể Từ Hội Đồng Chuyên Gia:</h4>
+                    <p id="synthesis-summary-text"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Data Dashboard & 3-Tier Categorization -->
+        <section id="dashboard-section" class="card-section hidden">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <div>
+                    <h2>Giao Diện Trực Quan Hóa Cạnh Tranh & Phân Loại Nguyện Vọng</h2>
+                    <p class="section-subtitle">Phân bổ 3 mức độ cơ hội đỗ dựa trên điểm số thực tế và điểm chuẩn 2023 - 2025.</p>
+                </div>
+            </div>
+
+            <!-- 3-Tier Summary Stats -->
+            <div class="tiers-counter-grid">
+                <div class="tier-card tier-safety">
+                    <div class="tier-badge-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="tier-info">
+                        <span class="tier-name">Nhóm An Toàn</span>
+                        <div class="tier-prob">Khả năng đỗ > 90%</div>
+                        <span id="count-safety" class="tier-count">0 ngành</span>
+                    </div>
+                </div>
+                <div class="tier-card tier-target">
+                    <div class="tier-badge-icon"><i class="fa-solid fa-crosshairs"></i></div>
+                    <div class="tier-info">
+                        <span class="tier-name">Nhóm Phù Hợp</span>
+                        <div class="tier-prob">Khả năng đỗ 60 - 80%</div>
+                        <span id="count-target" class="tier-count">0 ngành</span>
+                    </div>
+                </div>
+                <div class="tier-card tier-reach">
+                    <div class="tier-badge-icon"><i class="fa-solid fa-mountain"></i></div>
+                    <div class="tier-info">
+                        <span class="tier-name">Nhóm Thử Thách</span>
+                        <div class="tier-prob">Khả năng đỗ < 50%</div>
+                        <span id="count-reach" class="tier-count">0 ngành</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommended Strategy (Top 10 Roadmap) -->
+            <div class="roadmap-card mt-4" id="printable-strategy-report">
+                <div class="roadmap-header-row">
+                    <div>
+                        <h3 class="roadmap-title"><i class="fa-solid fa-map-location-dot" style="color: var(--primary); margin-right: 6px;"></i> Lộ Trình 10 Nguyện Vọng Tối Ưu Theo Tỷ Lệ Vàng</h3>
+                        <p class="roadmap-subtitle">Phân bổ chuẩn: <strong>20% Thử thách (Mơ ước) • 50% Vừa sức (Mục tiêu) • 30% An toàn (Bảo hiểm)</strong></p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                        <button type="button" class="btn-toggle-all-boxes" id="btn-toggle-all-boxes" onclick="toggleAllHelperBoxes()" title="Thu gọn hoặc mở rộng toàn bộ 3 khung công cụ bên dưới">
+                            <i class="fa-solid fa-compress"></i> <span>Thu gọn 3 khung</span>
+                        </button>
+                        <button type="button" class="btn-export-pdf" onclick="exportStrategyPDF()">
+                            <i class="fa-solid fa-file-pdf"></i> Xuất Báo Cáo Chiến Lược (PDF / In A4)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mô Phỏng "Nếu - Thì" (What-if Analysis Simulator) -->
+                <div class="what-if-card mb-4" id="what-if-card">
+                    <div class="what-if-header" onclick="toggleHelperBox('what-if-card')" title="Bấm để đóng / mở khung này">
+                        <div class="what-if-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                        <div class="what-if-title-area">
+                            <h4 class="what-if-title">Mô Phỏng "Nếu - Thì" (What-if Simulator) - Thử Thách Cải Thiện Điểm</h4>
+                            <p class="what-if-subtitle">Khám phá ngay: Nếu điểm Toán/Tiếng Anh tăng thêm hoặc có thêm chứng chỉ IELTS thì danh sách nguyện vọng sẽ biến chuyển ra sao!</p>
+                        </div>
+                        <div class="header-action-btns" onclick="event.stopPropagation()">
+                            <button type="button" class="btn-reset-whatif" onclick="resetWhatIf()"><i class="fa-solid fa-rotate-left"></i> Khôi phục điểm gốc</button>
+                            <button type="button" class="btn-collapse-toggle" onclick="toggleHelperBox('what-if-card')" title="Đóng / mở khung này">
+                                <i class="fa-solid fa-chevron-up"></i> <span>Thu gọn</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="collapsible-body" id="what-if-body">
+                        <div class="what-if-controls-grid">
+                            <div class="what-if-control-item">
+                                <span class="control-label"><i class="fa-solid fa-square-root-variable"></i> Điểm Toán:</span>
+                                <div class="stepper-group">
+                                    <button type="button" class="btn-step" id="btn-step-toan-05" onclick="adjustSubjectDelta('Toán', 0.5)">+0.5đ</button>
+                                    <button type="button" class="btn-step" id="btn-step-toan-10" onclick="adjustSubjectDelta('Toán', 1.0)">+1.0đ</button>
+                                    <button type="button" class="btn-step" id="btn-step-toan-15" onclick="adjustSubjectDelta('Toán', 1.5)">+1.5đ</button>
+                                </div>
+                            </div>
+
+                            <div class="what-if-control-item">
+                                <span class="control-label"><i class="fa-solid fa-language"></i> Điểm Tiếng Anh:</span>
+                                <div class="stepper-group">
+                                    <button type="button" class="btn-step" id="btn-step-anh-05" onclick="adjustSubjectDelta('Tiếng Anh', 0.5)">+0.5đ</button>
+                                    <button type="button" class="btn-step" id="btn-step-anh-10" onclick="adjustSubjectDelta('Tiếng Anh', 1.0)">+1.0đ</button>
+                                    <button type="button" class="btn-step" id="btn-step-anh-15" onclick="adjustSubjectDelta('Tiếng Anh', 1.5)">+1.5đ</button>
+                                </div>
+                            </div>
+
+                            <div class="what-if-control-item">
+                                <span class="control-label"><i class="fa-solid fa-certificate"></i> Giả định IELTS:</span>
+                                <select id="whatif-ielts" class="select-whatif-ielts" onchange="adjustIeltsWhatIf(this.value)">
+                                    <option value="">Giữ nguyên hiện tại</option>
+                                    <option value="6.0">IELTS 6.0</option>
+                                    <option value="6.5">IELTS 6.5</option>
+                                    <option value="7.0">IELTS 7.0</option>
+                                    <option value="7.5">IELTS 7.5+</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="whatif-live-banner" class="whatif-live-banner" style="display: none;">
+                            <i class="fa-solid fa-bolt-lightning text-warning"></i>
+                            <span id="whatif-banner-text">Đang áp dụng giả định điểm...</span>
+                        </div>
+
+                        <!-- Bảng chi tiết biến chuyển từng nguyện vọng -->
+                        <div id="whatif-impact-breakdown" class="whatif-impact-breakdown" style="display: none;">
+                            <div class="whatif-breakdown-title">
+                                <i class="fa-solid fa-chart-line" style="color: #16a34a;"></i> 
+                                <span>Phân Tích Chi Tiết Biến Chuyển Lộ Trình Sau Khi Cộng Điểm:</span>
+                            </div>
+                            <div id="whatif-breakdown-list" class="whatif-breakdown-list">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Khung Tra Cứu & Đánh Giá Trường Mơ Ước -->
+                <div class="dream-search-box mb-4" id="dream-search-card">
+                    <div class="dream-search-header" onclick="toggleHelperBox('dream-search-card')" title="Bấm để đóng / mở khung này">
+                        <div class="dream-icon"><i class="fa-solid fa-star"></i></div>
+                        <div class="dream-title-area" style="flex: 1;">
+                            <h4 class="dream-title">Tra Cứu & Đánh Giá Trường Đại Học Mơ Ước Của Bạn</h4>
+                            <p class="dream-subtitle">Nhập tên trường, mã trường hoặc ngành học mơ ước để AI tính toán ngay tỷ lệ đỗ, khoảng cách điểm và chi tiết nghề nghiệp:</p>
+                        </div>
+                        <div class="header-action-btns" onclick="event.stopPropagation()">
+                            <button type="button" class="btn-collapse-toggle" onclick="toggleHelperBox('dream-search-card')" title="Đóng / mở khung này">
+                                <i class="fa-solid fa-chevron-up"></i> <span>Thu gọn</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="collapsible-body" id="dream-search-body">
+                        <div class="dream-input-row">
+                            <div class="dream-input-wrapper">
+                                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                                <input type="text" id="dream-search-input" placeholder="Ví dụ: BKHN, NEU, UIT, Đại học Ngoại Thương, Y Dược, Kỹ thuật phần mềm..." onkeydown="handleDreamKeydown(event)">
+                            </div>
+                            <button type="button" class="btn-primary btn-dream-search" onclick="searchDreamUniversity()">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Đánh Giá Cơ Hội Ngay
+                            </button>
+                        </div>
+                        <div class="dream-chips-row">
+                            <span class="dream-chips-label"><i class="fa-solid fa-fire text-danger"></i> Gợi ý tìm nhanh:</span>
+                            <button type="button" class="chip-btn" onclick="quickSearchDream('BKHN')">🏛️ ĐH Bách khoa Hà Nội</button>
+                            <button type="button" class="chip-btn" onclick="quickSearchDream('NEU')">📈 ĐH Kinh tế Quốc dân</button>
+                            <button type="button" class="chip-btn" onclick="quickSearchDream('FTU')">🚢 ĐH Ngoại thương</button>
+                            <button type="button" class="chip-btn" onclick="quickSearchDream('UIT')">💻 ĐH CNTT TP.HCM</button>
+                            <button type="button" class="chip-btn" onclick="quickSearchDream('HCMUT')">⚙️ ĐH Bách khoa TP.HCM</button>
+                            <button type="button" class="chip-btn" onclick="quickSearchDream('Y Dược')">🩺 Khối ngành Y Dược</button>
+                        </div>
+
+                        <!-- Dream Search Results Container -->
+                        <div id="dream-results-container" class="dream-results-container hidden">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bộ 6 Công Cụ Đột Phá Hướng Nghiệp & Chiến Lược Toàn Diện -->
+                <div id="feature-hub" class="career-tools-toolbar mb-4">
+                    <div class="career-tools-header" onclick="toggleHelperBox('feature-hub')" title="Bấm để đóng / mở khung này">
+                        <div style="flex: 1;">
+                            <div class="career-tools-title">
+                                <i class="fa-solid fa-wand-magic-sparkles text-warning"></i>
+                                <span>Bộ 6 Công Cụ Đột Phá Hướng Nghiệp & Chiến Lược Toàn Diện</span>
+                            </div>
+                            <p class="career-tools-sub">Khám phá chi tiết thực tế nghề nghiệp, cây kỹ năng 4 năm, rủi ro AI, tính điểm hoàn vốn học phí và lập báo cáo gửi Phụ huynh:</p>
+                        </div>
+                        <div class="header-action-btns" onclick="event.stopPropagation()">
+                            <button type="button" class="btn-collapse-toggle" onclick="toggleHelperBox('feature-hub')" title="Đóng / mở khung này">
+                                <i class="fa-solid fa-chevron-up"></i> <span>Thu gọn</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="collapsible-body" id="career-tools-body">
+                        <div class="career-tools-grid">
+                            <button type="button" class="btn-career-tool" onclick="openRealityCheckModal()">
+                                <div class="tool-icon icon-reality"><i class="fa-solid fa-masks-theater"></i></div>
+                                <div class="tool-info">
+                                    <strong>Một Ngày Làm Nghề (Reality Check)</strong>
+                                    <small>Phân rã % thời gian, áp lực & Case-study</small>
+                                </div>
+                            </button>
+
+                            <button type="button" class="btn-career-tool" onclick="openReverseCareerModal()">
+                                <div class="tool-icon"><i class="fa-solid fa-sitemap"></i></div>
+                                <div class="tool-info">
+                                    <strong>Đi Từ Nghề Ngược Về Ngành</strong>
+                                    <small>Sơ đồ cây kỹ năng & Lộ trình 4 năm</small>
+                                </div>
+                            </button>
+
+                            <button type="button" class="btn-career-tool" onclick="openAiImpactModal()">
+                                <div class="tool-icon icon-ai"><i class="fa-solid fa-robot"></i></div>
+                                <div class="tool-info">
+                                    <strong>Tác Động AI & Xu Hướng</strong>
+                                    <small>Rủi ro tự động hóa & Ngành trọng điểm</small>
+                                </div>
+                            </button>
+
+                            <button type="button" class="btn-career-tool" onclick="openRoiCalculatorModal()">
+                                <div class="tool-icon"><i class="fa-solid fa-calculator"></i></div>
+                                <div class="tool-info">
+                                    <strong>Tính Học Phí & Hoàn Vốn</strong>
+                                    <small>Tra cứu tất cả 44+ trường đại học</small>
+                                </div>
+                            </button>
+
+                            <button type="button" class="btn-career-tool" onclick="openParentAlignmentModal()">
+                                <div class="tool-icon"><i class="fa-solid fa-people-roof"></i></div>
+                                <div class="tool-info">
+                                    <strong>Đồng Thuận Gia Đình</strong>
+                                    <small>Khảo sát & Báo cáo gửi Phụ huynh</small>
+                                </div>
+                            </button>
+
+                            <button type="button" class="btn-career-tool" onclick="openCompareModal()">
+                                <div class="tool-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                                <div class="tool-info">
+                                    <strong>So Sánh Đối Đầu 2 Ngành</strong>
+                                    <small>Điểm chuẩn, học phí, rủi ro AI</small>
+                                </div>
+                            </button>
+
+                            <button type="button" class="btn-career-tool" onclick="openWishlistDrawer()">
+                                <div class="tool-icon tool-icon-heart"><i class="fa-solid fa-heart"></i></div>
+                                <div class="tool-info">
+                                    <strong>Tủ Nguyện Vọng (<span id="wishlist-badge-count">0</span>)</strong>
+                                    <small>Lưu & theo dõi chỉ tiêu tuyển sinh</small>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tiêu đề danh sách 10 nguyện vọng chuẩn -->
+                <div class="roadmap-section-subheading mb-3">
+                    <i class="fa-solid fa-list-ol text-primary"></i> <strong>Danh Sách 10 Nguyện Vọng Đề Xuất Tối Ưu (Tỷ Lệ Vàng):</strong>
+                </div>
+
+                <!-- AI Empathy Callout Bar in Section 4 -->
+                <div id="roadmap-empathy-banner" class="roadmap-empathy-banner mb-3 hidden"></div>
+
+                <div id="roadmap-items" class="roadmap-items">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Tabbed Detailed Tables for 3 Tiers -->
+            <div class="tier-tabs-container mt-4">
+                <div class="tier-tabs-header">
+                    <button class="tier-tab-btn active" onclick="switchTierTab('safety')">
+                        <i class="fa-solid fa-shield-halved text-success"></i> Nhóm An Toàn (<span id="tab-count-safety">0</span>)
+                    </button>
+                    <button class="tier-tab-btn" onclick="switchTierTab('target')">
+                        <i class="fa-solid fa-crosshairs text-warning"></i> Nhóm Phù Hợp (<span id="tab-count-target">0</span>)
+                    </button>
+                    <button class="tier-tab-btn" onclick="switchTierTab('reach')">
+                        <i class="fa-solid fa-mountain text-danger"></i> Nhóm Thử Thách (<span id="tab-count-reach">0</span>)
+                    </button>
+                </div>
+
+                <div class="tier-tab-content">
+                    <div id="tier-table-container">
+                        <!-- Table rendered dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historical Benchmark Comparison Chart -->
+            <div class="chart-card mt-4">
+                <div class="chart-card-header">
+                    <div>
+                        <h3><i class="fa-solid fa-chart-line"></i> Biểu Đồ So Sánh Điểm Thí Sinh vs Điểm Chuẩn 3 Năm (2023 - 2025)</h3>
+                        <p class="section-subtitle">Xem trực quan khoảng cách an toàn giữa điểm của bạn và ngưỡng cắt trúng tuyển các trường tiêu biểu.</p>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart-historical-benchmarks"></canvas>
+                </div>
+            </div>
+
+            <!-- Interactive Follow-up Question Card -->
+            <div class="followup-question-card mt-4">
+                <div class="followup-header">
+                    <div class="followup-icon"><i class="fa-solid fa-comments"></i></div>
+                    <div>
+                        <h4>Bạn Muốn Hỏi Câu Hỏi Khác Hoặc Thử Nguyện Vọng Ngành Khác?</h4>
+                        <p>Nhập câu hỏi mới hoặc nguyện vọng trường/ngành bất kỳ vào ô dưới đây để Hội đồng Agent đánh giá lại ngay lập tức:</p>
+                    </div>
+                </div>
+                <div class="followup-input-row">
+                    <input type="text" id="followup-query" placeholder="Ví dụ: Em muốn học Quản trị Khách sạn thì nên đăng ký trường nào ở miền Nam?..." onkeydown="handleFollowupKeydown(event)">
+                    <button type="button" class="btn-primary" onclick="submitFollowupQuestion()">
+                        <i class="fa-solid fa-paper-plane"></i> Đánh Giá Lại Ngay
+                    </button>
+                </div>
+                <div class="followup-chips">
+                    <span class="chip-label">Thử nhanh câu hỏi khác:</span>
+                    <button type="button" class="chip-btn" onclick="askQuickQuestion('Em muốn học ngành Y Đa khoa hoặc Dược học')">🩺 Y Đa khoa & Dược</button>
+                    <button type="button" class="chip-btn" onclick="askQuickQuestion('Em thích ngành Thiết kế thời trang và đồ họa')">🎨 Thiết kế Thời trang</button>
+                    <button type="button" class="chip-btn" onclick="askQuickQuestion('Em thích Logistics và Kinh doanh quốc tế ở miền Nam')">🚢 Logistics miền Nam</button>
+                    <button type="button" class="chip-btn" onclick="askQuickQuestion('Em muốn học Luật kinh tế và pháp chế doanh nghiệp')">⚖️ Luật Kinh tế</button>
+                    <button type="button" class="chip-btn" onclick="askQuickQuestion('Em thích Khoa học dữ liệu và Trí tuệ nhân tạo AI')">🤖 AI & Data Science</button>
+                    <button type="button" class="chip-btn" onclick="askQuickQuestion('Em thích Quản trị Khách sạn và Du lịch quốc tế')">🏨 Khách sạn & Du lịch</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Prospectus Analyzer -->
+        <section id="prospectus-section" class="card-section">
+            <div class="section-header">
+                <div class="section-number"><i class="fa-solid fa-bolt"></i></div>
+                <div>
+                    <h2>Tra Cứu & Trích Xuất Tự Động Đề Án Tuyển Sinh</h2>
+                    <p class="section-subtitle">Hệ thống AI chuyên dụng trích xuất tức thì bảng quy đổi IELTS sang thang điểm 10, tiêu chí phụ và học phí của các trường đại học lớn.</p>
+                </div>
+            </div>
+
+            <div class="grid-2-cols">
+                <div>
+                    <label><strong>Chọn trường để nạp văn bản đề án mẫu:</strong></label>
+                    <select id="slm-sample-selector" class="mb-2" onchange="loadProspectusSample(this.value)">
+                        <option value="BKHN">Đại học Bách khoa Hà Nội (Miền Bắc)</option>
+                        <option value="NEU">Trường Đại học Kinh tế Quốc dân (Miền Bắc)</option>
+                        <option value="FTU">Trường Đại học Ngoại thương (Miền Bắc)</option>
+                        <option value="DUT">Trường ĐH Bách khoa - ĐH Đà Nẵng (Miền Trung)</option>
+                        <option value="HCMUT">Trường ĐH Bách khoa - ĐHQG-HCM (Miền Nam)</option>
+                        <option value="UIT">Đại học Công nghệ Thông tin - ĐHQG-HCM (Miền Nam)</option>
+                    </select>
+
+                    <label><strong>Hoặc dán văn bản Đề án tuyển sinh cần phân tích:</strong></label>
+                    <textarea id="slm-input-text" rows="8" placeholder="Dán nội dung đề án tuyển sinh dài vào đây..."></textarea>
+                    
+                    <button class="btn-primary mt-2" onclick="runSLMProspectusAnalysis()">
+                        <i class="fa-solid fa-file-lines"></i> Phân Tích Đề Án Ngay
+                    </button>
+                </div>
+
+                <!-- SLM Structured Output -->
+                <div class="slm-output-box">
+                    <h4><i class="fa-solid fa-table-list"></i> Thông Tin Tuyển Sinh & Quy Chế Trích Xuất</h4>
+                    <div id="slm-results" class="slm-content-display">
+                        <div class="placeholder-text">Nhấn nút 'Phân Tích Đề Án Ngay' để xem dữ liệu trích xuất cấu trúc.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Holland RIASEC Quick Quiz -->
+    <div id="holland-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-brain"></i> Trắc Nghiệm Nhanh Tính Cách Nghề Nghiệp Holland RIASEC</h3>
+                <button class="modal-close-btn" onclick="closeHollandModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Trả lời nhanh 6 câu hỏi tình huống để AI xác định chính xác nhóm tố chất nổi bật của bạn:</p>
+                <div id="holland-quiz-container">
+                    <!-- Loaded dynamically -->
+                </div>
+                <!-- Holland Radar Chart Container -->
+                <div id="holland-radar-wrapper" style="display: none; text-align: center; margin-top: 1.25rem; padding: 1rem; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <h4 style="font-size: 0.95rem; font-weight: 700; color: #4338ca; margin-bottom: 0.75rem;">
+                        <i class="fa-solid fa-chart-pie"></i> Biểu Đồ Radar 6 Nhóm Tính Cách RIASEC Của Bạn
+                    </h4>
+                    <div style="max-width: 380px; margin: 0 auto;">
+                        <canvas id="hollandRadarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeHollandModal()">Đóng</button>
+                <button class="btn-primary" onclick="submitHollandQuiz()">Lưu Kết Quả & Cập Nhật</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating AI Follow-up Chatbot -->
+    <div id="chatbot-float-btn" class="chatbot-float-btn" onclick="toggleChatbot()" title="Trò chuyện với Cố vấn AI">
+        <i class="fa-solid fa-comments"></i>
+        <span class="chat-badge-pulse"></span>
+    </div>
+
+    <div id="chatbot-window" class="chatbot-window hidden">
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <div class="chatbot-avatar"><i class="fa-solid fa-robot"></i></div>
+                <div>
+                    <div class="chatbot-title">Cố Vấn Tuyển Sinh AI</div>
+                    <div class="chatbot-status"><span class="status-dot"></span> Sẵn sàng giải đáp ngữ cảnh</div>
+                </div>
+            </div>
+            <button class="btn-close-chat" onclick="toggleChatbot()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="chat-msg bot-msg">
+                <div class="msg-bubble">
+                    Xin chào! Tôi là Trợ lý Cố vấn Tuyển sinh EduCompass AI. Tôi đã nắm rõ điểm số và kết quả tư vấn của bạn. Bạn có thắc mắc gì về trường, học phí hay chiến lược đặt nguyện vọng không?
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-chips" id="chatbot-chips">
+            <button class="chat-chip" onclick="askFollowupQuestion('Học phí trường nào dưới 20 triệu/năm?')">💰 Học phí dưới 20tr/năm?</button>
+            <button class="chat-chip" onclick="askFollowupQuestion('Tại sao em không nên nộp ngành ở trường NV1?')">❓ Đánh giá cơ hội NV1?</button>
+            <button class="chat-chip" onclick="askFollowupQuestion('Chiến lược đặt thứ tự NV1, NV2 thế nào?')">🎯 Chiến lược xếp NV1, NV2?</button>
+        </div>
+        <div class="chatbot-input-row">
+            <input type="text" id="chatbot-input" placeholder="Hỏi AI về trường, học phí, cơ hội đỗ..." onkeydown="handleChatKeydown(event)">
+            <button class="btn-send-chat" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- MODAL 0: Phá Bỏ Ảo Tưởng Nghề Nghiệp (Reality Check & Một Ngày Làm Nghề) -->
+    <div id="modal-reality-check" class="modal-overlay hidden">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <div class="modal-title-icon icon-reality"><i class="fa-solid fa-masks-theater"></i></div>
+                    <div>
+                        <h4 class="modal-title">Phá Bỏ Ảo Tưởng Nghề Nghiệp (Reality Check & Một Ngày Làm Nghề)</h4>
+                        <p class="modal-subtitle">Đối diện tỷ lệ thời gian làm việc thực tế, thách thức áp lực đặc thù và thử sức Mini Case-Study thực chiến</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeModal('modal-reality-check')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3">
+                    <label for="reality-check-select" class="form-label font-bold"><i class="fa-solid fa-graduation-cap text-primary"></i> Chọn Lĩnh Vực / Ngành Nghề Muốn Khám Phá:</label>
+                    <select id="reality-check-select" class="form-select" onchange="onRealityCheckChange(this.value)">
+                        <option value="">-- Đang tải danh mục ngành nghề... --</option>
+                    </select>
+                </div>
+                <div id="reality-check-content" class="reality-check-content">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL AI IMPACT: Đánh Giá Tác Động AI & Xu Hướng Lao Động 5-10 Năm Tới -->
+    <div id="modal-ai-impact" class="modal-overlay hidden">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <div class="modal-title-icon icon-ai"><i class="fa-solid fa-robot"></i></div>
+                    <div>
+                        <h4 class="modal-title">Đánh Giá Tác Động AI & Xu Hướng Lao Động 5–10 Năm Tới</h4>
+                        <p class="modal-subtitle">Chỉ số rủi ro tự động hóa, kỹ năng tương hỗ AI và danh mục ngành trọng điểm theo quy hoạch quốc gia</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeModal('modal-ai-impact')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3">
+                    <label for="ai-impact-select" class="form-label font-bold"><i class="fa-solid fa-microchip text-primary"></i> Chọn Ngành Khảo Sát Tác Động AI:</label>
+                    <select id="ai-impact-select" class="form-select" onchange="onAiImpactChange(this.value)">
+                        <option value="">-- Đang tải danh mục ngành... --</option>
+                    </select>
+                </div>
+                <div id="ai-impact-content" class="ai-impact-content">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: Đi Từ Nghề Ngược Về Ngành (Reverse Career Mapping) -->
+    <div id="modal-reverse-career" class="modal-overlay hidden">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <div class="modal-title-icon"><i class="fa-solid fa-sitemap"></i></div>
+                    <div>
+                        <h4 class="modal-title">Đi Từ Nghề Ngược Về Ngành (Reverse Career Mapping)</h4>
+                        <p class="modal-subtitle">Chọn chức danh nghề nghiệp mơ ước để khám phá cây kỹ năng và lộ trình 4 năm đại học tối ưu</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeModal('modal-reverse-career')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3">
+                    <label for="reverse-role-select" class="form-label font-bold"><i class="fa-solid fa-user-tie text-primary"></i> Chọn Chức Danh Nghề Nghiệp Mục Tiêu:</label>
+                    <select id="reverse-role-select" class="form-select" onchange="onReverseRoleChange(this.value)">
+                        <option value="">-- Đang tải danh sách nghề... --</option>
+                    </select>
+                </div>
+                <div id="reverse-role-details" class="reverse-role-details">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Bộ Tính Học Phí & Hoàn Vốn Toàn Bộ Các Trường (Education ROI Calculator) -->
+    <div id="modal-roi-calculator" class="modal-overlay hidden">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <div class="modal-title-icon"><i class="fa-solid fa-calculator"></i></div>
+                    <div>
+                        <h4 class="modal-title">Bộ Tính Học Phí & Hoàn Vốn Toàn Bộ Các Trường (Education ROI)</h4>
+                        <p class="modal-subtitle">Tính toán học phí toàn khóa của tất cả 44+ trường đại học ba miền, sinh hoạt phí và dự báo thời gian hoàn vốn</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeModal('modal-roi-calculator')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="roi-controls-grid">
+                    <div class="form-group">
+                        <label for="roi-uni-select" class="form-label font-bold"><i class="fa-solid fa-building-columns text-primary"></i> Chọn Trường Đại Học (Toàn quốc):</label>
+                        <select id="roi-uni-select" class="form-select" onchange="recalculateEducationROI()">
+                            <!-- Populated dynamically with all 44+ universities -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roi-program-type" class="form-label font-bold"><i class="fa-solid fa-graduation-cap text-primary"></i> Hệ Đào Tạo:</label>
+                        <select id="roi-program-type" class="form-select" onchange="recalculateEducationROI()">
+                            <option value="standard">Hệ Chuẩn (Đại trà)</option>
+                            <option value="high_quality">Hệ Tiên Tiến / Chất Lượng Cao</option>
+                            <option value="international">Hệ Liên Kết Quốc Tế</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roi-living-city" class="form-label font-bold"><i class="fa-solid fa-city text-primary"></i> Thành Phố Theo Học:</label>
+                        <select id="roi-living-city" class="form-select" onchange="recalculateEducationROI()">
+                            <option value="Hà Nội">Hà Nội (~4.5 tr/tháng)</option>
+                            <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh (~5.0 tr/tháng)</option>
+                            <option value="Đà Nẵng">Đà Nẵng (~3.5 tr/tháng)</option>
+                            <option value="Cần Thơ">Cần Thơ (~3.0 tr/tháng)</option>
+                            <option value="Thừa Thiên Huế">Thừa Thiên Huế (~2.8 tr/tháng)</option>
+                            <option value="Khác">Tỉnh thành khác (~2.8 tr/tháng)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roi-study-years" class="form-label font-bold"><i class="fa-solid fa-clock text-primary"></i> Thời Gian Đào Tạo:</label>
+                        <select id="roi-study-years" class="form-select" onchange="recalculateEducationROI()">
+                            <option value="4.0">4.0 năm (Cử nhân kinh tế, xã hội, CNTT)</option>
+                            <option value="4.5">4.5 năm (Kỹ sư công nghệ)</option>
+                            <option value="5.0">5.0 năm (Kỹ sư chuyên sâu / Kiến trúc sư)</option>
+                            <option value="6.0">6.0 năm (Bác sĩ Y khoa)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="roi-results-card" class="roi-results-card mt-3">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: Cầu Nối Đồng Thuận Gia Đình (Parent & Student Alignment) -->
+    <div id="modal-parent-alignment" class="modal-overlay hidden">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <div class="modal-title-icon"><i class="fa-solid fa-people-roof"></i></div>
+                    <div>
+                        <h4 class="modal-title">Cầu Nối Đồng Thuận Gia Đình - Học Sinh</h4>
+                        <p class="modal-subtitle">Khảo sát song song 4 chiều kỳ vọng, đo độ đồng thuận và tạo bản tóm tắt dành riêng cho phụ huynh</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeModal('modal-parent-alignment')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="alignment-survey-grid">
+                    <!-- Cột Học sinh -->
+                    <div class="alignment-col student-col">
+                        <h5 class="col-title"><i class="fa-solid fa-graduation-cap"></i> Quan Điểm Của Con (Học Sinh)</h5>
+                        
+                        <div class="survey-item">
+                            <label>1. Ổn định công việc hay Thu nhập bứt phá?</label>
+                            <select id="align-s-stab" class="form-select">
+                                <option value="1">1 - Rất chuộng ổn định (công chức/nhà nước)</option>
+                                <option value="2">2 - Ưu tiên ổn định vừa phải</option>
+                                <option value="3" selected>3 - Cân bằng giữa ổn định và thu nhập</option>
+                                <option value="4">4 - Sẵn sàng chấp nhận áp lực để có thu nhập cao</option>
+                                <option value="5">5 - Đam mê khởi nghiệp / Thu nhập đột phá</option>
+                            </select>
+                        </div>
+
+                        <div class="survey-item">
+                            <label>2. Địa điểm học tập:</label>
+                            <select id="align-s-loc" class="form-select">
+                                <option value="1">1 - Nhất định muốn học gần gia đình</option>
+                                <option value="2">2 - Thích học trong tỉnh/vùng lân cận</option>
+                                <option value="3" selected>3 - Tùy thuộc vào trường nào tốt hơn</option>
+                                <option value="4">4 - Muốn lên thành phố lớn (Hà Nội/TP.HCM) tự lập</option>
+                                <option value="5">5 - Muốn vươn xa toàn cầu / Du học</option>
+                            </select>
+                        </div>
+
+                        <div class="survey-item">
+                            <label>3. Danh tiếng trường hay Đúng ngành yêu thích?</label>
+                            <select id="align-s-brand" class="form-select">
+                                <option value="1">1 - Trường top 1 danh giá là trên hết</option>
+                                <option value="2">2 - Ưu tiên thương hiệu trường</option>
+                                <option value="3" selected>3 - Cân đối cả trường và ngành</option>
+                                <option value="4">4 - Miễn đúng ngành yêu thích, trường nào cũng được</option>
+                                <option value="5">5 - Tuyệt đối chỉ học đúng ngành đam mê</option>
+                            </select>
+                        </div>
+
+                        <div class="survey-item">
+                            <label>4. Học phí và Đầu tư tài chính:</label>
+                            <select id="align-s-cost" class="form-select">
+                                <option value="1">1 - Tiết kiệm tối đa, học phí thấp nhất</option>
+                                <option value="2">2 - Học phí công lập truyền thống</option>
+                                <option value="3" selected>3 - Mức học phí tự chủ vừa phải</option>
+                                <option value="4">4 - Đầu tư chương trình chất lượng cao/tiên tiến</option>
+                                <option value="5">5 - Đầu tư mạnh mẽ chuẩn quốc tế</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Cột Phụ huynh -->
+                    <div class="alignment-col parent-col">
+                        <h5 class="col-title"><i class="fa-solid fa-hands-holding-child"></i> Kỳ Vọng Của Bố Mẹ (Phụ Huynh)</h5>
+                        
+                        <div class="survey-item">
+                            <label>1. Ổn định công việc hay Thu nhập bứt phá?</label>
+                            <select id="align-p-stab" class="form-select">
+                                <option value="1">1 - Rất chuộng ổn định (công chức/nhà nước)</option>
+                                <option value="2" selected>2 - Ưu tiên ổn định vừa phải</option>
+                                <option value="3">3 - Cân bằng giữa ổn định và thu nhập</option>
+                                <option value="4">4 - Sẵn sàng chấp nhận áp lực để có thu nhập cao</option>
+                                <option value="5">5 - Đam mê khởi nghiệp / Thu nhập đột phá</option>
+                            </select>
+                        </div>
+
+                        <div class="survey-item">
+                            <label>2. Địa điểm học tập:</label>
+                            <select id="align-p-loc" class="form-select">
+                                <option value="1">1 - Nhất định muốn con học gần gia đình</option>
+                                <option value="2" selected>2 - Thích con học trong tỉnh/vùng lân cận</option>
+                                <option value="3">3 - Tùy thuộc vào trường nào tốt hơn</option>
+                                <option value="4">4 - Cho con lên thành phố lớn tự lập</option>
+                                <option value="5">5 - Ủng hộ con đi xa / Du học</option>
+                            </select>
+                        </div>
+
+                        <div class="survey-item">
+                            <label>3. Danh tiếng trường hay Đúng ngành yêu thích?</label>
+                            <select id="align-p-brand" class="form-select">
+                                <option value="1">1 - Trường top 1 danh giá là trên hết</option>
+                                <option value="2" selected>2 - Ưu tiên thương hiệu trường truyền thống</option>
+                                <option value="3">3 - Cân đối cả trường và ngành</option>
+                                <option value="4">4 - Tôn trọng ngành con chọn</option>
+                                <option value="5">5 - Hoàn toàn để con quyết định theo đam mê</option>
+                            </select>
+                        </div>
+
+                        <div class="survey-item">
+                            <label>4. Học phí và Đầu tư tài chính:</label>
+                            <select id="align-p-cost" class="form-select">
+                                <option value="1">1 - Tiết kiệm tối đa, học phí thấp nhất</option>
+                                <option value="2" selected>2 - Học phí công lập truyền thống</option>
+                                <option value="3">3 - Mức học phí tự chủ vừa phải</option>
+                                <option value="4">4 - Sẵn sàng đầu tư chương trình chất lượng cao</option>
+                                <option value="5">5 - Đầu tư mạnh mẽ chuẩn quốc tế</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="button" class="btn-primary btn-run-alignment" onclick="runParentStudentAlignment()">
+                        <i class="fa-solid fa-heart-circle-bolt"></i> Phân Tích Độ Đồng Thuận & Xuất Báo Cáo Phụ Huynh
+                    </button>
+                </div>
+
+                <div id="alignment-results-box" class="alignment-results-box mt-4 hidden">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3b: Thẩm Định Cửa Đỗ Theo Trường (3 Tầng: An Toàn, Cạnh Tranh, Nguy Cơ) -->
+    <div id="modal-school-check" class="modal-overlay hidden">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <div class="modal-title-icon" id="modal-check-logo">🏛️</div>
+                    <div>
+                        <h4 class="modal-title" id="modal-check-title">Thẩm Định Cửa Đỗ & Dự Báo Trúng Tuyển: Đại học Bách khoa Hà Nội</h4>
+                        <p class="modal-subtitle" id="modal-check-subtitle">So sánh trực tiếp điểm thi & hồ sơ của bạn với toàn bộ ngành đào tạo và đề án tuyển sinh 2025 của trường.</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeModal('modal-school-check')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Thống kê tổng quan phân tầng -->
+                <div class="school-check-stats-row mb-3">
+                    <div class="stat-pill stat-safe" onclick="filterSchoolCheckTier('safe')">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Cửa đỗ cao (An toàn): <strong id="stat-count-safe">0</strong> ngành</span>
+                    </div>
+                    <div class="stat-pill stat-competitive" onclick="filterSchoolCheckTier('competitive')">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        <span>Cạnh tranh (Vừa sức): <strong id="stat-count-competitive">0</strong> ngành</span>
+                    </div>
+                    <div class="stat-pill stat-risky" onclick="filterSchoolCheckTier('risky')">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Thử thách (Nguy cơ): <strong id="stat-count-risky">0</strong> ngành</span>
+                    </div>
+                </div>
+
+                <!-- Box Cảnh báo Tiêu chí phụ / Điều kiện sàn -->
+                <div id="school-check-criteria-alerts" class="criteria-alerts-container mb-3">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Tabs lọc phân tầng -->
+                <div class="tier-tab-bar mb-3">
+                    <button type="button" class="btn-tier-tab active" id="tab-tier-all" onclick="filterSchoolCheckTier('all')">
+                        <i class="fa-solid fa-list-ul"></i> Tất cả các ngành (<span id="tab-count-all">0</span>)
+                    </button>
+                    <button type="button" class="btn-tier-tab" id="tab-tier-safe" onclick="filterSchoolCheckTier('safe')">
+                        🟢 Cửa đỗ cao (<span id="tab-count-safe">0</span>)
+                    </button>
+                    <button type="button" class="btn-tier-tab" id="tab-tier-competitive" onclick="filterSchoolCheckTier('competitive')">
+                        🟡 Cạnh tranh sát nút (<span id="tab-count-competitive">0</span>)
+                    </button>
+                    <button type="button" class="btn-tier-tab" id="tab-tier-risky" onclick="filterSchoolCheckTier('risky')">
+                        🔴 Thử thách cao (<span id="tab-count-risky">0</span>)
+                    </button>
+                </div>
+
+                <!-- Danh sách ngành phân tầng -->
+                <div id="school-check-majors-list" class="school-check-majors-grid">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+            <div class="modal-footer school-check-footer">
+                <button type="button" class="btn-export-to-web" onclick="exportSchoolCheckToWeb()" title="Đưa toàn bộ kết quả phân tầng ngành ra giao diện web">
+                    <i class="fa-solid fa-arrow-down-to-bracket text-success"></i>
+                    <span>Xuất Ra Web</span>
+                </button>
+                <button type="button" class="btn-interview-hero" onclick="launchInterviewFromCheckModal()">
+                    <i class="fa-solid fa-microphone-lines text-warning"></i>
+                    <div class="btn-interview-text">
+                        <strong>Phỏng Vấn Thử Với Đại Diện Tuyển Sinh Của Trường (AI Mock Interview)</strong>
+                        <small>Trò chuyện tương tác với Persona Thầy/Cô trường để thẩm định độ phù hợp văn hóa & chiến thuật đặt NV1</small>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3c: Phỏng Vấn Thử với Đại Diện Tuyển Sinh của Trường (AI Mock Interview) -->
+    <div id="modal-school-interview" class="modal-overlay hidden">
+        <div class="modal-dialog modal-lg interview-dialog">
+            <div class="modal-header interview-header">
+                <div class="interview-persona-info">
+                    <div class="persona-avatar-box" id="interview-persona-avatar">🏛️</div>
+                    <div class="persona-meta">
+                        <div class="persona-name-row">
+                            <h4 id="interview-persona-name">Thầy TS. Vũ Đình Tiến</h4>
+                            <span class="persona-badge" id="interview-persona-school">ĐH Bách khoa Hà Nội</span>
+                            <span class="status-online-dot"><span class="dot-live"></span> Đang trực tuyến</span>
+                        </div>
+                        <p class="persona-role" id="interview-persona-role">Trưởng phòng Tuyển sinh & Hướng nghiệp</p>
+                        <small class="persona-motto" id="interview-persona-motto">"Tư duy sáng tạo, dấn thân kỹ thuật, kiên định kỷ luật"</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeModal('modal-school-interview')">&times;</button>
+            </div>
+            <div class="modal-body interview-modal-body">
+                <!-- Chat Log -->
+                <div id="interview-chat-log" class="interview-chat-log">
+                    <!-- Messages will be injected here -->
+                </div>
+
+                <!-- Typing indicator -->
+                <div id="interview-typing-indicator" class="interview-typing hidden">
+                    <div class="typing-bubble">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <small id="interview-typing-text">Thầy/Cô đang soạn phản hồi...</small>
+                </div>
+
+                <!-- Quick Replies -->
+                <div id="interview-quick-replies-wrap" class="interview-quick-replies mb-2">
+                    <!-- Buttons will be injected here -->
+                </div>
+
+                <!-- Custom Input Bar -->
+                <div class="interview-input-bar">
+                    <input type="text" id="interview-user-input" placeholder="Nhập câu trả lời của em hoặc chọn nhanh các gợi ý ở trên..." onkeydown="handleInterviewKeydown(event)">
+                    <button type="button" id="btn-send-interview" class="btn-send-interview" onclick="sendInterviewAnswerFromInput()">
+                        <i class="fa-solid fa-paper-plane"></i> <span>Gửi</span>
+                    </button>
+                </div>
+
+                <!-- Evaluation Report Container (Appears when interview finishes) -->
+                <div id="interview-evaluation-report" class="interview-evaluation-report hidden">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: So Sánh Đối Đầu 2 Ngành / 2 Trường (Head-to-Head Comparison) -->
+    <div id="modal-compare" class="modal-overlay hidden">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <div class="modal-title-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <div>
+                        <h4 class="modal-title">So Sánh Đối Đầu 2 Ngành Học / Trường Đại Học</h4>
+                        <p class="modal-subtitle">Đặt lên bàn cân so sánh song song theo: Điểm chuẩn 3 năm, học phí toàn khóa, chuẩn đầu ra và rủi ro AI</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeModal('modal-compare')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="compare-selectors-row">
+                    <div class="compare-select-col">
+                        <label class="form-label font-bold text-primary"><i class="fa-solid fa-cube"></i> Lựa chọn A:</label>
+                        <select id="compare-select-a" class="form-select" onchange="triggerHeadToHeadComparison()"></select>
+                    </div>
+                    <div class="compare-vs-badge">VS</div>
+                    <div class="compare-select-col">
+                        <label class="form-label font-bold text-indigo"><i class="fa-solid fa-cube"></i> Lựa chọn B:</label>
+                        <select id="compare-select-b" class="form-select" onchange="triggerHeadToHeadComparison()"></select>
+                    </div>
+                </div>
+
+                <div id="compare-table-container" class="compare-table-container mt-3">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DRAWER: Tủ Nguyện Vọng Thông Minh (Smart Wishlist Drawer) -->
+    <div id="wishlist-drawer" class="wishlist-drawer hidden">
+        <div class="wishlist-drawer-header">
+            <div class="wishlist-header-title">
+                <i class="fa-solid fa-heart text-danger"></i>
+                <span>Tủ Nguyện Vọng Của Bạn (<span id="wishlist-drawer-count">0</span>/15)</span>
+            </div>
+            <button type="button" class="btn-close-drawer" onclick="closeWishlistDrawer()">&times;</button>
+        </div>
+        <div class="wishlist-drawer-body">
+            <div id="wishlist-items-list" class="wishlist-items-list">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+        <div class="wishlist-drawer-footer">
+            <button type="button" class="btn-primary w-100" onclick="openCompareModalFromWishlist()">
+                <i class="fa-solid fa-scale-balanced"></i> So Sánh Đối Đầu Các Ngành Đã Lưu
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p><strong>EduCompass AI</strong> • Hệ thống Trợ lý Cố vấn Tuyển sinh & Hướng nghiệp Đa tác tử cho Học sinh và Phụ huynh Việt Nam.</p>
+            <p class="footer-sub">Hỗ trợ phân bổ nguyện vọng theo tỷ lệ vàng chuẩn Bộ GD&ĐT, tra cứu học phí, giải thích AI và phân tích cơ hội trúng tuyển chuẩn xác.</p>
+        </div>
+    </footer>
+
+    <!-- App Logic -->
+    <script src="app.js?v=4.5"></script>
+</body>
+</html>
