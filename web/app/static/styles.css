@@ -6216,4 +6216,522 @@ table.data-table tr:hover {
     gap: 0.5rem;
 }
 
+/* =========================================================================
+   COMPREHENSIVE MOBILE RESPONSIVE ENHANCEMENTS (max-width: 768px & 480px)
+   ========================================================================= */
+
+@media (max-width: 768px) {
+    /* 1. Global & Main Layout Containers */
+    body {
+        overflow-x: hidden;
+    }
+
+    .main-container {
+        padding: 0 0.75rem;
+        margin: -1rem auto 2rem;
+    }
+
+    .card-section {
+        padding: 1.15rem 0.85rem;
+        border-radius: 14px;
+        margin-bottom: 1.25rem;
+    }
+
+    .hero-section {
+        padding: 1.85rem 0.85rem 2.25rem;
+    }
+
+    .hero-title {
+        font-size: 1.35rem;
+        line-height: 1.3;
+    }
+
+    .hero-desc {
+        font-size: 0.86rem;
+        line-height: 1.5;
+    }
+
+    /* 2. Top Header & Navbar */
+    .nav-container {
+        padding: 0.6rem 0.85rem;
+    }
+
+    .brand-title {
+        font-size: 1.05rem;
+    }
+
+    .brand-subtitle {
+        display: none;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .nav-badge {
+        display: none;
+    }
+
+    /* 3. Section Headers & Step Indicators */
+    .section-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        margin-bottom: 1.15rem;
+    }
+
+    .section-header-left {
+        flex: 1 1 100%;
+        width: 100%;
+        gap: 0.75rem;
+    }
+
+    .section-number {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        border-radius: 10px;
+        flex-shrink: 0;
+    }
+
+    .section-header h2,
+    .section-header-title h2 {
+        font-size: 1.1rem;
+        line-height: 1.35;
+    }
+
+    .section-subtitle {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    /* 4. Trường ĐH Mơ Ước - Selector Dropdown */
+    .school-target-selector-box {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0.4rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.4rem;
+        background: #f8fafc;
+        padding: 0.65rem 0.75rem;
+        border-radius: 10px;
+        border: 1.5px solid #e0e7ff;
+    }
+
+    .school-target-selector-box label {
+        font-size: 0.84rem;
+        color: #3730a3;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        white-space: nowrap;
+    }
+
+    .school-target-select {
+        width: 100%;
+        max-width: 100%;
+        font-size: 0.88rem;
+        padding: 0.65rem 0.75rem;
+        box-sizing: border-box;
+    }
+
+    /* 5. School Branding Showcase Card - Uncrushed Full Width */
+    .school-branding-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.95rem 0.85rem;
+        gap: 0.9rem;
+    }
+
+    .school-branding-left {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0.75rem;
+        width: 100%;
+    }
+
+    .school-logo-badge {
+        width: 48px;
+        height: 48px;
+        font-size: 1.55rem;
+        border-radius: 12px;
+        flex-shrink: 0;
+    }
+
+    .school-meta-info {
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .school-title-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35rem;
+        margin-bottom: 0.35rem;
+        width: 100%;
+    }
+
+    .school-title-row h3 {
+        font-size: 1.05rem;
+        line-height: 1.35;
+        width: 100%;
+        word-break: normal;
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+
+    .school-code-tag,
+    .school-type-tag,
+    .school-region-tag {
+        font-size: 0.72rem;
+        padding: 0.15rem 0.45rem;
+        display: inline-block;
+        white-space: nowrap;
+    }
+
+    .school-motto-desc {
+        font-size: 0.8rem;
+        line-height: 1.45;
+        margin-top: 0.4rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .school-highlight-badges {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.35rem;
+        width: 100%;
+    }
+
+    .school-highlight-badges .badge-item {
+        font-size: 0.76rem;
+        padding: 0.3rem 0.55rem;
+        border-radius: 6px;
+        white-space: normal;
+        word-break: break-word;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .school-branding-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.45rem;
+    }
+
+    .btn-school-action {
+        width: 100%;
+        justify-content: center;
+        padding: 0.65rem 0.85rem;
+        font-size: 0.85rem;
+        white-space: normal;
+        text-align: center;
+    }
+
+    /* 6. Bản Thẩm Định On-Page Result Card */
+    .school-onpage-result-card {
+        padding: 0.95rem 0.8rem;
+        border-radius: 12px;
+    }
+
+    .school-onpage-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .school-onpage-title-wrap {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0.65rem;
+    }
+
+    .school-onpage-badge-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+    }
+
+    .onpage-school-title-row h3 {
+        font-size: 1rem;
+        line-height: 1.35;
+    }
+
+    .school-onpage-header-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .btn-onpage-action {
+        width: 100%;
+        justify-content: center;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.82rem;
+    }
+
+    .school-onpage-body-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    .school-onpage-col {
+        padding: 0.85rem 0.75rem;
+    }
+
+    .onpage-tier-pills-row {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .onpage-tier-pill {
+        width: 100%;
+        font-size: 0.78rem;
+        padding: 0.45rem 0.6rem;
+    }
+
+    .onpage-persona-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .btn-export-to-web,
+    .btn-export-interview-web {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* 7. Modal Windows (Thẩm Định & Phỏng Vấn Tuyển Sinh) */
+    .modal-overlay {
+        padding: 0.4rem;
+    }
+
+    .modal-dialog,
+    .modal-card {
+        width: 96vw !important;
+        max-width: 96vw !important;
+        max-height: 94vh !important;
+        border-radius: 12px !important;
+        margin: 0.25rem auto;
+    }
+
+    .modal-header {
+        padding: 0.85rem 1rem;
+    }
+
+    .modal-header h3 {
+        font-size: 1rem;
+        line-height: 1.35;
+    }
+
+    .modal-body {
+        padding: 0.85rem 0.75rem;
+    }
+
+    .school-check-stats-row {
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .stat-pill {
+        min-width: 100%;
+        width: 100%;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.82rem;
+    }
+
+    .tier-tab-bar {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.4rem;
+        gap: 0.35rem;
+    }
+
+    .btn-tier-tab {
+        white-space: nowrap;
+        font-size: 0.78rem;
+        padding: 0.4rem 0.65rem;
+        flex-shrink: 0;
+    }
+
+    .school-check-majors-grid {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+        max-height: 52vh;
+    }
+
+    .tier-major-card {
+        padding: 0.75rem 0.8rem;
+    }
+
+    .card-header-row h5 {
+        font-size: 0.88rem;
+    }
+
+    .card-action-row {
+        flex-direction: column;
+        gap: 0.4rem;
+        align-items: stretch;
+    }
+
+    .btn-card-interview {
+        width: 100%;
+        text-align: center;
+        padding: 0.45rem;
+    }
+
+    /* 8. AI Mock Interview Modal */
+    .interview-persona-info {
+        gap: 0.65rem;
+    }
+
+    .persona-avatar-box {
+        width: 40px;
+        height: 40px;
+        font-size: 1.4rem;
+        border-radius: 10px;
+    }
+
+    .persona-name-row h4 {
+        font-size: 0.95rem;
+    }
+
+    .interview-modal-body {
+        padding: 0.75rem;
+    }
+
+    .interview-chat-log {
+        max-height: 48vh;
+        gap: 0.65rem;
+        padding-right: 0.2rem;
+    }
+
+    .chat-bubble {
+        max-width: 92%;
+        font-size: 0.82rem;
+        padding: 0.65rem 0.8rem;
+    }
+
+    .interview-input-bar {
+        gap: 0.35rem;
+    }
+
+    .interview-input-bar input {
+        font-size: 0.85rem;
+        padding: 0.55rem 0.75rem;
+    }
+
+    .btn-quick-reply {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.6rem;
+    }
+
+    /* 9. Forms, Inputs & Action Buttons */
+    .form-box {
+        padding: 0.85rem 0.75rem;
+    }
+
+    .subjects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .subject-input-item .input-group input {
+        padding: 0.45rem 0.55rem;
+        font-size: 0.88rem;
+    }
+
+    .btn-large {
+        width: 100%;
+        justify-content: center;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.95rem;
+    }
+
+    /* 10. Floating Chatbot */
+    .chatbot-window {
+        width: calc(100vw - 20px) !important;
+        max-width: calc(100vw - 20px) !important;
+        right: 10px !important;
+        bottom: 76px !important;
+        height: 72vh !important;
+        border-radius: 12px !important;
+    }
+
+    .chatbot-float-btn {
+        bottom: 16px;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.35rem;
+    }
+
+    .school-integrated-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+    }
+
+    .school-integrated-header > div {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.4rem;
+    }
+
+    .school-integrated-header .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Extra small mobile screen adjustments (360px - 480px) */
+@media (max-width: 480px) {
+    .main-container {
+        padding: 0 0.45rem;
+    }
+
+    .card-section {
+        padding: 1rem 0.65rem;
+    }
+
+    .school-title-row h3 {
+        font-size: 1rem;
+    }
+
+    .school-logo-badge {
+        width: 42px;
+        height: 42px;
+        font-size: 1.4rem;
+    }
+
+    .btn-school-action {
+        font-size: 0.8rem;
+        padding: 0.6rem 0.75rem;
+    }
+
+    .btn-khoi-pill {
+        padding: 0.45rem 0.55rem;
+    }
+
+    .btn-khoi-pill strong {
+        font-size: 0.82rem;
+    }
+
+    .btn-khoi-pill small {
+        font-size: 0.68rem;
+    }
+}
+
 
