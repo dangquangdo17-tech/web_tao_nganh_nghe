@@ -62,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Load default school target & preset on startup
     onSelectSchoolTarget("BKHN");
     loadHollandQuestions();
-    loadProspectusSample("BKHN");
     updatePriorityPreview();
     updateWishlistBadge();
     setupAlignmentSliders();
@@ -1296,11 +1295,13 @@ function submitHollandQuiz() {
 
 // SLM Prospectus Analyzer Section
 async function loadProspectusSample(uniCode) {
+    const inputEl = document.getElementById("slm-input-text");
+    if (!inputEl) return;
     try {
         const res = await fetch(`/api/prospectus/${uniCode}`);
         const json = await res.json();
-        if (json.status === "success") {
-            document.getElementById("slm-input-text").value = json.data.raw_prospectus_text;
+        if (json.status === "success" && inputEl) {
+            inputEl.value = json.data.raw_prospectus_text;
         }
     } catch (err) {
         console.error(err);
@@ -1308,9 +1309,13 @@ async function loadProspectusSample(uniCode) {
 }
 
 async function runSLMProspectusAnalysis() {
-    const text = document.getElementById("slm-input-text").value.trim();
-    const uniCode = document.getElementById("slm-sample-selector").value;
+    const inputEl = document.getElementById("slm-input-text");
+    const selectorEl = document.getElementById("slm-sample-selector");
     const outputBox = document.getElementById("slm-results");
+    if (!inputEl || !outputBox) return;
+
+    const text = inputEl.value.trim();
+    const uniCode = selectorEl ? selectorEl.value : "BKHN";
 
     if (!text) {
         alert("Vui lòng nhập văn bản đề án cần phân tích!");

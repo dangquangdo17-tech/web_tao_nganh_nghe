@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styles.css?v=4.6">
+    <link rel="stylesheet" href="styles.css?v=4.7">
 </head>
 <body>
     <!-- Navigation Header -->
@@ -28,7 +28,6 @@
             <nav class="nav-links">
                 <a href="#advisor-section" class="active"><i class="fa-solid fa-compass"></i> Tư vấn Nguyện vọng</a>
                 <a href="#feature-hub" onclick="scrollToCareerTools(event)"><i class="fa-solid fa-wand-magic-sparkles text-warning"></i> 6 Công Cụ Đột Phá</a>
-                <a href="#prospectus-section"><i class="fa-solid fa-file-contract"></i> Tra cứu Đề án</a>
                 <a href="#dashboard-section"><i class="fa-solid fa-chart-pie"></i> Bảng Phân Tích</a>
             </nav>
             <div style="display: flex; align-items: center; gap: 0.6rem;">
@@ -948,45 +947,7 @@
             </div>
         </section>
 
-        <!-- Section 5: Prospectus Analyzer -->
-        <section id="prospectus-section" class="card-section">
-            <div class="section-header">
-                <div class="section-number"><i class="fa-solid fa-bolt"></i></div>
-                <div>
-                    <h2>Tra Cứu & Trích Xuất Tự Động Đề Án Tuyển Sinh</h2>
-                    <p class="section-subtitle">Hệ thống AI chuyên dụng trích xuất tức thì bảng quy đổi IELTS sang thang điểm 10, tiêu chí phụ và học phí của các trường đại học lớn.</p>
-                </div>
-            </div>
 
-            <div class="grid-2-cols">
-                <div>
-                    <label><strong>Chọn trường để nạp văn bản đề án mẫu:</strong></label>
-                    <select id="slm-sample-selector" class="mb-2" onchange="loadProspectusSample(this.value)">
-                        <option value="BKHN">Đại học Bách khoa Hà Nội (Miền Bắc)</option>
-                        <option value="NEU">Trường Đại học Kinh tế Quốc dân (Miền Bắc)</option>
-                        <option value="FTU">Trường Đại học Ngoại thương (Miền Bắc)</option>
-                        <option value="DUT">Trường ĐH Bách khoa - ĐH Đà Nẵng (Miền Trung)</option>
-                        <option value="HCMUT">Trường ĐH Bách khoa - ĐHQG-HCM (Miền Nam)</option>
-                        <option value="UIT">Đại học Công nghệ Thông tin - ĐHQG-HCM (Miền Nam)</option>
-                    </select>
-
-                    <label><strong>Hoặc dán văn bản Đề án tuyển sinh cần phân tích:</strong></label>
-                    <textarea id="slm-input-text" rows="8" placeholder="Dán nội dung đề án tuyển sinh dài vào đây..."></textarea>
-                    
-                    <button class="btn-primary mt-2" onclick="runSLMProspectusAnalysis()">
-                        <i class="fa-solid fa-file-lines"></i> Phân Tích Đề Án Ngay
-                    </button>
-                </div>
-
-                <!-- SLM Structured Output -->
-                <div class="slm-output-box">
-                    <h4><i class="fa-solid fa-table-list"></i> Thông Tin Tuyển Sinh & Quy Chế Trích Xuất</h4>
-                    <div id="slm-results" class="slm-content-display">
-                        <div class="placeholder-text">Nhấn nút 'Phân Tích Đề Án Ngay' để xem dữ liệu trích xuất cấu trúc.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
     </main>
 
@@ -1511,6 +1472,6 @@
     </footer>
 
     <!-- App Logic -->
-    <script src="app.js?v=4.6"></script>
+    <script src="app.js?v=4.7"></script>
 </body>
 </html>
