@@ -3627,6 +3627,222 @@ const SCHOOL_METADATA = {
         methods: "THPT + Học bạ + IELTS",
         focusInputs: ["ielts", "gpa"],
         defaultKhoi: "D01"
+    },
+    AOF: {
+        code: "AOF", name: "Học viện Tài chính", logo: "💰", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "22 - 40 tr/năm", website: "https://hvtc.edu.vn",
+        desc: "Cái nôi đào tạo chuyên gia Tài chính - Kế toán - Kiểm toán hàng đầu Việt Nam.",
+        methods: "THPT (A00, A01, D01) + Xét tuyển kết hợp học bạ/IELTS",
+        focusInputs: ["ielts", "gpa"],
+        defaultKhoi: "A00"
+    },
+    DAV: {
+        code: "DAV", name: "Học viện Ngoại giao", logo: "🌐", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "25 - 45 tr/năm", website: "https://dav.edu.vn",
+        desc: "Cơ quan nghiên cứu và đào tạo đối ngoại, ngoại giao, luật quốc tế trực thuộc Bộ Ngoại giao.",
+        methods: "Xét tuyển kết hợp IELTS (≥ 7.0) + THPT / Phỏng vấn",
+        focusInputs: ["ielts"],
+        defaultKhoi: "D01"
+    },
+    TMU: {
+        code: "TMU", name: "Trường Đại học Thương mại", logo: "🛒", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "22 - 35 tr/năm", website: "https://tmu.edu.vn",
+        desc: "Thế mạnh vượt trội về Thương mại điện tử, Marketing số, Logistics & Quản trị kinh doanh.",
+        methods: "THPT + ĐGNL ĐHQGHN (HSA) + Chứng chỉ ngoại ngữ",
+        focusInputs: ["hsa", "ielts"],
+        defaultKhoi: "A01"
+    },
+    UEB: {
+        code: "UEB", name: "Trường Đại học Kinh tế - ĐHQGHN", logo: "💹", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "42 - 48 tr/năm", website: "https://ueb.edu.vn",
+        desc: "Trường kinh tế định hướng nghiên cứu và đào tạo chuẩn quốc tế trực thuộc ĐHQGHN.",
+        methods: "THPT + HSA ĐHQGHN + IELTS",
+        focusInputs: ["hsa", "ielts"],
+        defaultKhoi: "A01"
+    },
+    HUB: {
+        code: "HUB", name: "Trường Đại học Ngân hàng TP. Hồ Chí Minh", logo: "🏦", region: "TP. Hồ Chí Minh (Miền Nam)", type: "Công lập",
+        tuition: "24 - 40 tr/năm", website: "https://hub.edu.vn",
+        desc: "Đầu tàu đào tạo Tài chính - Ngân hàng, FinTech và Kinh doanh quốc tế phía Nam.",
+        methods: "THPT + ĐGNL (APT/V-SAT) + Đánh giá năng lực riêng",
+        focusInputs: ["apt", "ielts"],
+        defaultKhoi: "A01"
+    },
+    UFM: {
+        code: "UFM", name: "Trường Đại học Tài chính - Marketing", logo: "📣", region: "TP. Hồ Chí Minh (Miền Nam)", type: "Công lập",
+        tuition: "25 - 38 tr/năm", website: "https://ufm.edu.vn",
+        desc: "Trực thuộc Bộ Tài chính, đào tạo chuyên sâu về Marketing, Thẩm định giá, Tài chính và Thuế.",
+        methods: "THPT + ĐGNL ĐHQG-HCM + Học bạ THPT",
+        focusInputs: ["apt", "gpa"],
+        defaultKhoi: "A01"
+    },
+    HCMUS: {
+        code: "HCMUS", name: "Trường Đại học Khoa học Tự nhiên - ĐHQG-HCM", logo: "🧪", region: "TP. Hồ Chí Minh (Miền Nam)", type: "Công lập",
+        tuition: "28 - 45 tr/năm", website: "https://hcmus.edu.vn",
+        desc: "Cái nôi khoa học cơ bản, Khoa học dữ liệu, AI và Công nghệ sinh học top đầu cả nước.",
+        methods: "ĐGNL ĐHQG-HCM (APT) + THPT + Tuyển thẳng",
+        focusInputs: ["apt"],
+        defaultKhoi: "A00"
+    },
+    KMA: {
+        code: "KMA", name: "Học viện Kỹ thuật Mật mã", logo: "🔐", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "18 - 25 tr/năm", website: "https://actvn.edu.vn",
+        desc: "Đơn vị duy nhất đào tạo cán bộ kỹ thuật Mật mã, An toàn thông tin trọng yếu quốc gia.",
+        methods: "Điểm thi THPT khối A00/A01 + Điểm ưu tiên chứng chỉ",
+        focusInputs: ["ielts"],
+        defaultKhoi: "A00"
+    },
+    HaUI: {
+        code: "HaUI", name: "Trường Đại học Công nghiệp Hà Nội", logo: "🔧", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "20 - 28 tr/năm", website: "https://haui.edu.vn",
+        desc: "Quy mô đào tạo kỹ thuật ứng dụng thực hành hàng đầu về Cơ điện tử, Ô tô và Điện tử viễn thông.",
+        methods: "THPT + ĐGNL (HSA) + Học bạ THPT",
+        focusInputs: ["hsa", "gpa"],
+        defaultKhoi: "A00"
+    },
+    UTC: {
+        code: "UTC", name: "Trường Đại học Giao thông Vận tải", logo: "🚆", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "18 - 26 tr/năm", website: "https://utc.edu.vn",
+        desc: "Trường đại học kỹ thuật đa ngành nòng cốt về Hạ tầng giao thông, Logistics và Tự động hóa.",
+        methods: "THPT + ĐGTD (TSA) + ĐGNL ĐHQGHN (HSA)",
+        focusInputs: ["tsa", "hsa"],
+        defaultKhoi: "A00"
+    },
+    FPT: {
+        code: "FPT", name: "Trường Đại học FPT", logo: "🌐", region: "Toàn quốc", type: "Tư thục",
+        tuition: "75 - 98 tr/năm", website: "https://daihoc.fpt.edu.vn",
+        desc: "Môi trường đào tạo công nghệ gắn liền doanh nghiệp, 100% tiếng Anh, thực tập On-the-Job (OJT).",
+        methods: "Xếp hạng SchoolRank (Top 40) + Phỏng vấn học bổng",
+        focusInputs: ["gpa", "ielts"],
+        defaultKhoi: "A01"
+    },
+    PNTU: {
+        code: "PNTU", name: "Trường Đại học Y khoa Phạm Ngọc Thạch", logo: "🏥", region: "TP. Hồ Chí Minh (Miền Nam)", type: "Công lập",
+        tuition: "32 - 55 tr/năm", website: "https://pnt.edu.vn",
+        desc: "Cơ sở đào tạo Y đa khoa, Răng Hàm Mặt và Khoa học sức khỏe uy tín của TP.HCM.",
+        methods: "Điểm thi THPT khối B00 + Tiêu chí ngoại ngữ",
+        focusInputs: ["ielts"],
+        defaultKhoi: "B00"
+    },
+    HPMU: {
+        code: "HPMU", name: "Trường Đại học Y Dược Hải Phòng", logo: "💉", region: "Hải Phòng (Miền Bắc)", type: "Công lập",
+        tuition: "28 - 45 tr/năm", website: "https://hpmu.edu.vn",
+        desc: "Trung tâm đào tạo Y Dược và Y học biển đảo trọng điểm vùng Duyên hải Bắc Bộ.",
+        methods: "Điểm thi THPT khối B00/A00",
+        focusInputs: [],
+        defaultKhoi: "B00"
+    },
+    CTUMP: {
+        code: "CTUMP", name: "Trường Đại học Y Dược Cần Thơ", logo: "🩺", region: "Cần Thơ (Miền Tây)", type: "Công lập",
+        tuition: "30 - 48 tr/năm", website: "https://ctump.edu.vn",
+        desc: "Trường đại học Y Dược lớn nhất khu vực Đồng bằng sông Cửu Long.",
+        methods: "Điểm thi THPT khối B00",
+        focusInputs: [],
+        defaultKhoi: "B00"
+    },
+    HMED: {
+        code: "HMED", name: "Trường Đại học Y Dược - ĐH Huế", logo: "🌿", region: "Thừa Thiên Huế (Miền Trung)", type: "Công lập",
+        tuition: "28 - 46 tr/năm", website: "https://huemed-univ.edu.vn",
+        desc: "Cơ sở y khoa danh tiếng miền Trung với hệ thống bệnh viện thực hành hiện đại.",
+        methods: "Điểm thi THPT khối B00/A00",
+        focusInputs: [],
+        defaultKhoi: "B00"
+    },
+    HLU: {
+        code: "HLU", name: "Trường Đại học Luật Hà Nội", logo: "⚖️", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "22 - 38 tr/năm", website: "https://hlu.edu.vn",
+        desc: "Trường đại học trọng điểm quốc gia về đào tạo pháp luật chất lượng cao.",
+        methods: "Điểm thi THPT (A00, A01, C00, D01) + Học bạ THPT",
+        focusInputs: ["gpa", "ielts"],
+        defaultKhoi: "C00"
+    },
+    ULIS: {
+        code: "ULIS", name: "Trường Đại học Ngoại ngữ - ĐHQGHN", logo: "🌏", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "22 - 35 tr/năm", website: "https://ulis.vnu.edu.vn",
+        desc: "Cái nôi hàng đầu cả nước về ngôn ngữ, văn hóa quốc tế và sư phạm ngoại ngữ.",
+        methods: "THPT + HSA ĐHQGHN + VSTEP / IELTS",
+        focusInputs: ["ielts", "hsa"],
+        defaultKhoi: "D01"
+    },
+    HANU: {
+        code: "HANU", name: "Trường Đại học Hà Nội", logo: "🗣️", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "20 - 32 tr/năm", website: "https://hanu.edu.vn",
+        desc: "Đào tạo các ngành ngôn ngữ và chuyên ngành kinh tế giảng dạy hoàn toàn bằng ngoại ngữ.",
+        methods: "THPT khối D + Xét tuyển kết hợp chứng chỉ quốc tế",
+        focusInputs: ["ielts"],
+        defaultKhoi: "D01"
+    },
+    HNUE: {
+        code: "HNUE", name: "Trường Đại học Sư phạm Hà Nội", logo: "🎓", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "Miễn học phí SP / 18 - 25 tr/năm", website: "https://hnue.edu.vn",
+        desc: "Trung tâm sư phạm số 1 Việt Nam đào tạo thế hệ nhà giáo và chuyên gia giáo dục mẫu mực.",
+        methods: "Kỳ thi ĐGNL Sư phạm Hà Nội + THPT + Tuyển thẳng",
+        focusInputs: ["gpa"],
+        defaultKhoi: "A00"
+    },
+    HCMUE: {
+        code: "HCMUE", name: "Trường Đại học Sư phạm TP. Hồ Chí Minh", logo: "📚", region: "TP. Hồ Chí Minh (Miền Nam)", type: "Công lập",
+        tuition: "Miễn học phí SP / 20 - 28 tr/năm", website: "https://hcmue.edu.vn",
+        desc: "Đại học sư phạm trọng điểm phía Nam với kỳ thi ĐGNL chuyên biệt uy tín.",
+        methods: "Kỳ thi ĐGNL chuyên biệt HCMUE + THPT",
+        focusInputs: ["gpa"],
+        defaultKhoi: "A00"
+    },
+    AJC: {
+        code: "AJC", name: "Học viện Báo chí và Tuyên truyền", logo: "🎙️", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "20 - 35 tr/năm", website: "https://ajc.edu.vn",
+        desc: "Cái nôi đào tạo phóng viên, biên tập viên, nhà báo và chuyên gia truyền thông hàng đầu cả nước.",
+        methods: "THPT + Năng khiếu báo chí + Học bạ THPT",
+        focusInputs: ["gpa", "ielts"],
+        defaultKhoi: "C00"
+    },
+    USSH_HCM: {
+        code: "USSH_HCM", name: "Trường ĐH KHXH&NV - ĐHQG-HCM", logo: "🏛️", region: "TP. Hồ Chí Minh (Miền Nam)", type: "Công lập",
+        tuition: "20 - 32 tr/năm", website: "https://hcmussh.edu.vn",
+        desc: "Trung tâm đào tạo khoa học xã hội, nhân văn, truyền thông đa phương tiện lớn nhất phía Nam.",
+        methods: "ĐGNL ĐHQG-HCM (APT) + THPT",
+        focusInputs: ["apt", "ielts"],
+        defaultKhoi: "D01"
+    },
+    HOU: {
+        code: "HOU", name: "Trường Đại học Mở Hà Nội", logo: "📖", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "18 - 26 tr/năm", website: "https://hou.edu.vn",
+        desc: "Trường đại học đa ngành năng động, chuyển đổi số hiện đại với học phí hợp lý.",
+        methods: "THPT + Học bạ THPT",
+        focusInputs: ["gpa"],
+        defaultKhoi: "A01"
+    },
+    HAU: {
+        code: "HAU", name: "Trường Đại học Kiến trúc Hà Nội", logo: "📐", region: "Hà Nội (Miền Bắc)", type: "Công lập",
+        tuition: "22 - 32 tr/năm", website: "https://hau.edu.vn",
+        desc: "Cái nôi đào tạo kiến trúc sư, quy hoạch gia và kỹ sư xây dựng danh tiếng miền Bắc.",
+        methods: "Điểm thi THPT + Thi môn Vẽ Năng khiếu (Khối V, H)",
+        focusInputs: [],
+        defaultKhoi: "A00"
+    },
+    UAH: {
+        code: "UAH", name: "Trường Đại học Kiến trúc TP. Hồ Chí Minh", logo: "🏛️", region: "TP. Hồ Chí Minh (Miền Nam)", type: "Công lập",
+        tuition: "24 - 36 tr/năm", website: "https://uah.edu.vn",
+        desc: "Đào tạo kiến trúc sư, thiết kế nội thất, mỹ thuật công nghiệp hàng đầu phía Nam.",
+        methods: "Điểm thi THPT + Điểm thi Vẽ MT / Hình họa",
+        focusInputs: [],
+        defaultKhoi: "A00"
+    },
+    TDTU: {
+        code: "TDTU", name: "Trường Đại học Tôn Đức Thắng", logo: "🌟", region: "TP. Hồ Chí Minh (Miền Nam)", type: "Công lập",
+        tuition: "28 - 48 tr/năm", website: "https://tdtu.edu.vn",
+        desc: "Đại học chuẩn quốc tế hiện đại, xếp hạng cao trên bảng xếp hạng thế giới THE và QS.",
+        methods: "ĐGNL ĐHQG-HCM + Điểm thi THPT + Học bạ THPT",
+        focusInputs: ["apt", "gpa"],
+        defaultKhoi: "A01"
+    },
+    DTU: {
+        code: "DTU", name: "Trường Đại học Duy Tân", logo: "🚀", region: "Đà Nẵng (Miền Trung)", type: "Tư thục",
+        tuition: "25 - 42 tr/năm", website: "https://duytan.edu.vn",
+        desc: "Đại học tư thục hàng đầu Việt Nam xếp hạng cao quốc tế, mạnh về CNTT, Du lịch và Sức khỏe.",
+        methods: "THPT + ĐGNL + Học bạ THPT",
+        focusInputs: ["apt", "gpa"],
+        defaultKhoi: "A01"
     }
 };
 

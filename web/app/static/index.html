@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styles.css?v=4.7">
+    <link rel="stylesheet" href="styles.css?v=4.8">
 </head>
 <body>
     <!-- Navigation Header -->
@@ -68,39 +68,54 @@
                     <label for="school-target-select"><i class="fa-solid fa-school-flag text-primary"></i> <strong>Trường ĐH Mơ Ước:</strong></label>
                     <select id="school-target-select" class="school-target-select" onchange="onSelectSchoolTarget(this.value)">
                         <option value="">-- Chọn trường đại học bạn muốn xét tuyển --</option>
-                        <optgroup label="🏛️ Top Kỹ thuật & Công nghệ">
+                        <optgroup label="🏛️ Top Kỹ thuật, Công nghệ & Mật mã">
                             <option value="BKHN" selected>🏛️ ĐH Bách khoa Hà Nội (BKHN)</option>
                             <option value="HCMUT">⚙️ ĐH Bách khoa - ĐHQG-HCM (HCMUT)</option>
                             <option value="UET">🔬 ĐH Công nghệ - ĐHQGHN (UET)</option>
                             <option value="UIT">💻 ĐH Công nghệ Thông tin ĐHQG-HCM (UIT)</option>
+                            <option value="HCMUS">🧪 ĐH Khoa học Tự nhiên - ĐHQG-HCM (HCMUS)</option>
                             <option value="PTIT">📡 Học viện Công nghệ Bưu chính Viễn thông (PTIT)</option>
+                            <option value="KMA">🔐 Học viện Kỹ thuật Mật mã (KMA)</option>
                             <option value="DUT">🏗️ ĐH Bách khoa - ĐH Đà Nẵng (DUT)</option>
                             <option value="HaUI">🔧 ĐH Công nghiệp Hà Nội (HaUI)</option>
                             <option value="UTC">🚆 ĐH Giao thông Vận tải (UTC)</option>
                             <option value="FPT">🌐 ĐH FPT (FPT)</option>
                         </optgroup>
-                        <optgroup label="📈 Top Kinh tế, Ngoại thương & Quản trị">
+                        <optgroup label="📈 Top Kinh tế, Tài chính, Ngân hàng & Ngoại thương">
                             <option value="NEU">📈 ĐH Kinh tế Quốc dân (NEU)</option>
                             <option value="FTU">🚢 ĐH Ngoại thương (FTU)</option>
                             <option value="UEH">📊 ĐH Kinh tế TP.HCM (UEH)</option>
                             <option value="AOF">💰 Học viện Tài chính (AOF)</option>
                             <option value="DAV">🌐 Học viện Ngoại giao (DAV)</option>
                             <option value="TMU">🛒 ĐH Thương mại (TMU)</option>
+                            <option value="UEB">💹 ĐH Kinh tế - ĐHQGHN (UEB)</option>
+                            <option value="HUB">🏦 ĐH Ngân hàng TP.HCM (HUB)</option>
+                            <option value="UFM">📣 ĐH Tài chính - Marketing (UFM)</option>
                             <option value="DUE">📉 ĐH Kinh tế - ĐH Đà Nẵng (DUE)</option>
                         </optgroup>
                         <optgroup label="🩺 Top Y Dược & Khoa học Sức khỏe">
                             <option value="HMU">🩺 ĐH Y Hà Nội (HMU)</option>
                             <option value="UMP">💊 ĐH Y Dược TP.HCM (UMP)</option>
                             <option value="PNTU">🏥 ĐH Y khoa Phạm Ngọc Thạch (PNTU)</option>
+                            <option value="HPMU">💉 ĐH Y Dược Hải Phòng (HPMU)</option>
+                            <option value="CTUMP">🩺 ĐH Y Dược Cần Thơ (CTUMP)</option>
                             <option value="HMED">🌿 ĐH Y Dược - ĐH Huế (HMED)</option>
                         </optgroup>
-                        <optgroup label="🎨 Kiến trúc, Xã hội, Ngoại ngữ, Luật & Sư phạm">
-                            <option value="HAU">📐 ĐH Kiến trúc Hà Nội (HAU)</option>
-                            <option value="UAH">🏛️ ĐH Kiến trúc TP.HCM (UAH)</option>
-                            <option value="USSH_HCM">📚 ĐH KHXH&NV - ĐHQG-HCM (USSH)</option>
+                        <optgroup label="⚖️ Luật, Sư phạm, Ngoại ngữ & Xã hội">
+                            <option value="HLU">⚖️ ĐH Luật Hà Nội (HLU)</option>
+                            <option value="ULIS">🌏 ĐH Ngoại ngữ - ĐHQGHN (ULIS)</option>
                             <option value="HANU">🗣️ ĐH Hà Nội (HANU)</option>
                             <option value="HNUE">🎓 ĐH Sư phạm Hà Nội (HNUE)</option>
+                            <option value="HCMUE">📚 ĐH Sư phạm TP.HCM (HCMUE)</option>
                             <option value="AJC">🎙️ Học viện Báo chí & Tuyên truyền (AJC)</option>
+                            <option value="USSH_HCM">🏛️ ĐH KHXH&NV - ĐHQG-HCM (USSH)</option>
+                            <option value="HOU">📖 ĐH Mở Hà Nội (HOU)</option>
+                        </optgroup>
+                        <optgroup label="🎨 Kiến trúc, Xây dựng & Đa ngành">
+                            <option value="HAU">📐 ĐH Kiến trúc Hà Nội (HAU)</option>
+                            <option value="UAH">🏛️ ĐH Kiến trúc TP.HCM (UAH)</option>
+                            <option value="TDTU">🌟 ĐH Tôn Đức Thắng (TDTU)</option>
+                            <option value="DTU">🚀 ĐH Duy Tân (DTU)</option>
                         </optgroup>
                     </select>
                 </div>
@@ -1472,6 +1487,6 @@
     </footer>
 
     <!-- App Logic -->
-    <script src="app.js?v=4.7"></script>
+    <script src="app.js?v=4.8"></script>
 </body>
 </html>

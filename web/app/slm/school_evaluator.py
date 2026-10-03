@@ -114,6 +114,114 @@ class SchoolEvaluator:
             "avatar": "📉",
             "accent_color": "#4338ca",
             "culture_traits": ["Tư duy kinh doanh", "Giao tiếp thuyết phục", "Khát vọng vươn xa"]
+        },
+        "AOF": {
+            "name": "Thầy PGS.TS Nguyễn Trọng Cơ",
+            "role": "Hội đồng Tuyển sinh Học viện Tài chính",
+            "school": "Học viện Tài chính",
+            "motto": "Chuẩn mực tài chính, vững bước tương lai",
+            "avatar": "💰",
+            "accent_color": "#047857",
+            "culture_traits": ["Tỉ mỉ số liệu", "Đạo đức nghề nghiệp", "Phân tích tài chính", "Cẩn trọng"]
+        },
+        "DAV": {
+            "name": "Cô TS. Nguyễn Thị Thìn",
+            "role": "Ban Đào tạo & Đối ngoại Ngoại giao",
+            "school": "Học viện Ngoại giao",
+            "motto": "Năng động, sáng tạo, tầm nhìn toàn cầu",
+            "avatar": "🌐",
+            "accent_color": "#1e40af",
+            "culture_traits": ["Ngoại ngữ xuất sắc", "Nghi thức ngoại giao", "Tư duy đa văn hóa", "Thuyết trình"]
+        },
+        "TMU": {
+            "name": "Thầy PGS.TS Hà Văn Sự",
+            "role": "Ban Tuyển sinh ĐH Thương mại",
+            "school": "Trường Đại học Thương mại",
+            "motto": "Khởi nghiệp đổi mới, làm chủ thị trường số",
+            "avatar": "🛒",
+            "accent_color": "#b45309",
+            "culture_traits": ["Nhanh nhạy thị trường", "Marketing số", "Tư duy dịch vụ", "Chủ động"]
+        },
+        "UEB": {
+            "name": "Cô PGS.TS Lê Thị Anh",
+            "role": "Cố vấn Tuyển sinh & Hợp tác Quốc tế UEB",
+            "school": "Trường Đại học Kinh tế - ĐHQGHN",
+            "motto": "Trách nhiệm, sáng tạo, chuẩn mực quốc tế",
+            "avatar": "💹",
+            "accent_color": "#0d9488",
+            "culture_traits": ["Tư duy kinh tế", "Nghiên cứu học thuật", "Kỹ năng toàn cầu", "Tự chủ"]
+        },
+        "HUB": {
+            "name": "Thầy TS. Trần Mai Long",
+            "role": "Ban Đào tạo ĐH Ngân hàng TP.HCM",
+            "school": "Trường Đại học Ngân hàng TP.HCM",
+            "motto": "Tiên phong công nghệ tài chính, ngân hàng hiện đại",
+            "avatar": "🏦",
+            "accent_color": "#1e3a8a",
+            "culture_traits": ["Fintech", "Kỷ luật tài chính", "Đạo đức nghề nghiệp", "Chuyên nghiệp"]
+        },
+        "HCMUS": {
+            "name": "Thầy PGS.TS Trần Lê Quan",
+            "role": "Hội đồng Tuyển sinh & Khoa học Mũi nhọn",
+            "school": "Trường ĐH Khoa học Tự nhiên - ĐHQG-HCM",
+            "motto": "Nền tảng khoa học vững chắc, bứt phá công nghệ tương lai",
+            "avatar": "🧪",
+            "accent_color": "#0284c7",
+            "culture_traits": ["Tư duy nghiên cứu", "Đam mê khoa học", "Kiên trì thí nghiệm", "Sáng tạo số"]
+        },
+        "KMA": {
+            "name": "Thầy Đại tá TS. Hoàng Văn Thắng",
+            "role": "Ban Tuyển sinh Học viện Kỹ thuật Mật mã",
+            "school": "Học viện Kỹ thuật Mật mã",
+            "motto": "Trung thành, tận tụy, bí mật, bất ngờ",
+            "avatar": "🔐",
+            "accent_color": "#15803d",
+            "culture_traits": ["Kỷ luật quân đội", "An toàn thông tin", "Mật mã học", "Bảo mật tuyệt đối"]
+        },
+        "HLU": {
+            "name": "Cô PGS.TS Vũ Thị Lan Anh",
+            "role": "Hội đồng Tuyển sinh ĐH Luật Hà Nội",
+            "school": "Trường Đại học Luật Hà Nội",
+            "motto": "Thượng tôn pháp luật, nhân văn và công lý",
+            "avatar": "⚖️",
+            "accent_color": "#7f1d1d",
+            "culture_traits": ["Tư duy logic pháp lý", "Lập luận sắc bén", "Công tâm chính trực", "Đọc hiểu sâu"]
+        },
+        "ULIS": {
+            "name": "Cô TS. Đỗ Tuấn Minh",
+            "role": "Hội đồng Tuyển sinh ĐH Ngoại ngữ - ĐHQGHN",
+            "school": "Trường Đại học Ngoại ngữ - ĐHQGHN",
+            "motto": "Cùng nhau kiến tạo cơ hội, vươn tầm năm châu",
+            "avatar": "🌏",
+            "accent_color": "#0369a1",
+            "culture_traits": ["Năng khiếu ngôn ngữ", "Thấu cảm văn hóa", "Giao tiếp tự tin", "Sư phạm mẫu mực"]
+        },
+        "HNUE": {
+            "name": "Thầy GS.TS Nguyễn Văn Minh",
+            "role": "Hội đồng Tuyển sinh ĐH Sư phạm Hà Nội",
+            "school": "Trường Đại học Sư phạm Hà Nội",
+            "motto": "Chuẩn mực người thầy, sáng tạo tri thức, phụng sự cộng đồng",
+            "avatar": "🎓",
+            "accent_color": "#166534",
+            "culture_traits": ["Yêu nghề dạy học", "Kiên nhẫn bao dung", "Phương pháp sư phạm", "Gương mẫu"]
+        },
+        "TDTU": {
+            "name": "Thầy TS. Võ Hoàng Duy",
+            "role": "Ban Tuyển sinh ĐH Tôn Đức Thắng",
+            "school": "Trường Đại học Tôn Đức Thắng",
+            "motto": "Phụng sự xã hội, kỷ luật, chất lượng và quốc tế hóa",
+            "avatar": "🌟",
+            "accent_color": "#c2410c",
+            "culture_traits": ["Kỷ luật nghiêm túc", "Tiếng Anh giao tiếp", "Tinh thần phụng sự", "Hội nhập"]
+        },
+        "DTU": {
+            "name": "Thầy TS. Lê Nguyên Bảo",
+            "role": "Ban Tuyển sinh ĐH Duy Tân",
+            "school": "Trường Đại học Duy Tân",
+            "motto": "Tất cả vì quyền lợi học tập và việc làm sinh viên",
+            "avatar": "🚀",
+            "accent_color": "#b91c1c",
+            "culture_traits": ["Năng động thực tế", "Công nghệ ứng dụng", "Chủ động sáng tạo", "Khởi nghiệp"]
         }
     }
 
@@ -154,6 +262,54 @@ class SchoolEvaluator:
         "UET": {
             "toan": 9.0, "van": 7.5, "anh": 8.5, "ly": 8.8, "hoa": 8.2, "sinh": 6.5, "su": 6.0, "dia": 6.0,
             "gpa": 8.9, "ielts": 7.0, "tsa": "", "apt": "", "hsa": 102, "priority": "KV2"
+        },
+        "AOF": {
+            "toan": 8.4, "van": 7.8, "anh": 8.4, "ly": 8.0, "hoa": 7.8, "sinh": 6.0, "su": 7.0, "dia": 7.0,
+            "gpa": 8.5, "ielts": 6.5, "tsa": "", "apt": "", "hsa": 90, "priority": "KV2"
+        },
+        "DAV": {
+            "toan": 8.0, "van": 8.5, "anh": 9.0, "ly": 7.0, "hoa": 6.5, "sinh": 6.0, "su": 8.0, "dia": 8.0,
+            "gpa": 8.9, "ielts": 7.0, "tsa": "", "apt": "", "hsa": 95, "priority": "KV3"
+        },
+        "TMU": {
+            "toan": 8.2, "van": 7.8, "anh": 8.4, "ly": 7.8, "hoa": 7.2, "sinh": 6.0, "su": 7.2, "dia": 7.2,
+            "gpa": 8.4, "ielts": 6.0, "tsa": "", "apt": "", "hsa": 92, "priority": "KV2"
+        },
+        "UEB": {
+            "toan": 8.6, "van": 8.0, "anh": 8.8, "ly": 7.8, "hoa": 7.0, "sinh": 6.0, "su": 7.5, "dia": 7.5,
+            "gpa": 8.7, "ielts": 6.5, "tsa": "", "apt": "", "hsa": 98, "priority": "KV2"
+        },
+        "HUB": {
+            "toan": 8.0, "van": 7.5, "anh": 8.2, "ly": 7.5, "hoa": 7.0, "sinh": 6.0, "su": 7.0, "dia": 7.0,
+            "gpa": 8.3, "ielts": 6.0, "tsa": "", "apt": 790, "hsa": "", "priority": "KV2"
+        },
+        "HCMUS": {
+            "toan": 8.8, "van": 7.0, "anh": 8.0, "ly": 8.4, "hoa": 8.0, "sinh": 7.0, "su": 6.0, "dia": 6.0,
+            "gpa": 8.6, "ielts": 6.0, "tsa": "", "apt": 830, "hsa": "", "priority": "KV2"
+        },
+        "KMA": {
+            "toan": 8.4, "van": 7.0, "anh": 8.0, "ly": 8.4, "hoa": 7.8, "sinh": 6.0, "su": 6.0, "dia": 6.0,
+            "gpa": 8.3, "ielts": 6.0, "tsa": "", "apt": "", "hsa": 88, "priority": "KV2"
+        },
+        "HLU": {
+            "toan": 7.8, "van": 8.8, "anh": 8.5, "ly": 6.8, "hoa": 6.5, "sinh": 6.0, "su": 8.8, "dia": 8.5,
+            "gpa": 8.8, "ielts": 6.5, "tsa": "", "apt": "", "hsa": 90, "priority": "KV2"
+        },
+        "ULIS": {
+            "toan": 7.5, "van": 8.2, "anh": 9.2, "ly": 6.5, "hoa": 6.0, "sinh": 6.0, "su": 7.5, "dia": 7.5,
+            "gpa": 8.8, "ielts": 7.0, "tsa": "", "apt": "", "hsa": 95, "priority": "KV2"
+        },
+        "HNUE": {
+            "toan": 8.5, "van": 8.4, "anh": 8.0, "ly": 8.0, "hoa": 8.0, "sinh": 7.5, "su": 8.0, "dia": 8.0,
+            "gpa": 8.9, "ielts": 6.0, "tsa": "", "apt": "", "hsa": 92, "priority": "KV2"
+        },
+        "TDTU": {
+            "toan": 8.0, "van": 7.4, "anh": 8.2, "ly": 7.5, "hoa": 7.0, "sinh": 6.5, "su": 7.0, "dia": 7.0,
+            "gpa": 8.3, "ielts": 6.0, "tsa": "", "apt": 780, "hsa": "", "priority": "KV2"
+        },
+        "DTU": {
+            "toan": 7.6, "van": 7.2, "anh": 7.8, "ly": 7.2, "hoa": 7.0, "sinh": 6.5, "su": 6.8, "dia": 6.8,
+            "gpa": 8.0, "ielts": 5.5, "tsa": "", "apt": 720, "hsa": "", "priority": "KV2"
         }
     }
 
