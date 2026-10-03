@@ -581,9 +581,6 @@ function populateAgentResults(data) {
     // 0. AI Empathy Summary
     renderAiEmpathySummary(finalReport?.empathy_summary || psychology?.empathy_summary);
 
-    // 0b. Tích hợp Đánh giá & Phỏng vấn Trường mục tiêu nếu có
-    renderIntegratedSchoolConsultationCard();
-
     // 1. Academic Agent
     document.getElementById("academic-commentary").innerHTML = formatMarkdown(academic.commentary);
     document.getElementById("metric-top-combo").textContent = academic.top_combination;
@@ -4563,44 +4560,40 @@ function openSchoolCheckModalWithFilter(tier) {
     }
 }
 
-function renderIntegratedSchoolConsultationCard() {
-    const card = document.getElementById("school-integrated-consultation-card");
-    if (!card) return;
-
-    if (!window.lastSchoolCheckData && !window.lastInterviewReport && !currentSelectedSchool) {
-        card.classList.add("hidden");
-        return;
+// Xử lý đóng/mở Menu điều hướng góc trái
+function toggleLeftNavMenu(event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
     }
+    const dropdown = document.getElementById("left-nav-dropdown");
+    const btn = document.getElementById("btn-left-menu");
+    if (!dropdown) return;
 
-    const schoolCode = currentSelectedSchool || window.lastSchoolCheckData?.school_info?.code || "BKHN";
-    const schoolMeta = SCHOOL_METADATA[schoolCode] || {};
-    const checkData = window.lastSchoolCheckData;
-    const interview = window.lastInterviewReport;
-    const counts = checkData?.counts || {};
-    const fitScore = interview?.fit_score ? `${interview.fit_score}%` : "Chưa phỏng vấn";
-
-    card.innerHTML = `
-        <div class="school-integrated-header">
-            <h4>
-                <span>${schoolMeta.logo || '🏛️'}</span>
-                <span>Thẩm Định Trường Mục Tiêu: ${schoolMeta.name || schoolCode} (${schoolCode})</span>
-            </h4>
-            <div style="display: flex; align-items: center; gap: 0.65rem;">
-                <span class="badge-item" style="background: #ffffff; padding: 0.25rem 0.65rem; border-radius: 6px; font-weight: 700; color: #047857; font-size: 0.8rem;">
-                    Culture Fit: <strong>${fitScore}</strong>
-                </span>
-                <button type="button" class="btn-secondary btn-sm" onclick="scrollToSchoolOnPage()">
-                    <i class="fa-solid fa-eye"></i> Xem Chi Tiết Thẩm Định
-                </button>
-            </div>
-        </div>
-        <div style="font-size: 0.88rem; color: #1e293b; line-height: 1.55;">
-            <strong>Khuyến nghị từ Hội đồng Cố vấn:</strong> Đối chiếu với kết quả học tập và năng lực thực tế, trường <strong>${schoolMeta.name || schoolCode}</strong> có <strong>${counts.safe || 0} ngành An Toàn</strong> và <strong>${counts.competitive || 0} ngành Cạnh Tranh</strong>.
-            ${interview?.tactical_recommendation?.nv1_advice ? ` ${interview.tactical_recommendation.nv1_advice}` : ` Bạn nên ưu tiên xếp ngành thế mạnh của ${schoolCode} vào NV1 hoặc NV2.`}
-        </div>
-    `;
-    card.classList.remove("hidden");
+    const isHidden = dropdown.classList.contains("hidden");
+    if (isHidden) {
+        dropdown.classList.remove("hidden");
+        btn?.classList.add("active");
+    } else {
+        dropdown.classList.add("hidden");
+        btn?.classList.remove("active");
+    }
 }
+
+function closeLeftNavMenu() {
+    const dropdown = document.getElementById("left-nav-dropdown");
+    const btn = document.getElementById("btn-left-menu");
+    if (dropdown) dropdown.classList.add("hidden");
+    if (btn) btn.classList.remove("active");
+}
+
+// Tự động đóng menu góc trái khi click ra ngoài
+document.addEventListener("click", function (event) {
+    const wrapper = document.querySelector(".left-nav-wrapper");
+    if (wrapper && !wrapper.contains(event.target)) {
+        closeLeftNavMenu();
+    }
+});
 
 function scrollToSchoolOnPage() {
     const card = document.getElementById("school-onpage-result-card");

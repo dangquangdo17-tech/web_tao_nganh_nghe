@@ -12,30 +12,76 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styles.css?v=4.8">
+    <link rel="stylesheet" href="styles.css?v=4.9">
 </head>
 <body>
     <!-- Navigation Header -->
     <header class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                <div class="logo-text">
-                    <span class="brand-title">EduCompass AI</span>
-                    <span class="brand-subtitle">Hệ Thống Cố Vấn Tuyển Sinh & Định Hướng Nghề Nghiệp AI</span>
+            <div class="nav-left">
+                <!-- Menu Điều Hướng Góc Trái Gộp Toàn Bộ Các Mục -->
+                <div class="left-nav-wrapper">
+                    <button type="button" class="btn-left-menu" id="btn-left-menu" onclick="toggleLeftNavMenu(event)" aria-label="Menu chức năng" title="Mở menu điều hướng">
+                        <i class="fa-solid fa-bars"></i>
+                        <span>Menu</span>
+                    </button>
+                    
+                    <!-- Dropdown Menu Góc Trái -->
+                    <div id="left-nav-dropdown" class="left-nav-dropdown hidden">
+                        <div class="left-nav-dropdown-header">
+                            <span><i class="fa-solid fa-compass text-primary"></i> <strong>Danh Mục Điều Hướng</strong></span>
+                            <button type="button" class="btn-close-dropdown" onclick="closeLeftNavMenu()" title="Đóng menu"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <nav class="left-nav-list">
+                            <a href="#advisor-section" class="left-nav-item active" onclick="closeLeftNavMenu()">
+                                <div class="nav-item-icon bg-primary-soft"><i class="fa-solid fa-compass text-primary"></i></div>
+                                <div class="nav-item-text">
+                                    <strong>Tư Vấn Nguyện Vọng</strong>
+                                    <small>Nhập điểm & phân tích nguyện vọng</small>
+                                </div>
+                            </a>
+                            <a href="#feature-hub" class="left-nav-item" onclick="scrollToCareerTools(event); closeLeftNavMenu()">
+                                <div class="nav-item-icon bg-warning-soft"><i class="fa-solid fa-wand-magic-sparkles text-warning"></i></div>
+                                <div class="nav-item-text">
+                                    <strong>6 Công Cụ Đột Phá</strong>
+                                    <small>Holland RIASEC, Học phí, So sánh...</small>
+                                </div>
+                            </a>
+                            <a href="#dashboard-section" class="left-nav-item" onclick="closeLeftNavMenu()">
+                                <div class="nav-item-icon bg-success-soft"><i class="fa-solid fa-chart-pie text-success"></i></div>
+                                <div class="nav-item-text">
+                                    <strong>Bảng Phân Tích</strong>
+                                    <small>Báo cáo 3 Chuyên gia AI & Biểu đồ</small>
+                                </div>
+                            </a>
+                            <div class="left-nav-divider"></div>
+                            <a href="javascript:void(0)" class="left-nav-item" onclick="openWishlistDrawer(); closeLeftNavMenu()">
+                                <div class="nav-item-icon bg-danger-soft"><i class="fa-solid fa-heart text-danger"></i></div>
+                                <div class="nav-item-text">
+                                    <strong>Tủ Nguyện Vọng</strong>
+                                    <small>Xem và so sánh các ngành đã lưu</small>
+                                </div>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Logo & Tên Thương Hiệu -->
+                <div class="logo">
+                    <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="logo-text">
+                        <span class="brand-title">EduCompass AI</span>
+                        <span class="brand-subtitle">Hệ Thống Cố Vấn Tuyển Sinh & Định Hướng Nghề Nghiệp AI</span>
+                    </div>
                 </div>
             </div>
-            <nav class="nav-links">
-                <a href="#advisor-section" class="active"><i class="fa-solid fa-compass"></i> Tư vấn Nguyện vọng</a>
-                <a href="#feature-hub" onclick="scrollToCareerTools(event)"><i class="fa-solid fa-wand-magic-sparkles text-warning"></i> 6 Công Cụ Đột Phá</a>
-                <a href="#dashboard-section"><i class="fa-solid fa-chart-pie"></i> Bảng Phân Tích</a>
-            </nav>
-            <div style="display: flex; align-items: center; gap: 0.6rem;">
-                <button type="button" class="btn-nav-wishlist" onclick="openWishlistDrawer()">
-                    <i class="fa-solid fa-heart text-danger"></i> Tủ Nguyện Vọng (<span id="nav-wishlist-count">0</span>)
+
+            <div class="nav-right">
+                <button type="button" class="btn-nav-wishlist" onclick="openWishlistDrawer()" title="Mở danh sách ngành đã lưu">
+                    <i class="fa-solid fa-heart text-danger"></i> <span>Tủ Nguyện Vọng (<strong id="nav-wishlist-count">0</strong>)</span>
                 </button>
                 <div class="nav-badge">
-                    <span class="status-indicator"></span> 3 Chuyên Gia AI
+                    <span class="status-indicator"></span> <span>3 Chuyên Gia AI</span>
                 </div>
             </div>
         </div>
@@ -561,11 +607,6 @@
                     <h2>Báo Cáo Phân Tích Toàn Diện Từ Hội Đồng 3 Chuyên Gia AI</h2>
                     <p class="section-subtitle">Tổng hợp đa chiều giữa năng lực học tập thực tế, thiên hướng tâm lý nghề nghiệp và quy chế tuyển sinh hiện hành.</p>
                 </div>
-            </div>
-
-            <!-- Thẻ Tích Hợp Đánh Giá & Phỏng Vấn Trường Mục Tiêu -->
-            <div id="school-integrated-consultation-card" class="school-integrated-consultation-card mb-4 hidden">
-                <!-- Populated dynamically when user runs consult -->
             </div>
 
             <!-- Khối Giải Thích: "Hệ Thống Hiểu Bạn Thế Nào?" (AI Empathy Summary) -->
@@ -1487,6 +1528,6 @@
     </footer>
 
     <!-- App Logic -->
-    <script src="app.js?v=4.8"></script>
+    <script src="app.js?v=4.9"></script>
 </body>
 </html>

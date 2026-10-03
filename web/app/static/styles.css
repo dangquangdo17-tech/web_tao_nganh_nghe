@@ -88,24 +88,185 @@ body {
     display: block;
 }
 
-.nav-links {
-    display: flex;
-    gap: 1.5rem;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--gray-500);
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
+.nav-left {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 1rem;
 }
 
-.nav-links a:hover, .nav-links a.active {
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+/* Menu Điều Hướng Góc Trái (Left Nav Dropdown) */
+.left-nav-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-left-menu {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    color: #1e293b;
+    padding: 0.45rem 0.95rem;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.btn-left-menu:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
     color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.12);
+}
+
+.btn-left-menu.active {
+    background: #eef2ff;
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.left-nav-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 320px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.16), 0 4px 12px rgba(15, 23, 42, 0.08);
+    z-index: 1200;
+    padding: 0.65rem;
+    animation: leftNavFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes leftNavFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.left-nav-dropdown-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0.65rem 0.6rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.84rem;
+    color: #0f172a;
+}
+
+.btn-close-dropdown {
+    background: transparent;
+    border: none;
+    font-size: 0.95rem;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.btn-close-dropdown:hover {
+    color: #0f172a;
+    background: #f1f5f9;
+}
+
+.left-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.45rem;
+}
+
+.left-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #334155;
+    transition: all 0.15s ease;
+}
+
+.left-nav-item:hover {
+    background: #f8fafc;
+    transform: translateX(3px);
+}
+
+.left-nav-item.active {
+    background: #eef2ff;
+}
+
+.nav-item-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.nav-item-icon.bg-primary-soft {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.nav-item-icon.bg-warning-soft {
+    background: #fffbeb;
+    color: #d97706;
+}
+
+.nav-item-icon.bg-success-soft {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.nav-item-icon.bg-danger-soft {
+    background: #fff1f2;
+    color: #e11d48;
+}
+
+.nav-item-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.nav-item-text strong {
+    font-size: 0.88rem;
+    color: #0f172a;
+    line-height: 1.25;
+}
+
+.nav-item-text small {
+    font-size: 0.74rem;
+    color: #64748b;
+    line-height: 1.2;
+}
+
+.left-nav-divider {
+    height: 1px;
+    background: #f1f5f9;
+    margin: 0.35rem 0.5rem;
 }
 
 .nav-badge {
@@ -6256,15 +6417,25 @@ table.data-table tr:hover {
         padding: 0.6rem 0.85rem;
     }
 
+    .nav-left {
+        gap: 0.5rem;
+    }
+
+    .btn-left-menu {
+        padding: 0.35rem 0.65rem;
+        font-size: 0.8rem;
+    }
+
+    .left-nav-dropdown {
+        width: min(320px, calc(100vw - 1.5rem));
+        left: 0;
+    }
+
     .brand-title {
         font-size: 1.05rem;
     }
 
     .brand-subtitle {
-        display: none;
-    }
-
-    .nav-links {
         display: none;
     }
 
