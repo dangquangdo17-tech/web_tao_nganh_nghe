@@ -1,0 +1,22 @@
+name: Keep Render Alive Cron
+
+on:
+  schedule:
+    # Chạy tự động mỗi 10 phút để giữ server Render luôn thức 24/7 (không bị sleep)
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Cho phép bấm chạy thử thủ công bất cứ lúc nào trên GitHub
+
+jobs:
+  ping-render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render Service
+        run: |
+          echo "Pinging EduCompass AI at https://web-tao-nganh-nghe.onrender.com..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://web-tao-nganh-nghe.onrender.com/api/universities)
+          echo "HTTP Status Code: $STATUS"
+          if [ "$STATUS" -eq 200 ]; then
+            echo "✅ Website đang hoạt động hoàn hảo và luôn được đánh thức 24/7!"
+          else
+            echo "⚠️ Status $STATUS, đánh thức container thành công."
+          fi
