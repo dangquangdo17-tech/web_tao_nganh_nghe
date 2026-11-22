@@ -573,55 +573,21 @@ function renderAiEmpathySummary(empathy) {
 
 // Render Agent Results
 function populateAgentResults(data) {
-    const academic = data.academic_analysis;
-    const psychology = data.psychology_analysis;
-    const admission = data.admission_analysis;
     const finalReport = data.final_report;
+    const psychology = data.psychology_analysis;
 
     // 0. AI Empathy Summary
     renderAiEmpathySummary(finalReport?.empathy_summary || psychology?.empathy_summary);
 
-    // 1. Academic Agent
-    document.getElementById("academic-commentary").innerHTML = formatMarkdown(academic.commentary);
-    document.getElementById("metric-top-combo").textContent = academic.top_combination;
-    document.getElementById("metric-top-score").textContent = academic.top_score.toFixed(2) + " điểm";
-    document.getElementById("metric-std").textContent = "±" + academic.std_deviation.toFixed(2);
-    renderCombosChart(academic.ranked_combinations);
-
-    // 2. Psychology Agent
-    document.getElementById("psychology-commentary").innerHTML = formatMarkdown(psychology.commentary);
-    document.getElementById("metric-holland-code").textContent = psychology.primary_code;
-    document.getElementById("metric-dominant-group").textContent = psychology.dominant_type;
-    renderHollandRadarChart(psychology.holland_scores);
-
-    // 3. Admission Agent
-    document.getElementById("admission-commentary").innerHTML = formatMarkdown(admission.commentary);
-    
-    // IELTS Advantage Tags
-    const ieltsBox = document.getElementById("ielts-advantage-box");
-    ieltsBox.innerHTML = "";
-    if (admission.ielts_advantages && admission.ielts_advantages.length > 0) {
-        admission.ielts_advantages.slice(0, 3).forEach(adv => {
-            const tag = document.createElement("div");
-            tag.className = "ielts-pill";
-            tag.innerHTML = `<strong>${adv.university_code}:</strong> IELTS ${adv.ielts_band} ➔ ${adv.converted_english_score}đ (+${adv.score_gain}đ)`;
-            ieltsBox.appendChild(tag);
-        });
-    }
-
-    // Sub-criteria Alerts
-    const alertBox = document.getElementById("sub-criteria-alert-box");
-    alertBox.innerHTML = "";
-    if (admission.sub_criteria_alerts && admission.sub_criteria_alerts.length > 0) {
-        admission.sub_criteria_alerts.forEach(al => {
-            const p = document.createElement("p");
-            p.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-warning"></i> ${al}`;
-            alertBox.appendChild(p);
-        });
-    }
-
-    // Synthesis Summary
-    document.getElementById("synthesis-summary-text").innerHTML = formatMarkdown(finalReport.summary);
+    // Optional safe updates if elements exist
+    const acadEl = document.getElementById("academic-commentary");
+    if (acadEl && data.academic_analysis) acadEl.innerHTML = formatMarkdown(data.academic_analysis.commentary);
+    const psychEl = document.getElementById("psychology-commentary");
+    if (psychEl && data.psychology_analysis) psychEl.innerHTML = formatMarkdown(data.psychology_analysis.commentary);
+    const admEl = document.getElementById("admission-commentary");
+    if (admEl && data.admission_analysis) admEl.innerHTML = formatMarkdown(data.admission_analysis.commentary);
+    const synthEl = document.getElementById("synthesis-summary-text");
+    if (synthEl && finalReport?.summary) synthEl.innerHTML = formatMarkdown(finalReport.summary);
 }
 
 // // Render Roadmap cards
@@ -1049,7 +1015,9 @@ function switchTierTab(tier) {
 
 // Chart 1: Subject Combinations Bar Chart
 function renderCombosChart(combos) {
-    const ctx = document.getElementById("chart-combos").getContext("2d");
+    const canvas = document.getElementById("chart-combos");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
     if (chartCombos) chartCombos.destroy();
 
     const labels = combos.map(c => c.combination);
@@ -1079,7 +1047,9 @@ function renderCombosChart(combos) {
 
 // Chart 2: Holland RIASEC Radar Chart
 function renderHollandRadarChart(hollandScores) {
-    const ctx = document.getElementById("chart-holland").getContext("2d");
+    const canvas = document.getElementById("chart-holland");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
     if (chartHolland) chartHolland.destroy();
 
     const labels = [

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styles.css?v=4.9">
+    <link rel="stylesheet" href="styles.css?v=5.0">
 </head>
 <body>
     <!-- Navigation Header -->
@@ -604,89 +604,14 @@
             <div class="section-header">
                 <div class="section-number">3</div>
                 <div>
-                    <h2>Báo Cáo Phân Tích Toàn Diện Từ Hội Đồng 3 Chuyên Gia AI</h2>
-                    <p class="section-subtitle">Tổng hợp đa chiều giữa năng lực học tập thực tế, thiên hướng tâm lý nghề nghiệp và quy chế tuyển sinh hiện hành.</p>
+                    <h2>Báo Cáo Đánh Giá & Thấu Hiểu Hồ Sơ Từ AI</h2>
+                    <p class="section-subtitle">Góc nhìn thấu cảm và nhận diện điểm cộng, năng lực vượt trội cùng các nguyện vọng đề xuất.</p>
                 </div>
             </div>
 
             <!-- Khối Giải Thích: "Hệ Thống Hiểu Bạn Thế Nào?" (AI Empathy Summary) -->
             <div id="ai-empathy-card" class="ai-empathy-card mb-4 hidden">
                 <!-- Populated dynamically by renderAiEmpathySummary() -->
-            </div>
-
-            <!-- Agent Cards Grid -->
-            <div class="agents-grid">
-                <!-- Academic Agent -->
-                <div class="agent-card academic-card">
-                    <div class="agent-card-header">
-                        <div class="agent-avatar"><i class="fa-solid fa-calculator"></i></div>
-                        <div>
-                            <h4>Chuyên Gia Học Thuật</h4>
-                            <span class="agent-badge">Phân Tích Điểm & Tổ Hợp</span>
-                        </div>
-                    </div>
-                    <div class="agent-body">
-                        <p id="academic-commentary" class="agent-text"></p>
-                        <div class="agent-metric-box">
-                            <div><strong>Khối mạnh nhất:</strong> <span id="metric-top-combo" class="highlight-val">A01</span></div>
-                            <div><strong>Tổng điểm:</strong> <span id="metric-top-score" class="highlight-val">22.50</span></div>
-                            <div><strong>Độ lệch chuẩn:</strong> <span id="metric-std" class="highlight-val">±0.58</span></div>
-                        </div>
-                        <div class="chart-container-sm mt-3">
-                            <canvas id="chart-combos"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Psychology Agent -->
-                <div class="agent-card psychology-card">
-                    <div class="agent-card-header">
-                        <div class="agent-avatar"><i class="fa-solid fa-heart-pulse"></i></div>
-                        <div>
-                            <h4>Chuyên Gia Tâm Lý</h4>
-                            <span class="agent-badge">Định Hướng Thiên Hướng Nghề Nghiệp</span>
-                        </div>
-                    </div>
-                    <div class="agent-body">
-                        <p id="psychology-commentary" class="agent-text"></p>
-                        <div class="agent-metric-box">
-                            <div><strong>Mã Holland:</strong> <span id="metric-holland-code" class="highlight-val">RIC</span></div>
-                            <div><strong>Nhóm chủ đạo:</strong> <span id="metric-dominant-group" class="highlight-val">Kỹ thuật - Thực tế</span></div>
-                        </div>
-                        <div class="chart-container-sm mt-3">
-                            <canvas id="chart-holland"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Admission Agent -->
-                <div class="agent-card admission-card">
-                    <div class="agent-card-header">
-                        <div class="agent-avatar"><i class="fa-solid fa-scale-balanced"></i></div>
-                        <div>
-                            <h4>Chuyên Gia Tuyển Sinh</h4>
-                            <span class="agent-badge">Quy Chế & Cơ Hội Trúng Tuyển</span>
-                        </div>
-                    </div>
-                    <div class="agent-body">
-                        <p id="admission-commentary" class="agent-text"></p>
-                        <div id="ielts-advantage-box" class="ielts-tag-box mt-2">
-                            <!-- Populated dynamically -->
-                        </div>
-                        <div id="sub-criteria-alert-box" class="alert-box mt-2">
-                            <!-- Populated dynamically -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Executive Synthesis Alert -->
-            <div class="synthesis-summary-card mt-4">
-                <div class="synthesis-icon"><i class="fa-solid fa-bullseye"></i></div>
-                <div>
-                    <h4>Chiến Lược Phối Hợp Tổng Thể Từ Hội Đồng Chuyên Gia:</h4>
-                    <p id="synthesis-summary-text"></p>
-                </div>
             </div>
         </section>
 
@@ -735,120 +660,10 @@
                         <h3 class="roadmap-title"><i class="fa-solid fa-map-location-dot" style="color: var(--primary); margin-right: 6px;"></i> Lộ Trình 10 Nguyện Vọng Tối Ưu Theo Tỷ Lệ Vàng</h3>
                         <p class="roadmap-subtitle">Phân bổ chuẩn: <strong>20% Thử thách (Mơ ước) • 50% Vừa sức (Mục tiêu) • 30% An toàn (Bảo hiểm)</strong></p>
                     </div>
-                    <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-                        <button type="button" class="btn-toggle-all-boxes" id="btn-toggle-all-boxes" onclick="toggleAllHelperBoxes()" title="Thu gọn hoặc mở rộng toàn bộ 3 khung công cụ bên dưới">
-                            <i class="fa-solid fa-compress"></i> <span>Thu gọn 3 khung</span>
-                        </button>
+                    <div>
                         <button type="button" class="btn-export-pdf" onclick="exportStrategyPDF()">
                             <i class="fa-solid fa-file-pdf"></i> Xuất Báo Cáo Chiến Lược (PDF / In A4)
                         </button>
-                    </div>
-                </div>
-
-                <!-- Mô Phỏng "Nếu - Thì" (What-if Analysis Simulator) -->
-                <div class="what-if-card mb-4" id="what-if-card">
-                    <div class="what-if-header" onclick="toggleHelperBox('what-if-card')" title="Bấm để đóng / mở khung này">
-                        <div class="what-if-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                        <div class="what-if-title-area">
-                            <h4 class="what-if-title">Mô Phỏng "Nếu - Thì" (What-if Simulator) - Thử Thách Cải Thiện Điểm</h4>
-                            <p class="what-if-subtitle">Khám phá ngay: Nếu điểm Toán/Tiếng Anh tăng thêm hoặc có thêm chứng chỉ IELTS thì danh sách nguyện vọng sẽ biến chuyển ra sao!</p>
-                        </div>
-                        <div class="header-action-btns" onclick="event.stopPropagation()">
-                            <button type="button" class="btn-reset-whatif" onclick="resetWhatIf()"><i class="fa-solid fa-rotate-left"></i> Khôi phục điểm gốc</button>
-                            <button type="button" class="btn-collapse-toggle" onclick="toggleHelperBox('what-if-card')" title="Đóng / mở khung này">
-                                <i class="fa-solid fa-chevron-up"></i> <span>Thu gọn</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="collapsible-body" id="what-if-body">
-                        <div class="what-if-controls-grid">
-                            <div class="what-if-control-item">
-                                <span class="control-label"><i class="fa-solid fa-square-root-variable"></i> Điểm Toán:</span>
-                                <div class="stepper-group">
-                                    <button type="button" class="btn-step" id="btn-step-toan-05" onclick="adjustSubjectDelta('Toán', 0.5)">+0.5đ</button>
-                                    <button type="button" class="btn-step" id="btn-step-toan-10" onclick="adjustSubjectDelta('Toán', 1.0)">+1.0đ</button>
-                                    <button type="button" class="btn-step" id="btn-step-toan-15" onclick="adjustSubjectDelta('Toán', 1.5)">+1.5đ</button>
-                                </div>
-                            </div>
-
-                            <div class="what-if-control-item">
-                                <span class="control-label"><i class="fa-solid fa-language"></i> Điểm Tiếng Anh:</span>
-                                <div class="stepper-group">
-                                    <button type="button" class="btn-step" id="btn-step-anh-05" onclick="adjustSubjectDelta('Tiếng Anh', 0.5)">+0.5đ</button>
-                                    <button type="button" class="btn-step" id="btn-step-anh-10" onclick="adjustSubjectDelta('Tiếng Anh', 1.0)">+1.0đ</button>
-                                    <button type="button" class="btn-step" id="btn-step-anh-15" onclick="adjustSubjectDelta('Tiếng Anh', 1.5)">+1.5đ</button>
-                                </div>
-                            </div>
-
-                            <div class="what-if-control-item">
-                                <span class="control-label"><i class="fa-solid fa-certificate"></i> Giả định IELTS:</span>
-                                <select id="whatif-ielts" class="select-whatif-ielts" onchange="adjustIeltsWhatIf(this.value)">
-                                    <option value="">Giữ nguyên hiện tại</option>
-                                    <option value="6.0">IELTS 6.0</option>
-                                    <option value="6.5">IELTS 6.5</option>
-                                    <option value="7.0">IELTS 7.0</option>
-                                    <option value="7.5">IELTS 7.5+</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div id="whatif-live-banner" class="whatif-live-banner" style="display: none;">
-                            <i class="fa-solid fa-bolt-lightning text-warning"></i>
-                            <span id="whatif-banner-text">Đang áp dụng giả định điểm...</span>
-                        </div>
-
-                        <!-- Bảng chi tiết biến chuyển từng nguyện vọng -->
-                        <div id="whatif-impact-breakdown" class="whatif-impact-breakdown" style="display: none;">
-                            <div class="whatif-breakdown-title">
-                                <i class="fa-solid fa-chart-line" style="color: #16a34a;"></i> 
-                                <span>Phân Tích Chi Tiết Biến Chuyển Lộ Trình Sau Khi Cộng Điểm:</span>
-                            </div>
-                            <div id="whatif-breakdown-list" class="whatif-breakdown-list">
-                                <!-- Populated dynamically -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Khung Tra Cứu & Đánh Giá Trường Mơ Ước -->
-                <div class="dream-search-box mb-4" id="dream-search-card">
-                    <div class="dream-search-header" onclick="toggleHelperBox('dream-search-card')" title="Bấm để đóng / mở khung này">
-                        <div class="dream-icon"><i class="fa-solid fa-star"></i></div>
-                        <div class="dream-title-area" style="flex: 1;">
-                            <h4 class="dream-title">Tra Cứu & Đánh Giá Trường Đại Học Mơ Ước Của Bạn</h4>
-                            <p class="dream-subtitle">Nhập tên trường, mã trường hoặc ngành học mơ ước để AI tính toán ngay tỷ lệ đỗ, khoảng cách điểm và chi tiết nghề nghiệp:</p>
-                        </div>
-                        <div class="header-action-btns" onclick="event.stopPropagation()">
-                            <button type="button" class="btn-collapse-toggle" onclick="toggleHelperBox('dream-search-card')" title="Đóng / mở khung này">
-                                <i class="fa-solid fa-chevron-up"></i> <span>Thu gọn</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="collapsible-body" id="dream-search-body">
-                        <div class="dream-input-row">
-                            <div class="dream-input-wrapper">
-                                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                                <input type="text" id="dream-search-input" placeholder="Ví dụ: BKHN, NEU, UIT, Đại học Ngoại Thương, Y Dược, Kỹ thuật phần mềm..." onkeydown="handleDreamKeydown(event)">
-                            </div>
-                            <button type="button" class="btn-primary btn-dream-search" onclick="searchDreamUniversity()">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> Đánh Giá Cơ Hội Ngay
-                            </button>
-                        </div>
-                        <div class="dream-chips-row">
-                            <span class="dream-chips-label"><i class="fa-solid fa-fire text-danger"></i> Gợi ý tìm nhanh:</span>
-                            <button type="button" class="chip-btn" onclick="quickSearchDream('BKHN')">🏛️ ĐH Bách khoa Hà Nội</button>
-                            <button type="button" class="chip-btn" onclick="quickSearchDream('NEU')">📈 ĐH Kinh tế Quốc dân</button>
-                            <button type="button" class="chip-btn" onclick="quickSearchDream('FTU')">🚢 ĐH Ngoại thương</button>
-                            <button type="button" class="chip-btn" onclick="quickSearchDream('UIT')">💻 ĐH CNTT TP.HCM</button>
-                            <button type="button" class="chip-btn" onclick="quickSearchDream('HCMUT')">⚙️ ĐH Bách khoa TP.HCM</button>
-                            <button type="button" class="chip-btn" onclick="quickSearchDream('Y Dược')">🩺 Khối ngành Y Dược</button>
-                        </div>
-
-                        <!-- Dream Search Results Container -->
-                        <div id="dream-results-container" class="dream-results-container hidden">
-                            <!-- Populated dynamically -->
-                        </div>
                     </div>
                 </div>
 
@@ -1528,6 +1343,6 @@
     </footer>
 
     <!-- App Logic -->
-    <script src="app.js?v=4.9"></script>
+    <script src="app.js?v=5.0"></script>
 </body>
 </html>
