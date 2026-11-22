@@ -124,6 +124,7 @@ class SchoolCheckRequest(BaseModel):
     hsa_score: Optional[float] = None
     priority_area: Optional[str] = "KV3"
     ethnicity: Optional[str] = "kinh"
+    bonus_points: Optional[float] = 0.0
 
 @app.post("/api/school-check")
 async def evaluate_school(req: SchoolCheckRequest):
@@ -137,13 +138,48 @@ async def evaluate_school(req: SchoolCheckRequest):
             apt_score=req.apt_score,
             hsa_score=req.hsa_score,
             priority_area=req.priority_area or "KV3",
-            ethnicity=req.ethnicity or "kinh"
+            ethnicity=req.ethnicity or "kinh",
+            bonus_points=req.bonus_points or 0.0
         )
         return res
     except Exception as e:
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/admission/rules")
+async def get_all_admission_rules():
+    from .slm.rule_engine import AdmissionRuleEngine
+    return AdmissionRuleEngine.get_rules_config()
+
+@app.get("/api/admission/rules/{school_code}")
+async def get_school_admission_rules(school_code: str):
+    from .slm.rule_engine import AdmissionRuleEngine
+    config = AdmissionRuleEngine.get_rules_config()
+    school_code_clean = school_code.strip().upper()
+    overrides = config.get("school_overrides", {})
+    if school_code_clean in overrides:
+        return {
+            "status": "success",
+            "school_code": school_code_clean,
+            "data": overrides[school_code_clean],
+            "templates": config.get("templates", {})
+        }
+    return {
+        "status": "success",
+        "school_code": school_code_clean,
+        "data": {
+            "school_name": school_code_clean,
+            "rules": [
+                {
+                    "rule_id": f"{school_code_clean}_DYNAMIC",
+                    "rule_name": f"{school_code_clean} - Quy chế tự động theo từng ngành",
+                    "template_id": "T1_STANDARD_30"
+                }
+            ]
+        },
+        "templates": config.get("templates", {})
+    }
 
 @app.get("/api/school-sample-score/{school_code}")
 async def get_school_sample_score(school_code: str):

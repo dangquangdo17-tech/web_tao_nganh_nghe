@@ -252,7 +252,7 @@ function updateSelectedSubjectsCount() {
     if (countEl) countEl.textContent = count;
 }
 
-// Priority preview update
+// Priority preview update (Áp dụng quy chế giảm trừ từ 22.5đ)
 function updatePriorityPreview() {
     const areaSelect = document.getElementById("priority-area");
     const ethSelect = document.getElementById("priority-ethnicity");
@@ -266,11 +266,31 @@ function updatePriorityPreview() {
     const ethPts = (ethVal === "minority") ? 1.0 : 0.0;
     const totalBase = areaPts + ethPts;
 
+    // Ước tính điểm thô hiện tại từ các ô nhập
+    const toan = parseFloat(document.getElementById("score-toan")?.value) || 0;
+    const van = parseFloat(document.getElementById("score-van")?.value) || 0;
+    const anh = parseFloat(document.getElementById("score-anh")?.value) || 0;
+    const estRaw30 = toan + van + anh;
+
+    let reducedPriority = totalBase;
+    let isReduced = false;
+    if (estRaw30 >= 22.5 && totalBase > 0) {
+        const factor = Math.max(0, (30.0 - estRaw30) / 7.5);
+        reducedPriority = totalBase * factor;
+        isReduced = true;
+    }
+
     const elTotal = document.getElementById("preview-priority-total");
     const elArea = document.getElementById("preview-priority-area");
     const elEth = document.getElementById("preview-priority-ethnicity");
 
-    if (elTotal) elTotal.textContent = `+${totalBase.toFixed(2)} điểm`;
+    if (elTotal) {
+        if (isReduced && totalBase > 0) {
+            elTotal.innerHTML = `+${reducedPriority.toFixed(2)}đ <span style="font-size:0.75rem; color:#d97706; font-weight:normal;" title="Gốc +${totalBase.toFixed(2)}đ, giảm trừ vì điểm thô >= 22.5đ">(Gốc ${totalBase.toFixed(2)}đ - Giảm trừ Bộ GD&ĐT)</span>`;
+        } else {
+            elTotal.textContent = `+${totalBase.toFixed(2)} điểm`;
+        }
+    }
     if (elArea) elArea.textContent = `${areaPts.toFixed(2)}đ`;
     if (elEth) elEth.textContent = `${ethPts.toFixed(2)}đ`;
 }
@@ -3948,6 +3968,8 @@ async function triggerSchoolAdmissionCheck() {
     const hsaScore = hsaVal ? parseFloat(hsaVal) : null;
     const priorityArea = document.getElementById("priority-area").value;
     const priorityEth = document.getElementById("priority-ethnicity") ? document.getElementById("priority-ethnicity").value : "kinh";
+    const bonusVal = document.getElementById("bonus-points") ? document.getElementById("bonus-points").value.trim() : "";
+    const bonusPoints = bonusVal ? parseFloat(bonusVal) : 0.0;
 
     const payload = {
         school_code: currentSelectedSchool,
@@ -3958,7 +3980,8 @@ async function triggerSchoolAdmissionCheck() {
         apt_score: aptScore,
         hsa_score: hsaScore,
         priority_area: priorityArea,
-        ethnicity: priorityEth
+        ethnicity: priorityEth,
+        bonus_points: bonusPoints
     };
 
     try {
@@ -4094,25 +4117,55 @@ function renderTierMajorCards() {
     container.innerHTML = listToRender.map(m => {
         const isSafe = m.tier === "safe";
         const isComp = m.tier === "competitive";
+        const targetScale = m.target_scale || 30.0;
         const diffText = m.score_difference >= 0 ? `+${m.score_difference.toFixed(2)}đ` : `${m.score_difference.toFixed(2)}đ`;
         const diffClass = isSafe ? "diff-positive" : (isComp ? "diff-neutral" : "diff-negative");
         const tierName = isSafe ? "🟢 Cửa đỗ cao (An toàn)" : (isComp ? "🟡 Cạnh tranh sát nút" : "🔴 Nguy cơ thử thách");
+
+        // Huy hiệu thang điểm
+        let scaleBadgeHtml = `<span class="badge-scale" style="background:#f1f5f9; color:#475569; font-size:0.72rem; padding:2px 8px; border-radius:12px; font-weight:600;">Thang 30</span>`;
+        if (targetScale === 40) {
+            scaleBadgeHtml = `<span class="badge-scale" style="background:#e0e7ff; color:#3730a3; font-size:0.72rem; padding:2px 8px; border-radius:12px; font-weight:700;"><i class="fa-solid fa-scale-balanced"></i> Thang 40</span>`;
+        } else if (targetScale === 100) {
+            scaleBadgeHtml = `<span class="badge-scale" style="background:#fef3c7; color:#92400e; font-size:0.72rem; padding:2px 8px; border-radius:12px; font-weight:700;"><i class="fa-solid fa-bolt"></i> Thang 100 (TSA)</span>`;
+        }
+
+        // Chip chi tiết quy đổi IELTS & Điểm ưu tiên
+        let ieltsTag = m.ielts_replaced 
+            ? `<span style="background: #ecfdf5; color: #047857; font-size: 0.72rem; padding: 2px 7px; border-radius: 6px; font-weight: 600;"><i class="fa-solid fa-certificate"></i> IELTS đổi: ${m.ielts_converted_value.toFixed(1)}đ</span>`
+            : '';
+        let priorityTag = `<span style="background: #f8fafc; color: #475569; font-size: 0.72rem; padding: 2px 7px; border-radius: 6px;"><i class="fa-solid fa-medal"></i> Ưu tiên: +${(m.priority_points || 0).toFixed(2)}đ${m.is_priority_reduced ? ' <em style="color:#d97706; font-weight:600;" title="Đã giảm trừ từ 22.5đ theo Quy chế Bộ GD&ĐT">(giảm trừ)</em>' : ''}</span>`;
+        let rawTag = `<span style="background: #f8fafc; color: #475569; font-size: 0.72rem; padding: 2px 7px; border-radius: 6px;"><i class="fa-solid fa-calculator"></i> Điểm thô: ${m.raw_score.toFixed(2)}</span>`;
 
         return `
             <div class="tier-major-card card-${m.tier}">
                 <div class="card-header-row">
                     <div>
-                        <h5>${m.major_name}</h5>
-                        <small style="color: #64748b; font-weight: 600;">Mã ngành: ${m.major_code} | Tổ hợp: <strong>${m.combination}</strong></small>
+                        <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+                            <h5 style="margin-bottom: 0;">${m.major_name}</h5>
+                            ${scaleBadgeHtml}
+                        </div>
+                        <small style="color: #64748b; font-weight: 600; display: block; margin-top: 3px;">
+                            Mã ngành: ${m.major_code} | Tổ hợp: <strong>${m.combination}</strong>
+                        </small>
                     </div>
                     <span class="diff-badge ${diffClass}">${diffText}</span>
                 </div>
                 <div class="score-compare-bar">
-                    <div>Điểm của bạn: <strong style="color: #1e1b4b;">${m.student_score.toFixed(2)}</strong></div>
-                    <div>Điểm chuẩn 2025: <strong style="color: #4338ca;">${m.benchmark_2025.toFixed(2)}</strong></div>
+                    <div>Điểm của bạn: <strong style="color: #1e1b4b;">${m.student_score.toFixed(2)} / ${targetScale.toFixed(0)}đ</strong></div>
+                    <div>Điểm chuẩn '25: <strong style="color: #4338ca;">${m.benchmark_2025.toFixed(2)} / ${targetScale.toFixed(0)}đ</strong></div>
                     <div>Xác suất: <strong style="color: #059669;">${m.admission_probability}%</strong></div>
                 </div>
-                <div style="font-size: 0.78rem; color: #475569; line-height: 1.35;">
+                <!-- Chi tiết bóc tách điểm theo Rule Engine -->
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin: 5px 0;">
+                    ${rawTag}
+                    ${priorityTag}
+                    ${ieltsTag}
+                </div>
+                <div style="font-size: 0.72rem; color: #4f46e5; line-height: 1.35; background: #f5f3ff; padding: 4px 8px; border-radius: 6px;">
+                    <i class="fa-solid fa-sliders"></i> <strong>Quy tắc:</strong> ${m.formula_desc || m.rule_name || "M1 + M2 + M3"}
+                </div>
+                <div style="font-size: 0.78rem; color: #475569; line-height: 1.35; margin-top: 4px;">
                     <i class="fa-solid fa-circle-check text-primary"></i> ${tierName}
                 </div>
                 <div class="card-action-row">
@@ -4419,13 +4472,17 @@ function syncSchoolCheckToOnPage(data) {
         majorsPreview.innerHTML = topDisplay.map(m => {
             const isSafe = m.tier === "safe";
             const isComp = m.tier === "competitive";
+            const targetScale = m.target_scale || 30.0;
             const tagClass = isSafe ? "score-safe-tag" : (isComp ? "score-comp-tag" : "score-risk-tag");
-            const tagText = isSafe ? `🟢 Đỗ cao (+${m.score_difference >= 0 ? m.score_difference.toFixed(1) : m.score_difference}đ)` : (isComp ? `🟡 Sát nút (${m.score_difference.toFixed(1)}đ)` : `🔴 Nguy cơ (${m.score_difference.toFixed(1)}đ)`);
+            const tagText = isSafe ? `🟢 Đỗ cao (+${m.score_difference >= 0 ? m.score_difference.toFixed(2) : m.score_difference.toFixed(2)}đ)` : (isComp ? `🟡 Sát nút (${m.score_difference.toFixed(2)}đ)` : `🔴 Nguy cơ (${m.score_difference.toFixed(2)}đ)`);
             return `
                 <div class="onpage-major-item">
                     <div>
-                        <div class="onpage-major-title">${m.major_name}</div>
-                        <small style="color: #64748b;">${m.combination} • Chuẩn '25: ${m.benchmark_2025.toFixed(1)}đ (Bạn: ${m.student_score.toFixed(1)}đ)</small>
+                        <div class="onpage-major-title">
+                            ${m.major_name} 
+                            <span style="font-size: 0.68rem; color: #4338ca; background: #e0e7ff; padding: 1px 6px; border-radius: 8px; font-weight: 600;">Thang ${targetScale.toFixed(0)}</span>
+                        </div>
+                        <small style="color: #64748b;">${m.combination} • Chuẩn '25: <strong>${m.benchmark_2025.toFixed(2)}đ</strong> (Bạn: <strong>${m.student_score.toFixed(2)}đ</strong>)</small>
                     </div>
                     <span class="onpage-major-score ${tagClass}">${tagText}</span>
                 </div>

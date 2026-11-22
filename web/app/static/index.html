@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styles.css?v=5.0">
+    <link rel="stylesheet" href="styles.css?v=5.1">
 </head>
 <body>
     <!-- Navigation Header -->
@@ -422,14 +422,18 @@
                 <div class="form-box">
                     <h3 class="form-box-title"><i class="fa-solid fa-award"></i> Học Bạ, Ngoại Ngữ & Ưu Tiên</h3>
                     
-                    <div class="grid-2-cols mb-3">
+                    <div class="grid-3-cols mb-3">
                         <div class="input-group" id="wrap-transcript-gpa">
                             <label id="label-transcript-gpa">Điểm TB Học Bạ (GPA 3 năm)</label>
                             <input type="number" id="transcript-gpa" step="0.1" min="0" max="10" value="7.8" placeholder="vd: 7.8">
                         </div>
                         <div class="input-group" id="wrap-ielts-score">
                             <label id="label-ielts-score"><i class="fa-solid fa-certificate"></i> Chứng chỉ IELTS (nếu có)</label>
-                            <input type="number" id="ielts-score" step="0.5" min="4.0" max="9.0" value="6.5" placeholder="vd: 6.5">
+                            <input type="number" id="ielts-score" step="0.5" min="4.0" max="9.0" value="6.5" placeholder="vd: 6.5" oninput="updatePriorityPreview()">
+                        </div>
+                        <div class="input-group" id="wrap-bonus-points">
+                            <label id="label-bonus-points" title="Điểm thưởng giải HSG Tỉnh/QG, khuyến khích học sinh chuyên"><i class="fa-solid fa-medal"></i> Điểm thưởng HSG/Khác</label>
+                            <input type="number" id="bonus-points" step="0.25" min="0" max="3.0" value="0.0" placeholder="vd: 1.0">
                         </div>
                     </div>
 
@@ -1343,6 +1347,6 @@
     </footer>
 
     <!-- App Logic -->
-    <script src="app.js?v=5.0"></script>
+    <script src="app.js?v=5.1"></script>
 </body>
 </html>

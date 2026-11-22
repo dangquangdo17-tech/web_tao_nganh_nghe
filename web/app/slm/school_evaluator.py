@@ -4,6 +4,7 @@ import uuid
 from typing import Dict, Any, List, Optional
 from ..database.db_manager import DatabaseManager
 from .prospectus_parser import SLMProspectusParser
+from .rule_engine import AdmissionRuleEngine
 
 class SchoolEvaluator:
     """
@@ -349,57 +350,35 @@ class SchoolEvaluator:
         }
 
     @classmethod
-    def calculate_priority_points(cls, area: str, ethnicity: str, raw_score: float) -> float:
+    def calculate_priority_points(cls, area: str, ethnicity: str, raw_score: float, target_scale: float = 30.0) -> float:
         """Tính điểm ưu tiên theo quy chế Bộ GD&ĐT 2025 có giảm trừ từ 22.5 điểm trở lên"""
-        area_map = {"KV1": 0.75, "KV2-NT": 0.5, "KV2": 0.25, "KV3": 0.0}
-        area_pts = area_map.get(area, 0.0)
-        eth_pts = 1.0 if ethnicity == "minority" else 0.0
-        total_base = area_pts + eth_pts
-
-        if raw_score >= 22.5 and total_base > 0:
-            scale = (30.0 - raw_score) / 7.5
-            return round(max(0.0, total_base * scale), 2)
-        return round(total_base, 2)
+        res = AdmissionRuleEngine.calculate_moet_priority(
+            raw_score=raw_score,
+            target_scale=target_scale,
+            area=area,
+            ethnicity=ethnicity
+        )
+        return res["final_priority"]
 
     @classmethod
     def calculate_combo_score(cls, combo: str, exam_scores: Dict[str, float], ielts_score: Optional[float], ielts_map: Dict[str, float]) -> float:
         """Tính điểm 3 môn trong tổ hợp xét tuyển, tự động quy đổi IELTS nếu có lợi"""
-        sub_map = {
-            "toan": exam_scores.get("Toán", 0.0),
-            "van": exam_scores.get("Ngữ văn", 0.0),
-            "anh": exam_scores.get("Tiếng Anh", 0.0),
-            "ly": exam_scores.get("Vật lý", 0.0),
-            "hoa": exam_scores.get("Hóa học", 0.0),
-            "sinh": exam_scores.get("Sinh học", 0.0),
-            "su": exam_scores.get("Lịch sử", 0.0),
-            "dia": exam_scores.get("Địa lý", 0.0)
+        rule = {
+            "rule_id": "DEFAULT_30",
+            "rule_name": "Chuẩn 30",
+            "target_scale": 30.0,
+            "normalization": "unweighted_30",
+            "allow_ielts_replacement": True,
+            "allow_stacking_with_ielts": False,
+            "ielts_conversion_table": ielts_map
         }
-
-        # Quy đổi IELTS nếu thí sinh có nộp
-        if ielts_score and ielts_score >= 4.0:
-            converted = SLMProspectusParser.calculate_converted_score(ielts_score, ielts_map)
-            if converted > sub_map["anh"]:
-                sub_map["anh"] = converted
-
-        combo_upper = combo.upper()
-        if combo_upper == "A00":
-            return sub_map["toan"] + sub_map["ly"] + sub_map["hoa"]
-        elif combo_upper == "A01":
-            return sub_map["toan"] + sub_map["ly"] + sub_map["anh"]
-        elif combo_upper == "B00":
-            return sub_map["toan"] + sub_map["hoa"] + sub_map["sinh"]
-        elif combo_upper == "C00":
-            return sub_map["van"] + sub_map["su"] + sub_map["dia"]
-        elif combo_upper == "D01":
-            return sub_map["toan"] + sub_map["van"] + sub_map["anh"]
-        elif combo_upper == "D07":
-            return sub_map["toan"] + sub_map["hoa"] + sub_map["anh"]
-        elif combo_upper == "D14":
-            return sub_map["van"] + sub_map["su"] + sub_map["anh"]
-        elif combo_upper == "D15":
-            return sub_map["van"] + sub_map["dia"] + sub_map["anh"]
-        else:
-            return sub_map["toan"] + sub_map["van"] + sub_map["anh"]
+        res = AdmissionRuleEngine.compute_score(
+            exam_scores=exam_scores,
+            rule=rule,
+            combination_code=combo,
+            ielts_band=ielts_score
+        )
+        return res["raw_score"]
 
     @classmethod
     def evaluate_school_admission(
@@ -412,12 +391,13 @@ class SchoolEvaluator:
         apt_score: Optional[float] = None,
         hsa_score: Optional[float] = None,
         priority_area: str = "KV3",
-        ethnicity: str = "kinh"
+        ethnicity: str = "kinh",
+        bonus_points: float = 0.0
     ) -> Dict[str, Any]:
         """
-        Thẩm định chi tiết cơ hội vào trường đại học được chỉ định:
+        Thẩm định chi tiết cơ hội vào trường đại học được chỉ định dựa trên Động cơ Quy tắc (Rule Engine):
         Phân 3 tầng: 🟢 An toàn | 🟡 Cạnh tranh | 🔴 Nguy cơ
-        Kiểm tra tiêu chí phụ & điều kiện sàn
+        Tính chuẩn xác từng ngành theo Thang 30, Thang 40 hoặc Thang 100
         """
         school_profile = DatabaseManager.get_school_full_profile(school_code)
         if not school_profile:
@@ -471,50 +451,92 @@ class SchoolEvaluator:
                     "detail": "FTU ưu tiên xét tuyển chứng chỉ IELTS $\\ge 6.5$ quy đổi từ 8.5 - 10.0 điểm tiếng Anh."
                 })
 
-        # Phân tầng từng ngành
+        # Phân tầng từng ngành qua Rule Engine
         safe_majors = []
         competitive_majors = []
         risky_majors = []
 
-        math_priority = exam_scores.get("Toán", 7.0)
-
         for b in benchmarks:
             combo = b.get("combination_code", "A00")
-            raw_score = cls.calculate_combo_score(combo, exam_scores, ielts_score, ielts_map)
-            priority_pts = cls.calculate_priority_points(priority_area, ethnicity, raw_score)
-            final_score = round(raw_score + priority_pts, 2)
+            major_code = b.get("major_code", "")
+            major_name = b.get("major_name", "")
+            sub_criteria = b.get("sub_criteria", "")
+            benchmark_2025 = float(b.get("score_2025") or 25.0)
 
-            benchmark_2025 = b.get("score_2025") or 25.0
+            # 1. Tìm Rule chuẩn hóa cho ngành này
+            rule = AdmissionRuleEngine.resolve_rule(
+                school_code=school_code,
+                major_code=major_code,
+                major_name=major_name,
+                combination_code=combo,
+                sub_criteria=sub_criteria,
+                benchmark_score=benchmark_2025,
+                prospectus_ielts_map=ielts_map
+            )
+
+            # 2. Chạy Pipeline 4 bước qua Rule Engine
+            calc = AdmissionRuleEngine.compute_score(
+                exam_scores=exam_scores,
+                rule=rule,
+                combination_code=combo,
+                area=priority_area,
+                ethnicity=ethnicity,
+                ielts_band=ielts_score,
+                bonus_points=bonus_points,
+                tsa_score=tsa_score,
+                apt_score=apt_score
+            )
+
+            final_score = calc["final_score"]
+            raw_score = calc["raw_score"]
+            priority_pts = calc["priority_points"]
+            target_scale = calc["target_scale"]
+            formula_desc = calc["formula_desc"]
+            rule_name = calc["rule_name"]
+            priority_detail = calc["priority_detail"]
+
+            # So sánh trên CÙNG thang điểm target_scale
             diff = round(final_score - benchmark_2025, 2)
 
+            # Chuẩn hóa độ lệch để tính xác suất (Scale factor so với thang 30)
+            scale_factor = target_scale / 30.0 if target_scale > 0 else 1.0
+            norm_diff = diff / scale_factor
+
             # Dự báo xác suất đỗ
-            if diff >= 1.5:
-                prob = min(98, int(85 + diff * 5))
+            if norm_diff >= 1.5:
+                prob = min(98, int(85 + norm_diff * 5))
                 tier = "safe"
-            elif diff >= -1.0:
-                prob = max(35, min(80, int(60 + diff * 15)))
+            elif norm_diff >= -1.0:
+                prob = max(35, min(80, int(60 + norm_diff * 15)))
                 tier = "competitive"
             else:
-                prob = max(5, int(30 + diff * 8))
+                prob = max(5, int(30 + norm_diff * 8))
                 tier = "risky"
 
             major_item = {
-                "major_code": b.get("major_code"),
-                "major_name": b.get("major_name"),
+                "major_code": major_code,
+                "major_name": major_name,
                 "combination": combo,
                 "benchmark_2023": b.get("score_2023"),
                 "benchmark_2024": b.get("score_2024"),
                 "benchmark_2025": benchmark_2025,
                 "student_score": final_score,
-                "raw_score": round(raw_score, 2),
+                "raw_score": raw_score,
                 "priority_points": priority_pts,
                 "score_difference": diff,
                 "admission_probability": prob,
                 "tier": tier,
                 "quota": b.get("quota", 100),
-                "sub_criteria": b.get("sub_criteria", "Xét thứ tự nguyện vọng và môn chính"),
+                "sub_criteria": sub_criteria or "Xét thứ tự nguyện vọng và môn chính",
                 "career_prospects": b.get("career_prospects", ""),
-                "expected_salary": b.get("expected_salary_range", "15 - 30 tr/tháng")
+                "expected_salary": b.get("expected_salary_range", "15 - 30 tr/tháng"),
+                "target_scale": target_scale,
+                "rule_name": rule_name,
+                "formula_desc": formula_desc,
+                "ielts_replaced": calc["ielts_replaced"],
+                "ielts_converted_value": calc["ielts_converted_value"],
+                "is_priority_reduced": priority_detail.get("is_reduced", False),
+                "reduction_ratio": priority_detail.get("reduction_ratio", 1.0)
             }
 
             if tier == "safe":

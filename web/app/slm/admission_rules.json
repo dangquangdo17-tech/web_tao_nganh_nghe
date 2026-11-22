@@ -1,0 +1,281 @@
+{
+  "version": "2.0.0",
+  "updated_at": "2026-03-01",
+  "description": "Động cơ quy tắc tuyển sinh Đại học (Admission Rule Engine) theo Quy chế Bộ GD&ĐT",
+  "templates": {
+    "T1_STANDARD_30": {
+      "template_id": "T1_STANDARD_30",
+      "template_name": "Chuẩn 30 không nhân hệ số",
+      "target_scale": 30.0,
+      "normalization": "unweighted_30",
+      "formula_desc": "Điểm thô = M1 + M2 + M3",
+      "priority_reduction_threshold": 22.5,
+      "allow_stacking_with_ielts": false
+    },
+    "T2_WEIGHTED_NORM_30": {
+      "template_id": "T2_WEIGHTED_NORM_30",
+      "template_name": "Thang 30 quy đổi (Môn chính nhân 2 quy về 30)",
+      "target_scale": 30.0,
+      "normalization": "weighted_norm_30",
+      "formula_desc": "Điểm thô = (Môn chính x 2 + M2 + M3) / 4 x 3",
+      "priority_reduction_threshold": 22.5,
+      "allow_stacking_with_ielts": false
+    },
+    "T3_SCALE_40": {
+      "template_id": "T3_SCALE_40",
+      "template_name": "Thang 40 (Môn chính nhân hệ số 2)",
+      "target_scale": 40.0,
+      "normalization": "scale_40",
+      "formula_desc": "Điểm thô = Môn chính x 2 + M2 + M3 (Thang 40, Điểm ưu tiên x 4/3)",
+      "priority_reduction_threshold": 22.5,
+      "allow_stacking_with_ielts": false
+    },
+    "T4_SCALE_100": {
+      "template_id": "T4_SCALE_100",
+      "template_name": "Thang 100 Đánh giá tư duy TSA / Năng lực",
+      "target_scale": 100.0,
+      "normalization": "scale_100",
+      "formula_desc": "Điểm thô = Điểm bài thi TSA/ĐGNL (Điểm ưu tiên x 10/3)",
+      "priority_reduction_threshold": 22.5,
+      "allow_stacking_with_ielts": false
+    },
+    "T5_IELTS_REPLACEMENT": {
+      "template_id": "T5_IELTS_REPLACEMENT",
+      "template_name": "Thang 30 quy đổi chứng chỉ IELTS thay Tiếng Anh",
+      "target_scale": 30.0,
+      "normalization": "unweighted_30",
+      "formula_desc": "Điểm thô = M1 + M2 + max(Điểm Anh, IELTS quy đổi)",
+      "priority_reduction_threshold": 22.5,
+      "allow_stacking_with_ielts": false
+    }
+  },
+  "default_ielts_map": {
+    "4.5": 7.0,
+    "5.0": 8.0,
+    "5.5": 8.5,
+    "6.0": 9.0,
+    "6.5": 9.5,
+    "7.0": 10.0,
+    "7.5": 10.0,
+    "8.0": 10.0,
+    "8.5": 10.0,
+    "9.0": 10.0
+  },
+  "school_overrides": {
+    "AOF": {
+      "school_name": "Học viện Tài chính",
+      "rules": [
+        {
+          "rule_id": "AOF_CLC",
+          "rule_name": "Học viện Tài chính - Chương trình CLC (Toán/Anh hệ số 2)",
+          "applicable_keywords": ["CLC", "chất lượng cao", "tiên tiến"],
+          "template_id": "T2_WEIGHTED_NORM_30",
+          "target_scale": 30.0,
+          "normalization": "weighted_norm_30",
+          "main_subject": "Toán",
+          "main_subject_weight": 2.0,
+          "allow_ielts_replacement": true,
+          "allow_stacking_with_ielts": false,
+          "ielts_conversion_table": {
+            "5.5": 8.5,
+            "6.0": 9.0,
+            "6.5": 9.5,
+            "7.0": 10.0
+          }
+        },
+        {
+          "rule_id": "AOF_STANDARD",
+          "rule_name": "Học viện Tài chính - Hệ chuẩn (Thang 30)",
+          "applicable_keywords": [],
+          "template_id": "T1_STANDARD_30",
+          "target_scale": 30.0,
+          "normalization": "unweighted_30",
+          "allow_ielts_replacement": true,
+          "allow_stacking_with_ielts": false,
+          "ielts_conversion_table": {
+            "5.5": 8.5,
+            "6.0": 9.0,
+            "6.5": 9.5,
+            "7.0": 10.0
+          }
+        }
+      ]
+    },
+    "HANU": {
+      "school_name": "Trường Đại học Hà Nội",
+      "rules": [
+        {
+          "rule_id": "HANU_LANGUAGE_40",
+          "rule_name": "Đại học Hà Nội - Các ngành Ngôn ngữ (Thang 40, Ngoại ngữ x 2)",
+          "applicable_majors": ["SOC-ENG", "SOC-CHINESE", "SOC-KOREAN", "SOC-JAPANESE"],
+          "applicable_keywords": ["ngôn ngữ", "ngoại ngữ nhân hệ số 2", "tiếng anh nhân hệ số 2", "tiếng hàn nhân hệ số 2", "tiếng nhật nhân hệ số 2"],
+          "template_id": "T3_SCALE_40",
+          "target_scale": 40.0,
+          "normalization": "scale_40",
+          "main_subject": "Tiếng Anh",
+          "main_subject_weight": 2.0,
+          "allow_ielts_replacement": true,
+          "allow_stacking_with_ielts": false,
+          "ielts_conversion_table": {
+            "5.0": 8.0,
+            "5.5": 8.5,
+            "6.0": 9.0,
+            "6.5": 9.5,
+            "7.0": 10.0
+          }
+        },
+        {
+          "rule_id": "HANU_NON_LANGUAGE_30",
+          "rule_name": "Đại học Hà Nội - Khối ngành Phi ngôn ngữ (Thang 30)",
+          "applicable_majors": ["TOUR-HOSP", "IT-MIS", "BUS-ADMIN", "ECO-MKT"],
+          "applicable_keywords": ["du lịch", "khách sạn", "quản trị", "kinh tế"],
+          "template_id": "T1_STANDARD_30",
+          "target_scale": 30.0,
+          "normalization": "unweighted_30",
+          "allow_ielts_replacement": true,
+          "allow_stacking_with_ielts": false
+        }
+      ]
+    },
+    "ULIS": {
+      "school_name": "Trường Đại học Ngoại ngữ - ĐHQGHN",
+      "rules": [
+        {
+          "rule_id": "ULIS_LANGUAGE_40",
+          "rule_name": "Đại học Ngoại ngữ ĐHQGHN - Ngôn ngữ & Sư phạm Ngoại ngữ (Thang 40)",
+          "applicable_majors": ["SOC-ENG", "SOC-CHINESE", "SOC-KOREAN", "SOC-JAPANESE", "EDU-PED"],
+          "applicable_keywords": ["ngôn ngữ", "sư phạm tiếng anh", "ngoại ngữ nhân hệ số 2", "nhân hệ số 2"],
+          "template_id": "T3_SCALE_40",
+          "target_scale": 40.0,
+          "normalization": "scale_40",
+          "main_subject": "Tiếng Anh",
+          "main_subject_weight": 2.0,
+          "allow_ielts_replacement": true,
+          "allow_stacking_with_ielts": false,
+          "ielts_conversion_table": {
+            "5.5": 8.5,
+            "6.0": 9.0,
+            "6.5": 9.5,
+            "7.0": 10.0
+          }
+        },
+        {
+          "rule_id": "ULIS_STANDARD_30",
+          "rule_name": "Đại học Ngoại ngữ ĐHQGHN - Thang 30",
+          "applicable_keywords": [],
+          "template_id": "T1_STANDARD_30",
+          "target_scale": 30.0,
+          "normalization": "unweighted_30",
+          "allow_ielts_replacement": true,
+          "allow_stacking_with_ielts": false
+        }
+      ]
+    },
+    "HMU": {
+      "school_name": "Trường Đại học Y Hà Nội",
+      "rules": [
+        {
+          "rule_id": "HMU_STANDARD_30",
+          "rule_name": "Đại học Y Hà Nội - B00 Thang 30 Chuẩn (Không nhân hệ số)",
+          "applicable_keywords": [],
+          "template_id": "T1_STANDARD_30",
+          "target_scale": 30.0,
+          "normalization": "unweighted_30",
+          "allow_ielts_replacement": false,
+          "allow_stacking_with_ielts": false,
+          "notes": "HMU xét tuyển thuần túy điểm 3 môn B00 thi tốt nghiệp THPT, IELTS dùng làm điều kiện sơ tuyển hoặc phụ."
+        }
+      ]
+    },
+    "UMP": {
+      "school_name": "Đại học Y Dược TP.HCM",
+      "rules": [
+        {
+          "rule_id": "UMP_STANDARD_30",
+          "rule_name": "Đại học Y Dược TP.HCM - B00 Thang 30 Chuẩn",
+          "applicable_keywords": [],
+          "template_id": "T1_STANDARD_30",
+          "target_scale": 30.0,
+          "normalization": "unweighted_30",
+          "allow_ielts_replacement": false,
+          "allow_stacking_with_ielts": false
+        }
+      ]
+    },
+    "BKHN": {
+      "school_name": "Đại học Bách khoa Hà Nội",
+      "rules": [
+        {
+          "rule_id": "BKHN_THPT_WEIGHTED",
+          "rule_name": "Đại học Bách khoa Hà Nội - Điểm thi THPT (Toán môn chính)",
+          "applicable_keywords": ["toán >= ", "kỹ thuật", "công nghệ"],
+          "template_id": "T1_STANDARD_30",
+          "target_scale": 30.0,
+          "normalization": "unweighted_30",
+          "allow_ielts_replacement": true,
+          "allow_stacking_with_ielts": false,
+          "ielts_conversion_table": {
+            "5.0": 8.0,
+            "5.5": 8.5,
+            "6.0": 9.0,
+            "6.5": 9.5,
+            "7.0": 10.0
+          }
+        },
+        {
+          "rule_id": "BKHN_TSA_100",
+          "rule_name": "Đại học Bách khoa Hà Nội - Đánh giá tư duy (TSA thang 100)",
+          "applicable_keywords": ["tsa", "đánh giá tư duy"],
+          "template_id": "T4_SCALE_100",
+          "target_scale": 100.0,
+          "normalization": "scale_100",
+          "allow_ielts_replacement": false,
+          "allow_stacking_with_ielts": false
+        }
+      ]
+    },
+    "NEU": {
+      "school_name": "Trường Đại học Kinh tế Quốc dân",
+      "rules": [
+        {
+          "rule_id": "NEU_STANDARD_30",
+          "rule_name": "Trường Đại học Kinh tế Quốc dân - Thang 30 Chuẩn & IELTS quy đổi",
+          "applicable_keywords": [],
+          "template_id": "T1_STANDARD_30",
+          "target_scale": 30.0,
+          "normalization": "unweighted_30",
+          "allow_ielts_replacement": true,
+          "allow_stacking_with_ielts": false,
+          "ielts_conversion_table": {
+            "5.5": 8.0,
+            "6.0": 8.5,
+            "6.5": 9.0,
+            "7.0": 9.5,
+            "7.5": 10.0
+          }
+        }
+      ]
+    },
+    "FTU": {
+      "school_name": "Trường Đại học Ngoại thương",
+      "rules": [
+        {
+          "rule_id": "FTU_STANDARD_30",
+          "rule_name": "Trường Đại học Ngoại thương - Thang 30 Chuẩn & IELTS Ngoại thương",
+          "applicable_keywords": [],
+          "template_id": "T1_STANDARD_30",
+          "target_scale": 30.0,
+          "normalization": "unweighted_30",
+          "allow_ielts_replacement": true,
+          "allow_stacking_with_ielts": false,
+          "ielts_conversion_table": {
+            "6.5": 8.5,
+            "7.0": 9.0,
+            "7.5": 9.5,
+            "8.0": 10.0
+          }
+        }
+      ]
+    }
+  }
+}
