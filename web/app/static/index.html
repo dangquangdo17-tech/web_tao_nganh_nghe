@@ -77,6 +77,9 @@
             </div>
 
             <div class="nav-right">
+                <button type="button" class="btn-nav-guide" onclick="toggleUserGuide(true)" title="Xem bảng hướng dẫn sử dụng nhanh">
+                    <i class="fa-solid fa-circle-question text-primary"></i> <span>Hướng Dẫn</span>
+                </button>
                 <button type="button" class="btn-nav-wishlist" onclick="openWishlistDrawer()" title="Mở danh sách ngành đã lưu">
                     <i class="fa-solid fa-heart text-danger"></i> <span>Tủ Nguyện Vọng (<strong id="nav-wishlist-count">0</strong>)</span>
                 </button>
@@ -98,6 +101,68 @@
 
     <!-- Main Container -->
     <main class="main-container">
+
+        <!-- Quick User Guide Section -->
+        <section id="user-guide-section" class="user-guide-card">
+            <div class="user-guide-header" onclick="toggleUserGuide()">
+                <div class="user-guide-header-title">
+                    <span class="user-guide-icon"><i class="fa-solid fa-lightbulb"></i></span>
+                    <div>
+                        <h3>Hướng Dẫn 3 Bước: Chọn Ngành & Lập Lộ Trình Đỗ Đại Học</h3>
+                        <p>Nắm vững cách sử dụng trong 30 giây để đạt kết quả dự đoán chính xác nhất theo quy chế Bộ GD&ĐT</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-toggle-guide" id="btn-toggle-guide" title="Thu gọn / Xem chi tiết" onclick="event.stopPropagation(); toggleUserGuide();">
+                    <i class="fa-solid fa-chevron-up" id="guide-toggle-icon"></i> <span id="guide-toggle-text">Thu gọn</span>
+                </button>
+            </div>
+
+            <div class="user-guide-body" id="user-guide-body">
+                <div class="user-guide-grid">
+                    <!-- Step 1 -->
+                    <div class="guide-step-card">
+                        <div class="guide-step-top">
+                            <span class="guide-step-badge">Bước 1</span>
+                            <div class="guide-step-symbol"><i class="fa-solid fa-pen-to-square"></i></div>
+                        </div>
+                        <h4 class="guide-step-title">1. Nhập Điểm & Điểm Ưu Tiên</h4>
+                        <p class="guide-step-desc">Điền điểm thi dự kiến 6 môn THPT hoặc học bạ. Chọn band <strong>IELTS</strong> (hệ thống tự động so sánh lấy điểm cao nhất) và <strong>Khu vực ưu tiên</strong> để tự động giảm trừ chuẩn Bộ GD&ĐT.</p>
+                        <div class="guide-step-tip"><i class="fa-solid fa-shield-check"></i> Chống cộng trùng IELTS & Ưu tiên tự động</div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="guide-step-card">
+                        <div class="guide-step-top">
+                            <span class="guide-step-badge">Bước 2</span>
+                            <div class="guide-step-symbol"><i class="fa-solid fa-school-flag"></i></div>
+                        </div>
+                        <h4 class="guide-step-title">2. Chọn Trường & Sở Thích</h4>
+                        <p class="guide-step-desc">Chọn trường mục tiêu (ví dụ: <strong>PTIT, BKHN, NEU...</strong>) để <em>chỉ nhận các ngành của trường đó</em>, hoặc chọn <strong>"Tất cả các trường"</strong> để tìm kiếm toàn quốc. Chia sẻ 1-2 câu về sở thích của bạn.</p>
+                        <div class="guide-step-tip"><i class="fa-solid fa-filter"></i> Lọc chuyên biệt 100% theo trường mơ ước</div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="guide-step-card">
+                        <div class="guide-step-top">
+                            <span class="guide-step-badge">Bước 3</span>
+                            <div class="guide-step-symbol"><i class="fa-solid fa-bullseye"></i></div>
+                        </div>
+                        <h4 class="guide-step-title">3. Nhận Lộ Trình Tỷ Lệ Vàng</h4>
+                        <p class="guide-step-desc">Bấm <strong>"Phân Tích Nguyện Vọng"</strong>. AI sẽ cơ cấu chiến lược: <strong>20% Thử thách</strong> (ước mơ), <strong>50% Vừa sức</strong> (trọng tâm đỗ 70-85%), và <strong>30% An toàn</strong> (chắc chắn đỗ 95%+).</p>
+                        <div class="guide-step-tip"><i class="fa-solid fa-chart-pie"></i> Công thức chuẩn hóa thang 30, 40 & 100</div>
+                    </div>
+                </div>
+
+                <div class="user-guide-footer">
+                    <div class="guide-footer-item">
+                        <i class="fa-solid fa-calculator text-primary"></i> <span><strong>Thẩm định cửa đỗ:</strong> Bấm nút <em>"Thẩm Định Cửa Đỗ"</em> ở từng ngành để xem chi tiết công thức nhân hệ số môn chính của từng trường.</span>
+                    </div>
+                    <div class="guide-footer-item">
+                        <i class="fa-solid fa-heart text-danger"></i> <span><strong>Lưu nguyện vọng:</strong> Bấm <em>"Lưu NV"</em> vào Tủ Nguyện Vọng để tiện so sánh học phí và cơ hội việc làm sau này.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
         
         <!-- Step 1: Input Score & Profile -->
         <section id="advisor-section" class="card-section">

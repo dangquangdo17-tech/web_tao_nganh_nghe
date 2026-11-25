@@ -4704,4 +4704,31 @@ function scrollToSchoolOnPage() {
     }
 }
 
+// Bật / tắt bảng hướng dẫn 3 bước cho người dùng
+function toggleUserGuide(forceOpen = false) {
+    const guideBody = document.getElementById("user-guide-body");
+    const toggleIcon = document.getElementById("guide-toggle-icon");
+    const toggleText = document.getElementById("guide-toggle-text");
+    const guideSection = document.getElementById("user-guide-section");
+
+    if (!guideBody) return;
+
+    if (forceOpen) {
+        guideBody.classList.remove("collapsed");
+        if (toggleIcon) toggleIcon.className = "fa-solid fa-chevron-up";
+        if (toggleText) toggleText.textContent = "Thu gọn";
+        guideSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+    }
+
+    const isCollapsed = guideBody.classList.toggle("collapsed");
+    if (toggleIcon) {
+        toggleIcon.className = isCollapsed ? "fa-solid fa-chevron-down" : "fa-solid fa-chevron-up";
+    }
+    if (toggleText) {
+        toggleText.textContent = isCollapsed ? "Xem hướng dẫn" : "Thu gọn";
+    }
+}
+
+
 
