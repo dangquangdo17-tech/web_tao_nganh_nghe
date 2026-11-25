@@ -407,6 +407,13 @@ async function triggerMultiAgentConsultation() {
     const targetTuition = document.getElementById("target-tuition") ? document.getElementById("target-tuition").value : "Tất cả";
     const userInterest = document.getElementById("user-interest").value.trim();
 
+    // Lấy trường đại học mục tiêu (nếu người dùng chọn trường cụ thể)
+    const schoolTargetSelect = document.getElementById("school-target-select");
+    let targetSchool = schoolTargetSelect ? schoolTargetSelect.value : currentSelectedSchool;
+    if (targetSchool === "ALL" || targetSchool === "" || targetSchool === "Tất cả") {
+        targetSchool = null;
+    }
+
     const payload = {
         exam_scores: examScores,
         transcript_scores: transcriptScores,
@@ -417,7 +424,8 @@ async function triggerMultiAgentConsultation() {
         ethnicity: priorityEthnicity,
         target_region: targetRegion,
         target_category: targetCategory,
-        target_tuition: targetTuition
+        target_tuition: targetTuition,
+        target_school: targetSchool
     };
 
     // UI Loading state
@@ -610,7 +618,7 @@ function populateAgentResults(data) {
     if (synthEl && finalReport?.summary) synthEl.innerHTML = formatMarkdown(finalReport.summary);
 }
 
-// // Render Roadmap cards
+// Render Roadmap cards
 function renderRoadmap(topRecs) {
     const roadmapContainer = document.getElementById("roadmap-items");
     if (!roadmapContainer) return;
@@ -619,6 +627,34 @@ function renderRoadmap(topRecs) {
     if (!topRecs || topRecs.length === 0) {
         roadmapContainer.innerHTML = `<div class="placeholder-text">Không tìm thấy tổ hợp phù hợp với bộ lọc hiện tại. Hãy mở rộng khu vực, khối thi hoặc học phí.</div>`;
         return;
+    }
+
+    const targetSchool = currentConsultResult?.final_report?.target_school;
+    if (targetSchool) {
+        const meta = SCHOOL_METADATA[targetSchool] || {};
+        const schoolName = meta.name || targetSchool;
+        const bannerEl = document.createElement("div");
+        bannerEl.className = "roadmap-school-filter-banner";
+        bannerEl.style.cssText = "display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem; background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%); border: 1.5px solid #bfdbfe; border-radius: 12px; padding: 0.85rem 1.1rem; margin-bottom: 1.15rem; box-shadow: 0 2px 4px rgba(59,130,246,0.06);";
+        bannerEl.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; box-shadow: 0 2px 6px rgba(59,130,246,0.3);">
+                    ${meta.logo || '🏛️'}
+                </div>
+                <div>
+                    <div style="color: #1e3a8a; font-size: 0.95rem; font-weight: 700;">
+                        <i class="fa-solid fa-filter text-primary"></i> Đang đề xuất ${topRecs.length} ngành xét tuyển thuộc: ${schoolName} (${targetSchool})
+                    </div>
+                    <div style="font-size: 0.78rem; color: #475569; margin-top: 2px;">
+                        Toàn bộ danh sách nguyện vọng dưới đây chỉ gợi ý các ngành của riêng trường <strong>${targetSchool}</strong> theo đúng yêu cầu của bạn.
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn-clear-school-filter" onclick="clearSchoolTargetAndConsult()" style="background: #ffffff; border: 1px solid #cbd5e1; color: #1e40af; font-size: 0.8rem; font-weight: 700; padding: 0.45rem 0.9rem; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: all 0.2s;">
+                <i class="fa-solid fa-globe text-primary"></i> Gợi ý tất cả các trường
+            </button>
+        `;
+        roadmapContainer.appendChild(bannerEl);
     }
 
     topRecs.forEach((item, idx) => {
@@ -3833,6 +3869,15 @@ const SCHOOL_METADATA = {
     }
 };
 
+function clearSchoolTargetAndConsult() {
+    const selectEl = document.getElementById("school-target-select");
+    if (selectEl) {
+        selectEl.value = "ALL";
+    }
+    onSelectSchoolTarget("ALL");
+    submitCounselorForm();
+}
+
 // 1. Khi người dùng chọn một trường đại học mục tiêu
 function onSelectSchoolTarget(schoolCode) {
     if (!schoolCode) schoolCode = "BKHN";
@@ -3842,6 +3887,34 @@ function onSelectSchoolTarget(schoolCode) {
     const selectEl = document.getElementById("school-target-select");
     if (selectEl && selectEl.value !== schoolCode) {
         selectEl.value = schoolCode;
+    }
+
+    if (schoolCode === "ALL" || schoolCode === "Tất cả") {
+        const logoBadge = document.getElementById("school-logo-badge");
+        const nameEl = document.getElementById("school-display-name");
+        const codeEl = document.getElementById("school-display-code");
+        const typeEl = document.getElementById("school-display-type");
+        const regionEl = document.getElementById("school-display-region");
+        const descEl = document.getElementById("school-display-desc");
+        const tuitionEl = document.getElementById("school-display-tuition");
+        const websiteEl = document.getElementById("school-display-website");
+        const methodBadge = document.getElementById("school-method-badge");
+
+        if (logoBadge) logoBadge.textContent = "🌐";
+        if (nameEl) nameEl.textContent = "Tất cả các trường (Gợi ý mở rộng toàn quốc)";
+        if (codeEl) codeEl.textContent = "TOÀN QUỐC";
+        if (typeEl) typeEl.textContent = "Đa trường";
+        if (regionEl) regionEl.innerHTML = `<i class="fa-solid fa-earth-americas"></i> 3 miền Bắc - Trung - Nam`;
+        if (descEl) descEl.textContent = "Hệ thống tự do tìm kiếm và phân bổ 10 nguyện vọng trên toàn bộ hơn 58 trường đại học trên cả nước.";
+        if (tuitionEl) tuitionEl.textContent = "Đa dạng theo từng trường";
+        if (websiteEl) {
+            websiteEl.href = "#advisor-section";
+            websiteEl.innerHTML = `Đa trường <i class="fa-solid fa-globe"></i>`;
+        }
+        if (methodBadge) {
+            methodBadge.innerHTML = `<i class="fa-solid fa-sliders text-success"></i> Chế độ: <strong>Đề xuất đa trường toàn quốc</strong>`;
+        }
+        return;
     }
 
     const meta = SCHOOL_METADATA[schoolCode] || {

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styles.css?v=5.1">
+    <link rel="stylesheet" href="styles.css?v=5.2">
 </head>
 <body>
     <!-- Navigation Header -->
@@ -113,7 +113,7 @@
                 <div class="school-target-selector-box">
                     <label for="school-target-select"><i class="fa-solid fa-school-flag text-primary"></i> <strong>Trường ĐH Mơ Ước:</strong></label>
                     <select id="school-target-select" class="school-target-select" onchange="onSelectSchoolTarget(this.value)">
-                        <option value="">-- Chọn trường đại học bạn muốn xét tuyển --</option>
+                        <option value="ALL">🌐 Tất cả các trường (Gợi ý đa trường toàn quốc)</option>
                         <optgroup label="🏛️ Top Kỹ thuật, Công nghệ & Mật mã">
                             <option value="BKHN" selected>🏛️ ĐH Bách khoa Hà Nội (BKHN)</option>
                             <option value="HCMUT">⚙️ ĐH Bách khoa - ĐHQG-HCM (HCMUT)</option>
@@ -1347,6 +1347,6 @@
     </footer>
 
     <!-- App Logic -->
-    <script src="app.js?v=5.1"></script>
+    <script src="app.js?v=5.2"></script>
 </body>
 </html>

@@ -42,10 +42,11 @@ class DatabaseManager:
     def search_benchmarks(
         combinations: List[str], 
         min_score: float = 0.0, 
-        max_score: float = 30.0, 
+        max_score: float = 45.0, 
         region: Optional[str] = None,
         category: Optional[str] = None,
-        tuition_level: Optional[str] = None
+        tuition_level: Optional[str] = None,
+        university_code: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         conn = get_connection()
         cursor = conn.cursor()
@@ -84,7 +85,10 @@ class DatabaseManager:
         """
         params = list(combinations) + [min_score, max_score]
 
-        if region and region != "Tất cả":
+        if university_code and university_code not in ["Tất cả", "ALL", ""]:
+            query += " AND UPPER(u.code) = ?"
+            params.append(university_code.strip().upper())
+        elif region and region != "Tất cả":
             query += " AND u.region = ?"
             params.append(region)
             

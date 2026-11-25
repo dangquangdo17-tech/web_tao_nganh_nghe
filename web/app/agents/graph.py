@@ -6,6 +6,7 @@ from .psychology_agent import PsychologyAgent
 from .admission_agent import AdmissionAgent
 from ..database.db_manager import DatabaseManager
 from ..career.career_guidance import get_career_guidance
+from ..slm.rule_engine import AdmissionRuleEngine
 
 def academic_node(state: CounselorState) -> Dict[str, Any]:
     analysis = AcademicAgent.analyze(state)
@@ -52,16 +53,30 @@ def synthesizer_node(state: CounselorState) -> Dict[str, Any]:
     if query_category == "Tất cả":
         query_category = None
 
-    # Truy vấn cơ sở dữ liệu điểm chuẩn (hỗ trợ lọc theo vùng và học phí)
+    # Truy vấn cơ sở dữ liệu điểm chuẩn (hỗ trợ lọc theo trường mục tiêu, vùng và học phí)
+    target_school = getattr(state, "target_school", None)
+    if target_school in ["Tất cả", "ALL", "", "None", None]:
+        target_school = None
+
     target_tuition = getattr(state, "target_tuition", "Tất cả")
     benchmarks = DatabaseManager.search_benchmarks(
         combinations=combo_names,
-        min_score=15.0,
-        max_score=30.0,
+        min_score=10.0,
+        max_score=45.0,
         region=state.target_region,
         category=query_category,
-        tuition_level=target_tuition
+        tuition_level=target_tuition,
+        university_code=target_school
     )
+
+    # Nếu người dùng chọn trường cụ thể mà lọc theo category bị rỗng, bỏ lọc category để lấy toàn bộ ngành của trường đó
+    if target_school and not benchmarks:
+        benchmarks = DatabaseManager.search_benchmarks(
+            combinations=combo_names,
+            min_score=10.0,
+            max_score=45.0,
+            university_code=target_school
+        )
 
     safety_list = []
     target_list = []
@@ -72,36 +87,49 @@ def synthesizer_node(state: CounselorState) -> Dict[str, Any]:
         major_code = b["major_code"]
         major_cat = b["major_category"]
         combo = b["combination_code"]
-        benchmark_score_2025 = b["score_2025"]
+        benchmark_score_2025 = float(b["score_2025"])
 
         # Lọc bỏ nếu ngành này nằm trong danh sách phủ định do người dùng ghét/không thích
         if major_code in excluded_majors:
             continue
 
-        # Điểm cơ sở theo tổ hợp
-        base_score = combo_score_map.get(combo, academic.get("top_score", 24.0))
-
-        # Nếu trường có quy đổi IELTS và tổ hợp có Tiếng Anh (A01, D01, D07)
-        ielts_boost = 0.0
-        if combo in ["A01", "D01", "D07"] and uni_code in ielts_advantages:
-            ielts_boost = ielts_advantages[uni_code]
-
-        effective_candidate_score = round(base_score + priority_pts + ielts_boost, 2)
+        # Điểm cơ sở tính qua AdmissionRuleEngine chuẩn xác theo quy chế trường
+        rule = AdmissionRuleEngine.resolve_rule(
+            school_code=uni_code,
+            major_code=major_code,
+            major_name=b["major_name"],
+            combination_code=combo,
+            sub_criteria=b.get("sub_criteria", ""),
+            benchmark_score=benchmark_score_2025
+        )
+        calc = AdmissionRuleEngine.compute_score(
+            exam_scores=state.exam_scores or {},
+            rule=rule,
+            combination_code=combo,
+            area=state.priority_area or "KV3",
+            ethnicity=state.ethnicity or "kinh",
+            ielts_band=state.ielts_score
+        )
+        effective_candidate_score = calc["final_score"]
+        target_scale = calc["target_scale"]
         score_delta = round(effective_candidate_score - benchmark_score_2025, 2)
 
-        # Tính tỷ lệ đỗ dự đoán (Pass Probability)
-        if score_delta >= 2.0:
-            pass_prob = min(98, round(92 + (score_delta - 2.0) * 2, 1))
-        elif score_delta >= 1.5:
-            pass_prob = round(90 + (score_delta - 1.5) * 4, 1)
-        elif score_delta >= 0.0:
-            pass_prob = round(70 + score_delta * 13.3, 1)
-        elif score_delta >= -0.5:
-            pass_prob = round(60 + (score_delta + 0.5) * 20, 1)
-        elif score_delta >= -1.5:
-            pass_prob = max(15, round(45 + (score_delta + 0.5) * 30, 1))
+        # Tính tỷ lệ đỗ dự đoán (Pass Probability) chuẩn hóa theo thang điểm
+        scale_ratio = target_scale / 30.0 if target_scale > 0 else 1.0
+        norm_delta = score_delta / scale_ratio
+
+        if norm_delta >= 2.0:
+            pass_prob = min(98, round(92 + (norm_delta - 2.0) * 2, 1))
+        elif norm_delta >= 1.5:
+            pass_prob = round(90 + (norm_delta - 1.5) * 4, 1)
+        elif norm_delta >= 0.0:
+            pass_prob = round(70 + norm_delta * 13.3, 1)
+        elif norm_delta >= -0.5:
+            pass_prob = round(60 + (norm_delta + 0.5) * 20, 1)
+        elif norm_delta >= -1.5:
+            pass_prob = max(15, round(45 + (norm_delta + 0.5) * 30, 1))
         else:
-            pass_prob = max(5, round(15 - abs(score_delta + 1.5) * 5, 1))
+            pass_prob = max(5, round(15 - abs(norm_delta + 1.5) * 5, 1))
 
         # Chỉ số phù hợp ngữ nghĩa (Semantic Match từ RAG HyDE)
         sem_score = semantic_matches.get(major_code, 0.05)
@@ -176,9 +204,14 @@ def synthesizer_node(state: CounselorState) -> Dict[str, Any]:
             "score_2024": b["score_2024"],
             "score_2025": b["score_2025"],
             "candidate_score": effective_candidate_score,
-            "base_score": base_score,
-            "priority_pts": priority_pts,
-            "ielts_boost": ielts_boost,
+            "target_scale": target_scale,
+            "rule_name": calc["rule_name"],
+            "formula_desc": calc["formula_desc"],
+            "raw_score": calc["raw_score"],
+            "priority_pts": calc["priority_points"],
+            "ielts_boost": calc["ielts_converted_value"] if calc["ielts_replaced"] else 0.0,
+            "ielts_replaced": calc["ielts_replaced"],
+            "base_score": calc["raw_score"],
             "score_delta": score_delta,
             "pass_probability": pass_prob,
             "semantic_score": round(adjusted_sem * 100, 1),
@@ -242,16 +275,20 @@ def synthesizer_node(state: CounselorState) -> Dict[str, Any]:
 
     user_q = (state.user_interest or "").strip()
     q_preview = f"'{user_q}'" if len(user_q) < 60 else f"'{user_q[:57]}...'"
+    
+    school_filter_note = f" (Đề xuất chuyên biệt cho các ngành thuộc **{target_school}**)" if target_school else ""
     final_report = {
         "summary": (
-            f"Hội đồng tư vấn đã hoàn tất bản chiến lược tuyển sinh & nghề nghiệp cho câu hỏi: **{q_preview}**.\n\n"
+            f"Hội đồng tư vấn đã hoàn tất bản chiến lược tuyển sinh & nghề nghiệp cho câu hỏi: **{q_preview}**{school_filter_note}.\n\n"
             f"• **Thế mạnh học thuật:** Điểm cao nhất ở tổ hợp **{academic.get('top_combination')} ({academic.get('top_score')}đ)**, "
             f"với môn dẫn đầu **{academic.get('strongest_subject', ('Toán', 7))[0]}** đạt {academic.get('strongest_subject', ('Toán', 7))[1]}đ.\n"
             f"• **Định hướng nghề nghiệp & Tính cách:** Xác định bạn thuộc nhóm **{psychology.get('dominant_type')}** "
             f"(Mã RIASEC: **{psychology.get('primary_code')}**), thấu hiểu sở thích qua bức chân dung năng lực tương lai.\n"
-            f"• **Chiến lược Tỷ Lệ Vàng:** Đã cơ cấu danh sách 10 Nguyện Vọng tối ưu gồm **20% Thử thách** (ước mơ), "
+            f"• **Chiến lược Tỷ Lệ Vàng:** Đã cơ cấu danh sách {len(top_recommendations)} Nguyện Vọng tối ưu gồm **20% Thử thách** (ước mơ), "
             f"**50% Vừa sức** (trọng tâm) và **30% An toàn** (chắc đỗ), đảm bảo bạn vừa chạm tới trường mơ ước vừa có bảo hiểm tuyệt đối."
         ),
+        "target_school": target_school,
+        "school_filtered": bool(target_school),
         "empathy_summary": empathy_summary,
         "negative_constraints": negative_constraints,
         "top_recommendations": top_recommendations,

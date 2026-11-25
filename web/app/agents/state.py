@@ -13,6 +13,7 @@ class CounselorState(BaseModel):
     target_region: str = "Tất cả" # "Bắc", "Trung", "Nam", "Tất cả"
     target_category: str = "Tất cả" # Lĩnh vực mong muốn
     target_tuition: str = "Tất cả" # "Tất cả", "under_20", "20_40", "over_40"
+    target_school: Optional[str] = None # Mã trường đại học mục tiêu nếu muốn chỉ đề xuất ngành của trường này (vd: "BKHN", "PTIT", "NEU")
 
     # Kết quả phân tích từ Agent Học thuật (Academic Agent)
     academic_analysis: Dict[str, Any] = Field(default_factory=dict)
